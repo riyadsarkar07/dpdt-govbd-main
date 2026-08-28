@@ -1,2004 +1,784 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trademark Verification Portal | DPDT Bangladesh</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
-
-    <style>
-        /* ═══════════════════════════════════════════════════
-           CSS CUSTOM PROPERTIES — BANGLADESH GOVT PALETTE
-        ═══════════════════════════════════════════════════ */
-        :root {
-            --gov-green:        #006a4e;
-            --gov-green-dark:   #004f3a;
-            --gov-green-deep:   #003528;
-            --gov-green-light:  #e8f4f0;
-            --gov-orange:       #f47920;
-            --gov-orange-light: #fff3e8;
-            --gov-red:          #c0392b;
-            --gov-gold:         #c9a84c;
-            --gov-gold-light:   #f5edd8;
-
-            --text-primary:   #1a2332;
-            --text-secondary: #3d5166;
-            --text-muted:     #6b7c8d;
-            --text-light:     #9aaabb;
-
-            --border-color:   #d1dde8;
-            --bg-main:        #f0f3f7;
-            --bg-white:       #ffffff;
-            --bg-subtle:      #f8fafc;
-
-            --font-bangla-ui:   'Hind Siliguri', 'Tiro Bangla', sans-serif;
-            --font-bangla-doc:  'Noto Serif Bengali', 'Tiro Bangla', serif;
-            --font-en-display:  'Source Serif 4', Georgia, serif;
-            --font-en-body:     'Segoe UI', system-ui, sans-serif;
-
-            --shadow-sm:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md:  0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
-            --shadow-lg:  0 10px 30px rgba(0,0,0,0.1),  0 4px 10px rgba(0,0,0,0.06);
-            --radius-sm:  4px;
-            --radius-md:  6px;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           RESET & BASE
-        ═══════════════════════════════════════════════════ */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-en-body);
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        /* ─── Subtle Watermark Background ─── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            background-image:
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23006a4e' stroke-width='0.35' opacity='0.12'%3E%3Crect x='2' y='2' width='76' height='76' rx='2'/%3E%3Cpath d='M2 20h76M2 40h76M2 60h76M20 2v76M40 2v76M60 2v76'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 80px 80px;
-        }
-
-        /* ─── Left / Right Decorative Side Pillars ─── */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 0;
-            background-image:
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='1200' viewBox='0 0 180 1200'%3E%3Cg fill='none' stroke='%23006a4e' stroke-width='1' opacity='0.07'%3E%3Cpath d='M18 0 C18 60 42 90 18 150 C-6 210 42 270 18 330 C-6 390 42 450 18 510 C-6 570 42 630 18 690 C-6 750 42 810 18 870 C-6 930 42 990 18 1050 C-6 1110 30 1170 18 1200'/%3E%3Cpath d='M38 0 C38 80 62 120 38 200 C14 280 62 360 38 440 C14 520 62 600 38 680 C14 760 50 840 38 920 C26 1000 62 1080 38 1200'/%3E%3Ccircle cx='28' cy='200' r='8'/%3E%3Ccircle cx='20' cy='500' r='5'/%3E%3Ccircle cx='35' cy='800' r='7'/%3E%3Cpath d='M8 100 Q45 130 8 160'/%3E%3Cpath d='M8 400 Q45 430 8 460'/%3E%3Cpath d='M8 700 Q45 730 8 760'/%3E%3C/g%3E%3C/svg%3E"),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='1200' viewBox='0 0 180 1200'%3E%3Cg fill='none' stroke='%23006a4e' stroke-width='1' opacity='0.07'%3E%3Cpath d='M162 0 C162 60 138 90 162 150 C186 210 138 270 162 330 C186 390 138 450 162 510 C186 570 138 630 162 690 C186 750 138 810 162 870 C186 930 138 990 162 1050 C186 1110 150 1170 162 1200'/%3E%3Cpath d='M142 0 C142 80 118 120 142 200 C166 280 118 360 142 440 C166 520 118 600 142 680 C166 760 130 840 142 920 C154 1000 118 1080 142 1200'/%3E%3Ccircle cx='152' cy='200' r='8'/%3E%3Ccircle cx='160' cy='500' r='5'/%3E%3Ccircle cx='145' cy='800' r='7'/%3E%3Cpath d='M172 100 Q135 130 172 160'/%3E%3Cpath d='M172 400 Q135 430 172 460'/%3E%3Cpath d='M172 700 Q135 730 172 760'/%3E%3C/g%3E%3C/svg%3E");
-            background-position: left top, right top;
-            background-repeat: repeat-y, repeat-y;
-            background-size: 180px auto, 180px auto;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           TOP NATIONAL WEB PORTAL BAR
-        ═══════════════════════════════════════════════════ */
-        .top-national-bar {
-            background-color: var(--gov-green-deep);
-            color: rgba(255,255,255,0.92);
-            font-size: 11.5px;
-            padding: 6px 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-en-body);
-            letter-spacing: 0.3px;
-            position: relative;
-            z-index: 20;
-        }
-        .top-national-bar::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
-        }
-        .top-national-bar .left-txt {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .top-national-bar .right-lang {
-            cursor: pointer;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 3px 10px;
-            border-radius: 3px;
-            font-family: var(--font-bangla-ui);
-            font-size: 12px;
-            transition: background 0.2s;
-        }
-        .top-national-bar .right-lang:hover { background: rgba(255,255,255,0.2); }
-
-        /* ═══════════════════════════════════════════════════
-           GOVERNMENT HEADER BANNER
-        ═══════════════════════════════════════════════════ */
-        .main-gov-banner {
-            background: linear-gradient(135deg, var(--gov-green-dark) 0%, var(--gov-green) 55%, #007a5a 100%);
-            color: white;
-            position: relative;
-            z-index: 15;
-            overflow: hidden;
-        }
-
-        .main-gov-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='80' viewBox='0 0 300 80'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'%3E%3Cpath d='M0 0 L300 0 L300 80 L0 80 Z'/%3E%3Cpath d='M0 10 Q75 5 150 10 Q225 15 300 10'/%3E%3Cpath d='M0 20 Q75 15 150 20 Q225 25 300 20'/%3E%3Cpath d='M0 60 Q75 55 150 60 Q225 65 300 60'/%3E%3Cpath d='M0 70 Q75 65 150 70 Q225 75 300 70'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 300px 80px;
-            background-repeat: repeat;
-            pointer-events: none;
-        }
-
-        .main-gov-banner::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg,
-                var(--gov-green-dark),
-                var(--gov-gold) 15%,
-                var(--gov-orange) 35%,
-                var(--gov-gold) 50%,
-                var(--gov-orange) 65%,
-                var(--gov-gold) 85%,
-                var(--gov-green-dark)
-            );
-        }
-
-        .banner-inner {
-            max-width: 64rem;
-            margin: 0 auto;
-            padding: 20px 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .banner-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .gov-logo-wrap {
-            flex-shrink: 0;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: white;
-            padding: 3px;
-            box-shadow: 0 0 0 2px rgba(201,168,76,0.6), 0 4px 12px rgba(0,0,0,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .gov-logo-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-
-        .banner-text-block {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .banner-super {
-            font-family: var(--font-bangla-ui);
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: rgba(255,255,255,0.75);
-            text-transform: uppercase;
-        }
-
-        .banner-title-en {
-            font-family: var(--font-en-display);
-            font-size: 21px;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #ffffff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            letter-spacing: -0.2px;
-        }
-
-        .banner-sub-en {
-            font-size: 12.5px;
-            color: rgba(255,255,255,0.78);
-            font-style: italic;
-            font-family: var(--font-en-display);
-            letter-spacing: 0.1px;
-        }
-
-        .banner-right { flex-shrink: 0; }
-
-        .gov-seal-wrap {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: white;
-            padding: 3px;
-            box-shadow: 0 0 0 2px rgba(201,168,76,0.6), 0 4px 12px rgba(0,0,0,0.25);
-        }
-
-        .gov-seal-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-
-        .doc-header-rule {
-            width: 40px;
-            height: 3px;
-            background: var(--gov-gold);
-            border-radius: 2px;
-            margin-top: 6px;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           PRIMARY NAVIGATION BAR (NEW - HORIZONTAL TABS)
-        ═══════════════════════════════════════════════════ */
-        .primary-nav-bar {
-            background: var(--gov-green);
-            border-bottom: 3px solid var(--gov-gold);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-        }
-
-        .primary-nav-inner {
-            max-width: 64rem;
-            margin: 0 auto;
-            padding: 0 32px;
-            display: flex;
-            align-items: stretch;
-        }
-
-        .nav-item {
-            color: rgba(255,255,255,0.82);
-            font-size: 13px;
-            font-weight: 500;
-            padding: 13px 20px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            letter-spacing: 0.25px;
-            position: relative;
-            transition: color 0.18s, background 0.18s;
-            white-space: nowrap;
-            font-family: var(--font-en-body);
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0; right: 0;
-            height: 3px;
-            background: var(--gov-gold);
-            transform: scaleX(0);
-            transition: transform 0.2s;
-        }
-
-        .nav-item:hover {
-            background: rgba(255,255,255,0.09);
-            color: white;
-        }
-
-        .nav-item:hover::after { transform: scaleX(1); }
-
-        .nav-item.active {
-            background: rgba(255,255,255,0.14);
-            color: white;
-            font-weight: 700;
-        }
-
-        .nav-item.active::after { transform: scaleX(1); }
-
-        .nav-item svg { opacity: 0.75; }
-        .nav-item.active svg { opacity: 1; }
-
-        /* Separator dot between nav items */
-        .nav-sep {
-            width: 1px;
-            background: rgba(255,255,255,0.12);
-            margin: 10px 0;
-            flex-shrink: 0;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           BREADCRUMB
-        ═══════════════════════════════════════════════════ */
-        .breadcrumb-bar {
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-            z-index: 13;
-        }
-
-        .breadcrumb-inner {
-            max-width: 64rem;
-            margin: 0 auto;
-            padding: 8px 32px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .breadcrumb-inner a {
-            color: var(--gov-green);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .breadcrumb-inner a:hover { text-decoration: underline; }
-        .breadcrumb-sep { color: var(--text-light); }
-        .breadcrumb-current { color: var(--text-secondary); font-weight: 600; }
-
-        /* ═══════════════════════════════════════════════════
-           MAIN CONTENT WRAPPER
-        ═══════════════════════════════════════════════════ */
-        .page-wrapper {
-            flex-grow: 1;
-            max-width: 64rem;
-            width: 100%;
-            margin: 0 auto;
-            padding: 32px 32px 48px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           VIEW SECTIONS (tab switching)
-        ═══════════════════════════════════════════════════ */
-        .view-section { display: none; }
-        .view-section.active { display: block; }
-
-        /* ─── Portal Section Heading ─── */
-        .portal-heading-box {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 28px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .portal-heading-accent {
-            width: 5px;
-            border-radius: 3px;
-            background: linear-gradient(to bottom, var(--gov-orange), var(--gov-green));
-            align-self: stretch;
-            flex-shrink: 0;
-            min-height: 48px;
-        }
-
-        .portal-heading-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: var(--gov-orange);
-            margin-bottom: 4px;
-        }
-
-        .portal-heading-title {
-            font-family: var(--font-en-display);
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--gov-green-dark);
-            line-height: 1.2;
-        }
-
-        .portal-heading-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            line-height: 1.5;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           NOTICE / INFO BAND
-        ═══════════════════════════════════════════════════ */
-        .info-notice {
-            background: var(--gov-green-light);
-            border: 1px solid rgba(0,106,78,0.2);
-            border-left: 4px solid var(--gov-green);
-            border-radius: var(--radius-sm);
-            padding: 10px 16px;
-            font-size: 12.5px;
-            color: var(--gov-green-dark);
-            margin-bottom: 24px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .info-notice svg { flex-shrink: 0; margin-top: 1px; }
-
-        /* ═══════════════════════════════════════════════════
-           SEARCH SECTION — STYLED AS AN OFFICIAL FORM
-        ═══════════════════════════════════════════════════ */
-        .search-panel {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            margin-bottom: 32px;
-        }
-
-        .search-panel-header {
-            background: linear-gradient(90deg, var(--gov-green-dark), var(--gov-green));
-            color: white;
-            padding: 12px 20px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .search-panel-body { padding: 22px 24px; }
-
-        .search-form-row {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .search-field-wrap {
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .search-field-label {
-            font-size: 11.5px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .search-input-wrap { position: relative; }
-
-        .search-input-wrap svg.search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: var(--text-light);
-            transition: color 0.2s;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 11px 14px 11px 38px;
-            border: 1.5px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: 0.5px;
-            font-family: 'Courier New', monospace;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            background: var(--bg-subtle);
-        }
-
-        .search-input:focus {
-            border-color: var(--gov-green);
-            box-shadow: 0 0 0 3px rgba(0,106,78,0.12);
-            background: white;
-        }
-
-        .search-input-wrap:focus-within svg.search-icon { color: var(--gov-green); }
-
-        .search-btn {
-            background: linear-gradient(135deg, var(--gov-green), var(--gov-green-dark));
-            color: white;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 11px 28px;
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            align-self: flex-end;
-            box-shadow: 0 2px 6px rgba(0,106,78,0.3);
-            white-space: nowrap;
-        }
-
-        .search-btn:hover {
-            background: linear-gradient(135deg, var(--gov-green-dark), var(--gov-green-deep));
-            box-shadow: 0 4px 10px rgba(0,106,78,0.35);
-            transform: translateY(-1px);
-        }
-
-        .search-btn:active { transform: translateY(0); }
-
-        .search-hint {
-            font-size: 11.5px;
-            color: var(--text-light);
-            margin-top: 8px;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           VERIFICATION RESULT — OFFICIAL DOC STYLE
-        ═══════════════════════════════════════════════════ */
-        .hidden { display: none !important; }
-
-        .result-document {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .result-doc-header {
-            background: linear-gradient(90deg, var(--gov-green-dark) 0%, var(--gov-green) 100%);
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .result-doc-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .result-doc-title {
-            font-family: var(--font-en-display);
-            font-size: 14px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.2px;
-        }
-
-        .result-doc-subtitle {
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
-            margin-top: 2px;
-        }
-
-        .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 20px;
-            padding: 5px 14px 5px 8px;
-            font-size: 12px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-
-        .verified-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #4ade80;
-            box-shadow: 0 0 0 0 rgba(74,222,128,0.4);
-            animation: pulse-green 2s infinite;
-            flex-shrink: 0;
-        }
-
-        @keyframes pulse-green {
-            0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
-            70%  { box-shadow: 0 0 0 7px rgba(74,222,128,0); }
-            100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
-        }
-
-        .result-table-wrap { overflow-x: auto; }
-
-        .result-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-        }
-
-        .result-table tr { border-bottom: 1px solid var(--border-color); }
-        .result-table tr:last-child { border-bottom: none; }
-        .result-table tr:nth-child(even) .label-cell { background-color: #f1f7f4; }
-        .result-table tr:nth-child(even) .value-cell { background-color: #fcfeff; }
-
-        .result-table td {
-            padding: 13px 20px;
-            vertical-align: top;
-        }
-
-        .result-table td.label-cell {
-            background-color: var(--bg-subtle);
-            font-weight: 600;
-            color: var(--text-secondary);
-            width: 32%;
-            border-right: 1px solid var(--border-color);
-            font-size: 12.5px;
-            letter-spacing: 0.1px;
-            white-space: nowrap;
-        }
-
-        .result-table td.label-cell .label-icon {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            margin-right: 6px;
-            vertical-align: middle;
-            opacity: 0.5;
-        }
-
-        .result-table td.value-cell {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .result-table td.value-bold {
-            font-weight: 700;
-            color: var(--gov-green-dark);
-            font-family: var(--font-en-display);
-            font-size: 15px;
-        }
-
-        .tm-number-chip {
-            display: inline-block;
-            font-family: 'Courier New', monospace;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--gov-green-dark);
-            background: var(--gov-green-light);
-            border: 1px solid rgba(0,106,78,0.2);
-            padding: 2px 10px;
-            border-radius: 4px;
-            letter-spacing: 1px;
-        }
-
-        .status-verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #6ee7b7;
-            padding: 4px 12px 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-        }
-
-        .status-verified::before {
-            content: '';
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #10b981;
-            animation: pulse-green 2s infinite;
-        }
-
-        .result-actions {
-            background: var(--bg-subtle);
-            border-top: 1px solid var(--border-color);
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 8px 18px;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            letter-spacing: 0.2px;
-            border: none;
-        }
-
-        .action-btn-primary {
-            background: var(--gov-green);
-            color: white;
-            box-shadow: 0 2px 6px rgba(0,106,78,0.25);
-        }
-        .action-btn-primary:hover {
-            background: var(--gov-green-dark);
-            box-shadow: 0 4px 10px rgba(0,106,78,0.3);
-            transform: translateY(-1px);
-        }
-
-        .action-btn-outline {
-            background: white;
-            color: var(--gov-green);
-            border: 1.5px solid var(--gov-green);
-        }
-        .action-btn-outline:hover { background: var(--gov-green-light); }
-
-        .cert-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-
-        .cert-card-header {
-            background: var(--bg-subtle);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .cert-card-body {
-            padding: 16px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .cert-card-body img {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
-        }
-
-        .cert-card-body iframe {
-            width: 100%;
-            height: 780px;
-            border: 1px solid var(--border-color);
-        }
-
-        .success-notice {
-            background: var(--gov-green-light);
-            border: 1px solid rgba(0,106,78,0.25);
-            border-left: 4px solid var(--gov-green);
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            font-size: 13px;
-            color: var(--gov-green-dark);
-            font-weight: 600;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            line-height: 1.5;
-        }
-
-        .success-notice svg { flex-shrink: 0; margin-top: 1px; }
-
-        .error-box {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-left: 4px solid var(--gov-red);
-            border-radius: var(--radius-sm);
-            padding: 14px 20px;
-            font-size: 13.5px;
-            color: #7f1d1d;
-            font-weight: 600;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .space-y { display: flex; flex-direction: column; gap: 20px; }
-
-        /* ═══════════════════════════════════════════════════
-           FEE STRUCTURE VIEW
-        ═══════════════════════════════════════════════════ */
-        .fee-section-panel {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            margin-bottom: 24px;
-        }
-
-        .fee-section-header {
-            background: linear-gradient(90deg, var(--gov-green-dark), var(--gov-green));
-            color: white;
-            padding: 14px 22px;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .fee-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-        }
-
-        .fee-table thead th {
-            background: var(--gov-green-light);
-            color: var(--gov-green-dark);
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            padding: 11px 20px;
-            text-align: left;
-            border-bottom: 2px solid rgba(0,106,78,0.2);
-        }
-
-        .fee-table thead th:last-child { text-align: right; }
-
-        .fee-table tbody tr { border-bottom: 1px solid var(--border-color); transition: background 0.15s; }
-        .fee-table tbody tr:last-child { border-bottom: none; }
-        .fee-table tbody tr:hover { background: var(--bg-subtle); }
-
-        .fee-table tbody td {
-            padding: 13px 20px;
-            color: var(--text-primary);
-            vertical-align: middle;
-        }
-
-        .fee-table tbody td:first-child { font-weight: 600; color: var(--text-secondary); }
-        .fee-table tbody td:last-child { text-align: right; }
-
-        .fee-amount {
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--gov-green-dark);
-            background: var(--gov-green-light);
-            border: 1px solid rgba(0,106,78,0.2);
-            padding: 3px 10px;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
-        .fee-tag {
-            display: inline-block;
-            font-size: 10.5px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-            margin-left: 6px;
-        }
-
-        .fee-tag-new { background: #dbeafe; color: #1e40af; }
-        .fee-tag-renewal { background: var(--gov-orange-light); color: var(--gov-orange); border: 1px solid rgba(244,121,32,0.3); }
-
-        .fee-note-box {
-            background: #fffbeb;
-            border: 1px solid rgba(201,168,76,0.4);
-            border-left: 4px solid var(--gov-gold);
-            border-radius: var(--radius-sm);
-            padding: 12px 18px;
-            font-size: 12.5px;
-            color: #78350f;
-            line-height: 1.6;
-            margin-top: 20px;
-        }
-
-        .fee-note-box strong { display: block; margin-bottom: 4px; color: #92400e; }
-
-        /* ═══════════════════════════════════════════════════
-           CONTACT / EMERGENCY HOTLINES VIEW  (জরুরি যোগাযোগ)
-        ═══════════════════════════════════════════════════ */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        .contact-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.2s, transform 0.2s;
-            cursor: default;
-        }
-
-        .contact-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-
-        .contact-card-inner {
-            display: flex;
-            align-items: center;
-            gap: 0;
-        }
-
-        .contact-card-label {
-            flex: 1;
-            padding: 18px 20px;
-            font-family: var(--font-bangla-ui);
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.4;
-        }
-
-        .contact-card-label small {
-            display: block;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-top: 3px;
-            font-family: var(--font-en-body);
-        }
-
-        .contact-card-number {
-            flex-shrink: 0;
-            padding: 18px 22px;
-            font-family: var(--font-bangla-ui);
-            font-size: 26px;
-            font-weight: 700;
-            color: #d32f2f;
-            letter-spacing: 1px;
-            border-left: 1px solid var(--border-color);
-            text-align: center;
-            min-width: 90px;
-        }
-
-        .contact-section-header {
-            background: var(--gov-green);
-            color: white;
-            padding: 14px 22px;
-            font-family: var(--font-bangla-ui);
-            font-size: 17px;
-            font-weight: 700;
-            border-radius: var(--radius-md) var(--radius-md) 0 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 0;
-        }
-
-        .contact-block {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            margin-bottom: 28px;
-        }
-
-        .contact-block-items {
-            padding: 4px 0;
-        }
-
-        .contact-row {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.15s;
-        }
-
-        .contact-row:last-child { border-bottom: none; }
-        .contact-row:hover { background: var(--bg-subtle); }
-
-        .contact-row-label {
-            flex: 1;
-            padding: 16px 20px;
-            font-family: var(--font-bangla-ui);
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .contact-row-label em {
-            display: block;
-            font-style: normal;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-family: var(--font-en-body);
-            margin-top: 2px;
-        }
-
-        .contact-row-number {
-            flex-shrink: 0;
-            padding: 16px 24px;
-            font-family: var(--font-bangla-ui);
-            font-size: 24px;
-            font-weight: 700;
-            color: #c62828;
-            border-left: 1px solid var(--border-color);
-            min-width: 96px;
-            text-align: center;
-        }
-
-        .contact-dpdt-info {
-            background: var(--bg-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-        }
-
-        .contact-dpdt-header {
-            background: linear-gradient(90deg, var(--gov-green-dark), var(--gov-green));
-            color: white;
-            padding: 12px 20px;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .contact-dpdt-body {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px 24px;
-            font-size: 13px;
-        }
-
-        .contact-dpdt-item {}
-        .contact-dpdt-key {
-            font-size: 10.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            color: var(--text-light);
-            margin-bottom: 3px;
-        }
-
-        .contact-dpdt-value {
-            color: var(--text-primary);
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        .contact-dpdt-value a {
-            color: var(--gov-green);
-            text-decoration: none;
-        }
-        .contact-dpdt-value a:hover { text-decoration: underline; }
-
-        /* ═══════════════════════════════════════════════════
-           FOOTER
-        ═══════════════════════════════════════════════════ */
-        footer {
-            background: #e5eaee;
-            border-top: 3px solid var(--gov-green);
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer-top {
-            background: var(--gov-green-dark);
-            padding: 6px 32px;
-        }
-
-        .footer-top-inner {
-            max-width: 64rem;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-        }
-
-        .footer-top-inner span {
-            font-family: var(--font-bangla-ui);
-            font-size: 12px;
-            color: rgba(255,255,255,0.6);
-            letter-spacing: 0.5px;
-        }
-
-        .footer-body { padding: 24px 32px; }
-
-        .footer-body-inner {
-            max-width: 64rem;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .footer-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .footer-title::before {
-            content: '';
-            display: inline-block;
-            width: 12px;
-            height: 2px;
-            background: var(--gov-orange);
-            border-radius: 2px;
-        }
-
-        .footer-update-txt { color: var(--text-muted); font-size: 12px; margin-bottom: 6px; }
-        .footer-copyright { color: var(--text-muted); font-size: 11.5px; }
-
-        .footer-partner-txt {
-            font-size: 12.5px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            max-width: 320px;
-        }
-
-        .footer-support { margin-top: 12px; }
-
-        .support-title {
-            font-size: 10.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-light);
-            letter-spacing: 0.8px;
-            margin-bottom: 6px;
-        }
-
-        .support-banner-img {
-            height: 36px;
-            display: block;
-            mix-blend-mode: multiply;
-        }
-
-        /* ═══════════════════════════════════════════════════
-           RESPONSIVE
-        ═══════════════════════════════════════════════════ */
-        @media (max-width: 1200px) { body::after { display: none; } }
-        @media (max-width: 900px)  { body::before { display: none; } }
-
-        @media (max-width: 768px) {
-            .banner-inner { flex-direction: column; text-align: center; padding: 20px 16px; }
-            .banner-left { flex-direction: column; gap: 12px; }
-            .banner-title-en { font-size: 17px; }
-            .banner-right { display: none; }
-
-            .primary-nav-inner { overflow-x: auto; padding: 0 16px; }
-            .nav-item { font-size: 12px; padding: 11px 14px; }
-
-            .page-wrapper { padding: 20px 16px 36px; }
-
-            .result-table td.label-cell { width: 40%; white-space: normal; font-size: 12px; }
-            .result-table td { padding: 10px 14px; }
-
-            .footer-body-inner { flex-direction: column; gap: 20px; }
-            .search-form-row { flex-direction: column; }
-            .search-btn { width: 100%; justify-content: center; }
-            .breadcrumb-inner { padding: 7px 16px; }
-
-            .contact-dpdt-body { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 480px) {
-            .result-table { font-size: 12.5px; }
-            .tm-number-chip { font-size: 13px; }
-            .cert-card-body iframe { height: 500px; }
-            .contact-row-number { font-size: 20px; min-width: 80px; }
-        }
-
-        /* ═══════════════════════════════════════════════════
-           PRINT STYLES
-        ═══════════════════════════════════════════════════ */
-        @media print {
-            body::before, body::after { display: none; }
-            .top-national-bar, .primary-nav-bar, .breadcrumb-bar { display: none; }
-            .search-panel, .success-notice, footer { display: none; }
-            .page-wrapper { padding: 0; }
-            .result-document, .cert-card { box-shadow: none; }
-            @page { margin: 15mm; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Department of Patents, Designs & Trademarks (DPDT), Ministry of Industries, Government of the People's Republic of Bangladesh — official-style public service portal with online trademark verification.">
+<title>Home | Department of Patents, Designs & Trademarks, Bangladesh</title>
+<link rel="icon" type="image/png" href="seal.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ══ Top National Web Portal Green Bar ══ -->
-    <div class="top-national-bar">
-        <div class="left-txt">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-            National Web Portal — গণপ্রজাতন্ত্রী বাংলাদেশ সরকার
-        </div>
-        <div class="right-lang">বাংলা</div>
-    </div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <!-- ══ Main Government Banner ══ -->
-    <div class="main-gov-banner">
-        <div class="banner-inner">
-            <div class="banner-left">
-                <div class="gov-logo-wrap">
-                    <img src="logo.jpeg" alt="Government of Bangladesh Emblem">
-                </div>
-                <div class="banner-text-block">
-                    <span class="banner-super">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</span>
-                    <h1 class="banner-title-en">Department of Patents, Designs &amp; Trademarks</h1>
-                    <p class="banner-sub-en">Ministry of Industries, Government of the People's Republic of Bangladesh</p>
-                    <div class="doc-header-rule"></div>
-                </div>
-            </div>
-            <div class="banner-right">
-                <div class="gov-seal-wrap">
-                    <img src="seal.png" alt="Official Seal">
-                </div>
-            </div>
-        </div>
+<!-- ═══════════════════════════════════════════════════════════
+     TOP NATIONAL WEB PORTAL BAR
+═══════════════════════════════════════════════════════════ -->
+<div class="national-bar">
+  <div class="container national-bar-inner">
+    <a class="national-portal-link" href="http://bangladesh.gov.bd" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span data-en="Bangladesh National Web Portal" data-bn="বাংলাদেশ জাতীয় তথ্য বাতায়ন">Bangladesh National Web Portal</span>
+    </a>
+    <div class="national-bar-right">
+      <form class="top-search" id="topSearchForm" role="search">
+        <input type="text" id="topSearchInput" placeholder="Trademark number..." aria-label="Search trademark number">
+        <button type="submit" aria-label="Search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </form>
+      <button class="lang-toggle" id="langToggle" type="button">বাংলা</button>
     </div>
+  </div>
+</div>
 
-    <!-- ══ Primary Navigation Bar ══ -->
-    <nav class="primary-nav-bar" role="navigation" aria-label="Main navigation">
-        <div class="primary-nav-inner">
-            <!-- Home: opens dpdt.gov.bd in new tab -->
-            <a class="nav-item" href="https://dpdt.gov.bd/" target="_blank" rel="noopener noreferrer" id="nav-home">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
-                </svg>
-                Home
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN GOVERNMENT HEADER
+═══════════════════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="header-brand">
+      <img src="logo.jpeg" alt="Government of the People's Republic of Bangladesh Emblem" class="brand-emblem">
+      <div class="brand-text">
+        <span class="brand-gov-line">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</span>
+        <h1 class="brand-title" data-en="Department of Patents, Designs & Trademarks" data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর">Department of Patents, Designs &amp; Trademarks</h1>
+        <span class="brand-sub" data-en="Ministry of Industries, Government of the People's Republic of Bangladesh" data-bn="শিল্প মন্ত্রণালয়, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার">Ministry of Industries, Government of the People's Republic of Bangladesh</span>
+      </div>
+    </div>
+    <div class="header-side">
+      <img src="seal.png" alt="Official Seal of the Department" class="brand-seal">
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRIMARY NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<nav class="primary-nav" aria-label="Main navigation">
+  <div class="container nav-inner">
+    <ul class="nav-list" id="navList"></ul>
+    <button class="nav-menu-btn" id="menuBtn" type="button">
+      <span class="burger"><span></span><span></span><span></span></span>
+      <span class="menu-label" data-en="Full Menu" data-bn="সকল মেনু">Full Menu</span>
+    </button>
+    <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Open menu">
+      <span><i></i><i></i><i></i></span>
+      <span class="menu-label" data-en="Menu" data-bn="মেনু">Menu</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FULL MENU OVERLAY
+═══════════════════════════════════════════════════════════ -->
+<div class="mega-overlay" id="megaOverlay" role="dialog" aria-modal="true" aria-label="Full site menu">
+  <div class="mega-panel">
+    <div class="mega-head">
+      <span data-en="All Sections — DPDT Bangladesh" data-bn="সকল বিভাগ — পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর">All Sections — DPDT Bangladesh</span>
+      <button class="mega-close" id="megaClose" type="button" aria-label="Close">&times;</button>
+    </div>
+    <div class="mega-body" id="megaBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MOBILE DRAWER
+═══════════════════════════════════════════════════════════ -->
+<div class="mobile-drawer" id="mobileDrawer" aria-label="Mobile menu">
+  <div class="mobile-drawer-head">
+    <span data-en="Menu" data-bn="মেনু">Menu</span>
+    <button class="mobile-close" id="mobileClose" type="button" aria-label="Close">&times;</button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav"></nav>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BREADCRUMB
+═══════════════════════════════════════════════════════════ -->
+<div class="breadcrumb">
+  <div class="crumb-inner">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <a href="/" data-internal="1" data-en="Home" data-bn="হোম">Home</a>
+    <span class="sep">&rsaquo;</span>
+    <span class="current" id="crumbCurrent">Home</span>
+  </div>
+</div>
+
+<main id="main-content">
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: HOME
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view active" id="view-home">
+    <div class="container page">
+
+      <!-- Hero / Welcome -->
+      <div class="hero">
+        <div class="hero-eyebrow">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span data-en="Official Website — Welcome Message" data-bn="স্বাগত বার্তা — অফিসিয়াল ওয়েবসাইট">Official Website — Welcome Message</span>
+        </div>
+        <h2>
+          <span data-en="Welcome to the Department of Patents, Designs &amp; Trademarks" data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরে স্বাগতম">Welcome to the Department of Patents, Designs &amp; Trademarks</span>
+        </h2>
+        <p class="bn-text" data-en="The Department of Patents, Designs & Trademarks (DPDT), under the Ministry of Industries of the Government of the People's Republic of Bangladesh, is the national authority responsible for the protection of intellectual property — granting patents for new inventions, registering industrial designs, and registering trademarks and geographical indications (GI) for goods and services."
+           data-bn="গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের শিল্প মন্ত্রণালয়ের নিয়ন্ত্রণাধীন পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরের অফিসিয়াল ওয়েবসাইটে আপনাকে স্বাগত। সাবেক ‘পেটেন্ট অফিস’ এবং ‘ট্রেডমার্কস রেজিস্ট্রি’ অফিস দুটি একীভূত করে ২০০৩ সালে পেটেন্ট, ডিজাইন ও ট্রেডমার্কস অধিদপ্তর হিসাবে এটি কার্যক্রম শুরু করে। এই অধিদপ্তরের মূল কার্যাবলীর মধ্যে রয়েছে মেধা সম্পদ সুরক্ষায় নতুন নতুন উদ্ভাবনের পেটেন্ট, ডিজাইন সত্ত্ব মঞ্জুর করা, পণ্য ও সেবার ট্রেডমার্ক ও ভৌগোলিক নির্দেশক পণ্য নিবন্ধন করা।">
+          The Department of Patents, Designs &amp; Trademarks (DPDT), under the Ministry of Industries of the Government of the People's Republic of Bangladesh, is the national authority responsible for the protection of intellectual property — granting patents for new inventions, registering industrial designs, and registering trademarks and geographical indications (GI) for goods and services.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-green" href="/verify" data-internal="1">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span data-en="Verify a Trademark" data-bn="ট্রেডমার্ক যাচাই করুন">Verify a Trademark</span>
+          </a>
+          <a class="btn btn-outline" href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span data-en="IPAS Online Application" data-bn="অনলাইন আবেদন (আইপাস)">IPAS Online Application</span>
+          </a>
+          <a class="btn btn-gold" href="https://dpdt.gov.bd/pages/static-pages/6922defe933eb65569e1f09f" target="_blank" rel="noopener">
+            <span data-en="About the Department" data-bn="অধিদপ্তর সম্পর্কিত">About the Department</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Statistics band -->
+      <div class="stats-band">
+        <div class="stat-item">
+          <div class="num" id="recordCount">—</div>
+          <div class="lbl"><span data-en="Trademark Records in Online Verification Database" data-bn="অনলাইন যাচাইকরণ ডেটাবেজে ট্রেডমার্ক রেকর্ড">Trademark Records in Online Verification Database</span></div>
+        </div>
+        <div class="stat-item">
+          <a href="https://dpdt.gov.bd/pages/static-pages/6922df1c933eb65569e1fed9" target="_blank" rel="noopener" style="color:#c9a84c;font-size:24px;font-weight:700;display:block;margin-top:8px;">↗</a>
+          <div class="lbl"><span data-en="Patent Statistics" data-bn="পেটেন্ট পরিসংখ্যান">Patent Statistics</span></div>
+        </div>
+        <div class="stat-item">
+          <a href="https://dpdt.gov.bd/pages/static-pages/6922dd30933eb65569e13db9" target="_blank" rel="noopener" style="color:#c9a84c;font-size:24px;font-weight:700;display:block;margin-top:8px;">↗</a>
+          <div class="lbl"><span data-en="Industrial Design Statistics" data-bn="শিল্প-নকশা পরিসংখ্যান">Industrial Design Statistics</span></div>
+        </div>
+        <div class="stat-item">
+          <a href="https://dpdt.gov.bd/pages/static-pages/6922dc00933eb65569e0de4f" target="_blank" rel="noopener" style="color:#c9a84c;font-size:24px;font-weight:700;display:block;margin-top:8px;">↗</a>
+          <div class="lbl"><span data-en="Trademark Statistics" data-bn="ট্রেডমার্কস পরিসংখ্যান">Trademark Statistics</span></div>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <!-- MAIN COLUMN -->
+        <div class="home-main">
+
+          <!-- Notice Board -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="pt">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span data-en="Notice Board" data-bn="নোটিশ বোর্ড">Notice Board</span>
+              </div>
+              <a class="view-all" href="https://dpdt.gov.bd/pages/notices" target="_blank" rel="noopener" data-en="View all notices" data-bn="সকল নোটিশ দেখুন">View all notices</a>
+            </div>
+            <div class="panel-body">
+              <ul class="notice-list" id="noticeList"></ul>
+            </div>
+          </div>
+
+          <!-- News -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="pt">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0V9"/><line x1="12" y1="6" x2="20" y2="6"/><line x1="12" y1="10" x2="20" y2="10"/><line x1="12" y1="14" x2="20" y2="14"/></svg>
+                <span data-en="News" data-bn="খবর">News</span>
+              </div>
+              <a class="view-all" href="https://dpdt.gov.bd/pages/news/" target="_blank" rel="noopener" data-en="All news" data-bn="সকল খবর">All news</a>
+            </div>
+            <div class="panel-body">
+              <div class="news-item">
+                <span class="n-dot"></span>
+                <a href="https://dpdt.gov.bd/pages/news/bangladesh-patent-act-2023-gazette" target="_blank" rel="noopener"
+                   data-en="Gazette declaring the Bangladesh Patent Act, 2023 in effect."
+                   data-bn="বাংলাদেশ পেটেন্ট আইন, ২০২৩ কার্যকর এর গেজেট">Gazette declaring the Bangladesh Patent Act, 2023 in effect.</a>
+              </div>
+              <div class="news-item">
+                <span class="n-dot"></span>
+                <a href="https://dpdt.gov.bd/pages/news/" target="_blank" rel="noopener"
+                   data-en="Read the latest news and announcements from the Department."
+                   data-bn="অধিদপ্তরের সর্বশেষ খবর ও ঘোষণা পড়ুন।">Read the latest news and announcements from the Department.</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Services -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="pt">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <span data-en="Services" data-bn="সেবা সমূহ">Services</span>
+              </div>
+              <a class="view-all" href="https://dpdt.gov.bd/pages/service-boxes" target="_blank" rel="noopener" data-en="All services" data-bn="সব দেখুন">All services</a>
+            </div>
+            <div class="panel-body">
+              <div class="service-grid">
+
+                <a class="service-tile featured" href="/verify" data-internal="1">
+                  <span class="st-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8.5 11.5l2 2 3.5-3.5"/></svg>
+                  </span>
+                  <h3 class="bn" data-en="Trademark Verification" data-bn="ট্রেডমার্ক যাচাইকরণ">Trademark Verification</h3>
+                  <p data-en="Verify the registration status of a trademark with the national database and view the original certificate." data-bn="জাতীয় ডেটাবেজে ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন এবং মূল সনদ দেখুন।">Verify the registration status of a trademark with the national database and view the original certificate.</p>
+                  <span class="st-go" data-en="Verify now" data-bn="এখনই যাচাই করুন">Verify now &rarr;</span>
+                </a>
+
+                <a class="service-tile" href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener">
+                  <span class="st-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+                  </span>
+                  <h3 class="bn" data-en="IPAS 4.0 — Online Application" data-bn="আইপাস ৪.০ — অনলাইন আবেদন">IPAS 4.0 — Online Application</h3>
+                  <p data-en="Apply online for patents, industrial designs, trademarks and GI through the national IPAS system." data-bn="জাতীয় আইপাস সিস্টেমে পেটেন্ট, শিল্প-নকশা, ট্রেডমার্ক ও জিআই-এর জন্য অনলাইনে আবেদন করুন।">Apply online for patents, industrial designs, trademarks and GI through the national IPAS system.</p>
+                  <span class="st-go" data-en="Apply online" data-bn="অনলাইনে আবেদন করুন">Apply online &rarr;</span>
+                </a>
+
+                <a class="service-tile" href="https://www.achallan.gov.bd/" target="_blank" rel="noopener">
+                  <span class="st-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                  </span>
+                  <h3 class="bn" data-en="A-Challan Payment" data-bn="A চালান লিংক">A-Challan Payment</h3>
+                  <p data-en="Generate and pay government treasury challans for application and renewal fees online." data-bn="আবেদন ও নবায়ন ফি পরিশোধের জন্য সরকারি ট্রেজারি চালান অনলাইনে তৈরি ও পরিশোধ করুন।">Generate and pay government treasury challans for application and renewal fees online.</p>
+                  <span class="st-go" data-en="Pay fees" data-bn="ফি পরিশোধ করুন">Pay fees &rarr;</span>
+                </a>
+
+                <a class="service-tile" href="https://dpdt.gov.bd/pages/static-pages/6922dc84933eb65569e10c76" target="_blank" rel="noopener">
+                  <span class="st-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  </span>
+                  <h3 class="bn" data-en="Trademarks Journal" data-bn="ট্রেডমার্কস জার্নাল">Trademarks Journal</h3>
+                  <p data-en="Browse published trademark journals and opposition notices." data-bn="প্রকাশিত ট্রেডমার্ক জার্নাল ও অপোজিশন নোটিশ দেখুন।">Browse published trademark journals and opposition notices.</p>
+                  <span class="st-go" data-en="Browse journal" data-bn="জার্নাল দেখুন">Browse journal &rarr;</span>
+                </a>
+
+                <a class="service-tile" href="https://dpdt.gov.bd/pages/static-pages/6922e08d933eb65569e278d3" target="_blank" rel="noopener">
+                  <span class="st-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+                  </span>
+                  <h3 class="bn" data-en="Application Forms" data-bn="ফরম">Application Forms</h3>
+                  <p data-en="Download official application forms for patents, designs, trademarks and GI." data-bn="পেটেন্ট, ডিজাইন, ট্রেডমার্ক ও জিআই-এর সরকারি আবেদন ফরম ডাউনলোড করুন।">Download official application forms for patents, designs, trademarks and GI.</p>
+                  <span class="st-go" data-en="Download forms" data-bn="ফরম ডাউনলোড করুন">Download forms &rarr;</span>
+                </a>
+
+                <a class="service-tile" href="https://dpdt.gov.bd/pages/static-pages/6922dc71933eb65569e10685" target="_blank" rel="noopener">
+                  <span class="st-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                  </span>
+                  <h3 class="bn" data-en="Geographical Indication (GI)" data-bn="ভৌগোলিক নির্দেশক (জিআই) পণ্য">Geographical Indication (GI)</h3>
+                  <p data-en="Registered GI products, application process, forms and fee schedule." data-bn="নিবন্ধিত জিআই পণ্য, আবেদন প্রক্রিয়া, ফরম ও ফি সিডিউল।">Registered GI products, application process, forms and fee schedule.</p>
+                  <span class="st-go" data-en="Learn more" data-bn="আরও জানুন">Learn more &rarr;</span>
+                </a>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Our Topics -->
+          <div class="panel">
+            <div class="panel-head">
+              <div class="pt">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span data-en="Our Topics" data-bn="আমাদের বিষয়">Our Topics</span>
+              </div>
+              <a class="view-all" href="https://dpdt.gov.bd/pages/service-boxes" target="_blank" rel="noopener" data-en="All sections" data-bn="সব দেখুন">All sections</a>
+            </div>
+            <div class="panel-body">
+              <div class="cat-grid">
+
+                <div class="cat-block">
+                  <h3 data-en="Laws / Policies / Notifications" data-bn="আইন/নীতিমালা/প্রজ্ঞাপন/পরিপত্র">Laws / Policies / Notifications</h3>
+                  <ul>
+                    <li><a href="https://dpdt.gov.bd/pages/laws" target="_blank" rel="noopener"><span class="bn">আইন</span><span class="en">Laws</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/policies" target="_blank" rel="noopener"><span class="bn">নীতিমালা</span><span class="en">Policies</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/legislative-informations" target="_blank" rel="noopener"><span class="bn">বিধিবিধান</span><span class="en">Legislative Information</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dd2a933eb65569e13c11" target="_blank" rel="noopener"><span class="bn">প্রজ্ঞাপন ও অন্যান্য</span><span class="en">Notifications &amp; Others</span></a></li>
+                  </ul>
+                </div>
+
+                <div class="cat-block">
+                  <h3 data-en="Our Services" data-bn="আমাদের সেবা সমূহ">Our Services</h3>
+                  <ul>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922df8b933eb65569e22aeb" target="_blank" rel="noopener"><span class="bn">মেধাস্বত্ব বিষয়ক নিবন্ধন</span><span class="en">IP Registration</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dc6b933eb65569e1042a" target="_blank" rel="noopener"><span class="bn">নিবন্ধিত মেধাস্বত্বের নবায়ণ</span><span class="en">Renewal</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dccc933eb65569e121e0" target="_blank" rel="noopener"><span class="bn">নিবন্ধিত মেধাসম্পদের তথ্য প্রদান</span><span class="en">IP Information Service</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/office-process-maps" target="_blank" rel="noopener"><span class="bn">সকল সেবা</span><span class="en">All Services</span></a></li>
+                  </ul>
+                </div>
+
+                <div class="cat-block">
+                  <h3 data-en="Forms" data-bn="ফরম">Forms</h3>
+                  <ul>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dce0933eb65569e12878" target="_blank" rel="noopener"><span class="bn">পেটেন্ট</span><span class="en">Patent</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dfde933eb65569e24690" target="_blank" rel="noopener"><span class="bn">ডিজাইন</span><span class="en">Design</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e08d933eb65569e278d3" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্কস</span><span class="en">Trademarks</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dc71933eb65569e10685" target="_blank" rel="noopener"><span class="bn">ভৌগোলিক নির্দেশক পণ্য</span><span class="en">GI Products</span></a></li>
+                  </ul>
+                </div>
+
+                <div class="cat-block">
+                  <h3 data-en="Online Services" data-bn="অনলাইন সেবা">Online Services</h3>
+                  <ul>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e04d933eb65569e2666d" target="_blank" rel="noopener"><span class="bn">পেটেন্ট / ডিজাইন / ট্রেডমার্কস / জিআই</span><span class="en">Patent / Design / Trademark / GI (IPAS)</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e02a933eb65569e25ca3" target="_blank" rel="noopener"><span class="bn">অনলাইন আবেদন হালনাগাদ তথ্য</span><span class="en">Online Application Updates</span></a></li>
+                    <li><a href="/verify" data-internal="1"><span class="bn">ট্রেডমার্ক যাচাইকরণ</span><span class="en">Trademark Verification</span></a></li>
+                  </ul>
+                </div>
+
+                <div class="cat-block">
+                  <h3 data-en="Granted Patents, Designs, Trademarks, GI" data-bn="মঞ্জুরকৃত পেটেন্ট, শিল্প-নকশা, ট্রেডমার্ক, জিআই">Granted Patents, Designs, Trademarks, GI</h3>
+                  <ul>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e022933eb65569e25a5a" target="_blank" rel="noopener"><span class="bn">পেটেন্ট</span><span class="en">Patents</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dfc3933eb65569e23de4" target="_blank" rel="noopener"><span class="bn">শিল্প-নকশা</span><span class="en">Industrial Designs</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e0aa933eb65569e28164" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্ক</span><span class="en">Trademarks</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dff0933eb65569e24bcf" target="_blank" rel="noopener"><span class="bn">জিআই</span><span class="en">Geographical Indications</span></a></li>
+                  </ul>
+                </div>
+
+                <div class="cat-block">
+                  <h3 data-en="Right to Information" data-bn="তথ্য অধিকার">Right to Information</h3>
+                  <ul>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922db89933eb65569e0ab19" target="_blank" rel="noopener"><span class="bn">তথ্য অধিকার আইন/বিধিবিধান</span><span class="en">RTI Act / Rules</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922db65933eb65569e09e72" target="_blank" rel="noopener"><span class="bn">বার্ষিক কর্মপরিকল্পনা/প্রতিবেদন</span><span class="en">Annual Plan / Report</span></a></li>
+                    <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dd30933eb65569e13dc7" target="_blank" rel="noopener"><span class="bn">দায়িত্বপ্রাপ্ত কর্মকর্তা ও আপিল কর্তৃপক্ষ</span><span class="en">Responsible Officer &amp; Appellate</span></a></li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /home-main -->
+
+        <!-- SIDE COLUMN -->
+        <aside class="home-side">
+
+          <!-- Verification promo -->
+          <div class="verify-promo">
+            <div class="vp-icon">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8.5 11.5l2 2 3.5-3.5"/></svg>
+            </div>
+            <h3 data-en="Trademark Verification Service" data-bn="ট্রেডমার্ক যাচাইকরণ সেবা">Trademark Verification Service</h3>
+            <p data-en="Check the registration status of any trademark filed with DPDT. View the original certificate instantly." data-bn="ডিপিডিটি-তে দাখিলকৃত যেকোনো ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন। সাথে সাথে মূল সনদ দেখুন।">Check the registration status of any trademark filed with DPDT. View the original certificate instantly.</p>
+            <a class="btn btn-green" href="/verify" data-internal="1" style="width:100%;justify-content:center;">
+              <span data-en="Start Verification" data-bn="যাচাইকরণ শুরু করুন">Start Verification</span>
             </a>
-            <div class="nav-sep"></div>
+          </div>
 
-            <!-- Trademark Verification: default active view -->
-            <button class="nav-item active" id="nav-trademark" onclick="switchView('trademark')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                Trademark Verification
-            </button>
-            <div class="nav-sep"></div>
+          <!-- Central e-Services -->
+          <div class="side-widget">
+            <div class="side-widget-head">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <span data-en="Central e-Services" data-bn="কেন্দ্রীয় ই-সেবা">Central e-Services</span>
+            </div>
+            <div class="side-widget-body">
+              <div class="side-link-list">
+                <a href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener"><span class="bn">আইপাস ৪.০ (অনলাইন আবেদন)</span><span class="en">IPAS 4.0</span><span class="ext">↗</span></a>
+                <a href="https://d.nothi.gov.bd/login" target="_blank" rel="noopener"><span class="bn">ডি-নথি</span><span class="en">D-Nothi</span><span class="ext">↗</span></a>
+                <a href="https://mail.dpdt.gov.bd/" target="_blank" rel="noopener"><span class="bn">ওয়েবমেইল</span><span class="en">Webmail</span><span class="ext">↗</span></a>
+                <a href="https://www.mygov.bd/" target="_blank" rel="noopener"><span class="bn">মাইগভ</span><span class="en">MyGov</span><span class="ext">↗</span></a>
+              </div>
+            </div>
+          </div>
 
-            <!-- Patent Search: opens dpdt.gov.bd in new tab -->
-            <a class="nav-item" href="https://dpdt.gov.bd/" target="_blank" rel="noopener noreferrer" id="nav-patent">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-                </svg>
-                Patent Search
-            </a>
-            <div class="nav-sep"></div>
+          <!-- Important links -->
+          <div class="side-widget">
+            <div class="side-widget-head">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              <span data-en="Important Links" data-bn="গুরুত্বপূর্ণ লিঙ্ক">Important Links</span>
+            </div>
+            <div class="side-widget-body">
+              <div class="side-link-list" id="importantLinks"></div>
+            </div>
+          </div>
 
-            <!-- Fee Structure: dynamic view -->
-            <button class="nav-item" id="nav-fee" onclick="switchView('fee')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <rect x="2" y="5" width="20" height="14" rx="2"/>
-                    <line x1="2" y1="10" x2="22" y2="10"/>
-                </svg>
-                Fee Structure
-            </button>
-            <div class="nav-sep"></div>
+          <!-- Emergency hotlines -->
+          <div class="side-widget">
+            <div class="side-widget-head">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span data-en="Emergency Hotlines" data-bn="জরুরি যোগাযোগ">Emergency Hotlines</span>
+            </div>
+            <div class="side-widget-body">
+              <div class="hotline-grid" id="hotlineList"></div>
+            </div>
+          </div>
 
-            <!-- Contact: dynamic view -->
-            <button class="nav-item" id="nav-contact" onclick="switchView('contact')">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                Contact
-            </button>
-        </div>
-    </nav>
+          <!-- Statistics widget -->
+          <div class="side-widget">
+            <div class="side-widget-head">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <span data-en="Statistics" data-bn="পরিসংখ্যান">Statistics</span>
+            </div>
+            <div class="side-widget-body">
+              <div class="side-link-list">
+                <a href="https://dpdt.gov.bd/pages/static-pages/6922df1c933eb65569e1fed9" target="_blank" rel="noopener"><span class="bn">পেটেন্ট</span><span class="en">Patents</span><span class="ext">↗</span></a>
+                <a href="https://dpdt.gov.bd/pages/static-pages/6922dd30933eb65569e13db9" target="_blank" rel="noopener"><span class="bn">শিল্প-নকশা</span><span class="en">Industrial Designs</span><span class="ext">↗</span></a>
+                <a href="https://dpdt.gov.bd/pages/static-pages/6922dc00933eb65569e0de4f" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্কস</span><span class="en">Trademarks</span><span class="ext">↗</span></a>
+                <a href="https://dpdt.gov.bd/pages/static-pages/6922dff0933eb65569e24bcf" target="_blank" rel="noopener"><span class="bn">জিআই</span><span class="en">Geographical Indications</span><span class="ext">↗</span></a>
+              </div>
+            </div>
+          </div>
 
-    <!-- ══ Breadcrumb ══ -->
-    <div class="breadcrumb-bar">
-        <div class="breadcrumb-inner">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-            <a href="https://dpdt.gov.bd/" target="_blank">Home</a>
-            <span class="breadcrumb-sep">›</span>
-            <a href="#">Services</a>
-            <span class="breadcrumb-sep">›</span>
-            <span class="breadcrumb-current" id="breadcrumb-current">Trademark Verification Portal</span>
-        </div>
+        </aside>
+      </div><!-- /home-grid -->
     </div>
+  </section>
 
-    <!-- ══ Main Page Content ══ -->
-    <div class="page-wrapper">
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: TRADEMARK VERIFICATION (core functionality preserved)
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-verify">
+    <div class="container page">
 
-        <!-- ════════════════════════════════════════
-             VIEW 1: TRADEMARK VERIFICATION (default)
-        ════════════════════════════════════════ -->
-        <div id="view-trademark" class="view-section active">
-
-            <div class="portal-heading-box">
-                <div class="portal-heading-accent"></div>
-                <div class="portal-heading-text">
-                    <div class="portal-heading-label">Online Verification Service</div>
-                    <h2 class="portal-heading-title">Trademark Verification Portal</h2>
-                    <p class="portal-heading-desc">
-                        Verify the registration status of any trademark filed with the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-notice">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Enter the Trademark Application/Registration number to retrieve verified information directly from the DPDT national intellectual property database.
-            </div>
-
-            <!-- Search Panel -->
-            <div class="search-panel">
-                <div class="search-panel-header">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    Trademark Number Lookup
-                </div>
-                <div class="search-panel-body">
-                    <div class="search-form-row">
-                        <div class="search-field-wrap">
-                            <label class="search-field-label" for="tm">Trademark / Application Number</label>
-                            <div class="search-input-wrap">
-                                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                                </svg>
-                                <input
-                                    type="text"
-                                    id="tm"
-                                    class="search-input"
-                                    placeholder="e.g. 12345"
-                                    autocomplete="off"
-                                    onkeydown="if(event.key==='Enter') searchTM()"
-                                >
-                            </div>
-                            <p class="search-hint">Enter the numeric registration or application number assigned by DPDT.</p>
-                        </div>
-                        <button class="search-btn" onclick="searchTM()">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            Verify Now
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Verification Result -->
-            <div id="verificationResult" class="hidden space-y">
-                <div class="result-document">
-                    <div class="result-doc-header">
-                        <div class="result-doc-header-left">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-                            </svg>
-                            <div>
-                                <div class="result-doc-title">Trademark Verification Slip</div>
-                                <div class="result-doc-subtitle">Issued by Department of Patents, Designs &amp; Trademarks (DPDT)</div>
-                            </div>
-                        </div>
-                        <div class="verified-badge">
-                            <span class="verified-dot"></span>
-                            Verified
-                        </div>
-                    </div>
-                    <div class="result-table-wrap">
-                        <table class="result-table">
-                            <tbody>
-                                <tr>
-                                    <td class="label-cell">
-                                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M8 8h8M8 16h4"/></svg>
-                                        Trademark Number
-                                    </td>
-                                    <td id="resNum" class="value-cell"></td>
-                                </tr>
-                                <tr>
-                                    <td class="label-cell">
-                                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                                        Owner / Brand Name
-                                    </td>
-                                    <td id="resName" class="value-cell value-bold"></td>
-                                </tr>
-                                <tr>
-                                    <td class="label-cell">
-                                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                                        Filing / Application Date
-                                    </td>
-                                    <td id="resDate" class="value-cell"></td>
-                                </tr>
-                                <tr>
-                                    <td class="label-cell">
-                                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                        Registration Status
-                                    </td>
-                                    <td class="value-cell">
-                                        <span class="status-verified">Registered &amp; Verified</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="label-cell">
-                                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                                        Issuing Authority
-                                    </td>
-                                    <td id="resAuth" class="value-cell"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="result-actions">
-                        <button class="action-btn action-btn-primary" onclick="window.print()">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                            Print Verification Report
-                        </button>
-                        <button class="action-btn action-btn-outline" onclick="alert('Download functionality to be integrated with server.')">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Download Certificate
-                        </button>
-                    </div>
-                </div>
-
-                <div class="cert-card">
-                    <div class="cert-card-header">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                        Registered Trademark Certificate Document
-                    </div>
-                    <div class="cert-card-body" id="assetContainer"></div>
-                </div>
-
-                <div class="success-notice">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.
-                </div>
-            </div>
-
-            <!-- Error Message -->
-            <div id="errorResult" class="hidden error-box">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                <div>
-                    <strong>Record Not Found.</strong> This Trademark / Application number is not registered in the DPDT national database. Please verify the number and try again, or contact the office for assistance.
-                </div>
-            </div>
-
-        </div><!-- /view-trademark -->
-
-
-        <!-- ════════════════════════════════════════
-             VIEW 2: FEE STRUCTURE
-        ════════════════════════════════════════ -->
-        <div id="view-fee" class="view-section">
-
-            <div class="portal-heading-box">
-                <div class="portal-heading-accent"></div>
-                <div class="portal-heading-text">
-                    <div class="portal-heading-label">Official Schedule of Charges</div>
-                    <h2 class="portal-heading-title">Trademark Fee Structure</h2>
-                    <p class="portal-heading-desc">
-                        The following fees are prescribed under the Trademarks Act, 2009 and are payable at the time of filing or renewal with DPDT, Bangladesh.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Application / Filing Fees -->
-            <div class="fee-section-panel">
-                <div class="fee-section-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    Application &amp; Filing Fees
-                </div>
-                <table class="fee-table">
-                    <thead>
-                        <tr>
-                            <th>Service Description</th>
-                            <th>Form No.</th>
-                            <th>Fee (BDT)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Application for Registration of a Trademark (per class) <span class="fee-tag fee-tag-new">New</span></td>
-                            <td>TM-1</td>
-                            <td><span class="fee-amount">৳ 3,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Application for Series of Trademarks (per class, per mark)</td>
-                            <td>TM-1</td>
-                            <td><span class="fee-amount">৳ 3,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Application for Collective Mark or Certification Mark</td>
-                            <td>TM-1</td>
-                            <td><span class="fee-amount">৳ 5,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Application for Amendment of Registered Trademark</td>
-                            <td>TM-26</td>
-                            <td><span class="fee-amount">৳ 1,500</span></td>
-                        </tr>
-                        <tr>
-                            <td>Application for Registration of Assignment / Transmission</td>
-                            <td>TM-24</td>
-                            <td><span class="fee-amount">৳ 4,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Certified Copy of Entry in the Register (per copy)</td>
-                            <td>TM-31</td>
-                            <td><span class="fee-amount">৳ 500</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Renewal Fees -->
-            <div class="fee-section-panel">
-                <div class="fee-section-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                    Renewal Fees
-                </div>
-                <table class="fee-table">
-                    <thead>
-                        <tr>
-                            <th>Service Description</th>
-                            <th>Form No.</th>
-                            <th>Fee (BDT)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Renewal of Registration (per class) — within period <span class="fee-tag fee-tag-renewal">Renewal</span></td>
-                            <td>TM-12</td>
-                            <td><span class="fee-amount">৳ 4,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Renewal with Surcharge (late filing within 6 months)</td>
-                            <td>TM-12</td>
-                            <td><span class="fee-amount">৳ 6,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Restoration of Removed Mark</td>
-                            <td>TM-13</td>
-                            <td><span class="fee-amount">৳ 8,000</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Opposition & Legal Fees -->
-            <div class="fee-section-panel">
-                <div class="fee-section-header">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    Opposition &amp; Legal Fees
-                </div>
-                <table class="fee-table">
-                    <thead>
-                        <tr>
-                            <th>Service Description</th>
-                            <th>Form No.</th>
-                            <th>Fee (BDT)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Notice of Opposition to Registration</td>
-                            <td>TM-5</td>
-                            <td><span class="fee-amount">৳ 3,000</span></td>
-                        </tr>
-                        <tr>
-                            <td>Counter-Statement to Opposition</td>
-                            <td>TM-6</td>
-                            <td><span class="fee-amount">৳ 1,500</span></td>
-                        </tr>
-                        <tr>
-                            <td>Application for Rectification of Register</td>
-                            <td>TM-27</td>
-                            <td><span class="fee-amount">৳ 3,500</span></td>
-                        </tr>
-                        <tr>
-                            <td>Application for Cancellation of Registration</td>
-                            <td>TM-28</td>
-                            <td><span class="fee-amount">৳ 5,000</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="fee-note-box">
-                <strong>📌 Important Notice</strong>
-                All fees are payable via Treasury Challan (Code: 1-4331-0001-1801) at any scheduled bank. Fees are subject to revision by the Government. For the most current official schedule, please visit <a href="https://dpdt.gov.bd/" target="_blank" style="color:#92400e;font-weight:600;">dpdt.gov.bd</a> or contact the DPDT office directly. All amounts are in Bangladeshi Taka (BDT ৳).
-            </div>
-
-        </div><!-- /view-fee -->
-
-
-        <!-- ════════════════════════════════════════
-             VIEW 3: CONTACT / জরুরি যোগাযোগ
-        ════════════════════════════════════════ -->
-        <div id="view-contact" class="view-section">
-
-            <div class="portal-heading-box">
-                <div class="portal-heading-accent"></div>
-                <div class="portal-heading-text">
-                    <div class="portal-heading-label">যোগাযোগ ও সহায়তা</div>
-                    <h2 class="portal-heading-title">Contact &amp; Emergency Hotlines</h2>
-                    <p class="portal-heading-desc">
-                        DPDT office contact information and Bangladesh national emergency helpline numbers for immediate assistance.
-                    </p>
-                </div>
-            </div>
-
-            <!-- DPDT Office Info -->
-            <div class="contact-dpdt-info" style="margin-bottom:28px;">
-                <div class="contact-dpdt-header">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                    DPDT Office — Department of Patents, Designs &amp; Trademarks
-                </div>
-                <div class="contact-dpdt-body">
-                    <div class="contact-dpdt-item">
-                        <div class="contact-dpdt-key">Address</div>
-                        <div class="contact-dpdt-value">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০<br>127-128 Motijheel C/A, Dhaka-1000</div>
-                    </div>
-                    <div class="contact-dpdt-item">
-                        <div class="contact-dpdt-key">Office Hours</div>
-                        <div class="contact-dpdt-value">Sunday – Thursday<br>9:00 AM – 5:00 PM (Govt. holidays excluded)</div>
-                    </div>
-                    <div class="contact-dpdt-item">
-                        <div class="contact-dpdt-key">Phone</div>
-                        <div class="contact-dpdt-value">+880-2-9559982, 9559983</div>
-                    </div>
-                    <div class="contact-dpdt-item">
-                        <div class="contact-dpdt-key">Email / Website</div>
-                        <div class="contact-dpdt-value">
-                            <a href="mailto:dpdt@dpdt.gov.bd">dpdt@dpdt.gov.bd</a><br>
-                            <a href="https://dpdt.gov.bd/" target="_blank">www.dpdt.gov.bd</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- জরুরি যোগাযোগ block (mirroring the screenshot layout) -->
-            <div class="contact-block">
-                <div class="contact-section-header">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    জরুরি যোগাযোগ
-                </div>
-                <div class="contact-block-items">
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            সরকারি তথ্য ও সেবা
-                            <em>Government Information &amp; Services</em>
-                        </div>
-                        <div class="contact-row-number">৩৩৩</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            জরুরি সেবা
-                            <em>National Emergency Service</em>
-                        </div>
-                        <div class="contact-row-number">৯৯৯</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            ফায়ার সার্ভিস হটলাইন
-                            <em>Fire Service Hotline</em>
-                        </div>
-                        <div class="contact-row-number">১০২</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            সুপ্রীম কোর্ট হেল্পলাইন
-                            <em>Supreme Court Helpline</em>
-                        </div>
-                        <div class="contact-row-number">১০৩</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            নারী ও শিশু নির্যাতন প্রতিরোধ
-                            <em>Women &amp; Child Abuse Prevention</em>
-                        </div>
-                        <div class="contact-row-number">১০৯</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            দুদক (Anti-Corruption Commission)
-                            <em>Corruption Complaint Hotline</em>
-                        </div>
-                        <div class="contact-row-number">১০৬</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            দুর্যোগের আগাম বার্তা
-                            <em>Disaster Early Warning</em>
-                        </div>
-                        <div class="contact-row-number">১০২</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            স্মার্ট ভূমি সেবা
-                            <em>Smart Land Services</em>
-                        </div>
-                        <div class="contact-row-number">১৬১২২</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            শিশু সহায়তা লাইন
-                            <em>Child Helpline</em>
-                        </div>
-                        <div class="contact-row-number">১০৯৮</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            জাতীয় তথ্য বাতায়ন
-                            <em>National Information Portal</em>
-                        </div>
-                        <div class="contact-row-number">৩৩৩</div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="contact-row-label">
-                            স্বাস্থ্য সেবা হেল্পলাইন
-                            <em>Health Services Helpline</em>
-                        </div>
-                        <div class="contact-row-number">১৬০০০</div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- /view-contact -->
-
-    </div><!-- /page-wrapper -->
-
-    <!-- ══ Footer ══ -->
-    <footer>
-        <div class="footer-top">
-            <div class="footer-top-inner">
-                <span>বাংলাদেশ পেটেন্ট, ডিজাইন ও ট্রেডমার্ক অধিদপ্তর — আনুষ্ঠানিক সরকারি পোর্টাল</span>
-            </div>
+      <div class="verify-head">
+        <div class="vh-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
-        <div class="footer-body">
-            <div class="footer-body-inner">
-                <div class="footer-col">
-                    <p class="footer-title">Quick Links</p>
-                    <p class="footer-update-txt">Site last updated: <span id="last-update-placeholder"></span></p>
-                    <p class="footer-copyright">&copy; 2026 Department of Patents, Designs &amp; Trademarks, Bangladesh. All Rights Reserved.</p>
-                </div>
-                <div class="footer-col">
-                    <p class="footer-title">Implementation Partners</p>
-                    <p class="footer-partner-txt">
-                        Planning and Implementation: Cabinet Division, a2i Programme, Bangladesh Computer Council (BCC), Department of ICT &amp; BASIS.
-                    </p>
-                    <div class="footer-support">
-                        <p class="support-title">Technical Support</p>
-                        <img src="footer-banner.png" alt="Technical Support Partners" class="support-banner-img">
-                    </div>
-                </div>
-            </div>
+        <div>
+          <h2 data-en="Trademark Verification Portal" data-bn="ট্রেডমার্ক যাচাইকরণ পোর্টাল">Trademark Verification Portal</h2>
+          <p data-en="Verify the registration status of any trademark filed with the Department of Patents, Designs & Trademarks (DPDT), Bangladesh." data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরে দাখিলকৃত যেকোনো ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন।">Verify the registration status of any trademark filed with the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.</p>
         </div>
-    </footer>
+      </div>
 
-    <!-- ══ JavaScript — Original Core Logic 100% Preserved + New Navigation Logic ══ -->
-    <script>
-        /* ─────────────────────────────────────────────────────
-           TAB / VIEW SWITCHING — NEW NAVIGATION SYSTEM
-        ───────────────────────────────────────────────────── */
-        const VIEWS = {
-            trademark: {
-                navId: 'nav-trademark',
-                viewId: 'view-trademark',
-                breadcrumb: 'Trademark Verification Portal'
-            },
-            fee: {
-                navId: 'nav-fee',
-                viewId: 'view-fee',
-                breadcrumb: 'Fee Structure'
-            },
-            contact: {
-                navId: 'nav-contact',
-                viewId: 'view-contact',
-                breadcrumb: 'Contact & Emergency Hotlines'
-            }
-        };
+      <div class="info-notice">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span data-en="Enter the Trademark Application/Registration number to retrieve verified information directly from the DPDT national intellectual property database." data-bn="জাতীয় মেধাসম্পদ ডেটাবেজ থেকে সরাসরি যাচাইকৃত তথ্য পেতে ট্রেডমার্ক আবেদন/নিবন্ধন নম্বর লিখুন।">Enter the Trademark Application/Registration number to retrieve verified information directly from the DPDT national intellectual property database.</span>
+      </div>
 
-        let currentView = 'trademark';
+      <!-- Search panel -->
+      <div class="search-panel">
+        <div class="search-panel-head">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span data-en="Trademark Number Lookup" data-bn="ট্রেডমার্ক নম্বর অনুসন্ধান">Trademark Number Lookup</span>
+        </div>
+        <div class="search-panel-body">
+          <div class="search-form-row">
+            <div class="search-field">
+              <label for="tm" data-en="Trademark / Application Number" data-bn="ট্রেডমার্ক / আবেদন নম্বর">Trademark / Application Number</label>
+              <div class="search-input-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="tm" class="search-input" placeholder="e.g. 261029" autocomplete="off" onkeydown="if(event.key==='Enter') searchTM()">
+              </div>
+              <p class="search-hint" data-en="Enter the numeric registration or application number assigned by DPDT." data-bn="ডিপিডিটি কর্তৃক প্রদত্ত সংখ্যাসূচক নিবন্ধন বা আবেদন নম্বর লিখুন।">Enter the numeric registration or application number assigned by DPDT.</p>
+            </div>
+            <button class="search-btn" onclick="searchTM()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span data-en="Verify Now" data-bn="এখনই যাচাই করুন">Verify Now</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
-        function switchView(viewKey) {
-            if (!VIEWS[viewKey]) return;
+      <!-- Verification result -->
+      <div id="verificationResult" class="hidden">
+        <div class="result-doc">
+          <div class="result-doc-head">
+            <div class="result-doc-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <div>
+                <div class="tt" data-en="Trademark Verification Slip" data-bn="ট্রেডমার্ক যাচাইকরণ স্লিপ">Trademark Verification Slip</div>
+                <div class="ts" data-en="Issued by Department of Patents, Designs & Trademarks (DPDT)" data-bn="ইস্যুকারী: পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি)">Issued by Department of Patents, Designs &amp; Trademarks (DPDT)</div>
+              </div>
+            </div>
+            <span class="verified-badge"><span class="verified-dot"></span><span data-en="Verified" data-bn="যাচাইকৃত">Verified</span></span>
+          </div>
+          <div class="result-table-wrap">
+            <table class="result-table">
+              <tbody>
+                <tr>
+                  <td class="label-cell" data-en="Trademark Number" data-bn="ট্রেডমার্ক নম্বর">Trademark Number</td>
+                  <td id="resNum" class="value-cell"></td>
+                </tr>
+                <tr>
+                  <td class="label-cell" data-en="Owner / Brand Name" data-bn="মালিক / ব্র্যান্ড নাম">Owner / Brand Name</td>
+                  <td id="resName" class="value-cell value-bold"></td>
+                </tr>
+                <tr>
+                  <td class="label-cell" data-en="Filing / Application Date" data-bn="আবেদনের তারিখ">Filing / Application Date</td>
+                  <td id="resDate" class="value-cell"></td>
+                </tr>
+                <tr>
+                  <td class="label-cell" data-en="Registration Status" data-bn="নিবন্ধন অবস্থা">Registration Status</td>
+                  <td class="value-cell"><span class="status-ok"><span data-en="Registered & Verified" data-bn="নিবন্ধিত ও যাচাইকৃত">Registered &amp; Verified</span></span></td>
+                </tr>
+                <tr>
+                  <td class="label-cell" data-en="Issuing Authority" data-bn="ইস্যুকারী কর্তৃপক্ষ">Issuing Authority</td>
+                  <td id="resAuth" class="value-cell"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="result-actions">
+            <button class="action-btn action-btn-green" onclick="window.print()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span data-en="Print Verification Report" data-bn="যাচাইকরণ প্রতিবেদন প্রিন্ট করুন">Print Verification Report</span>
+            </button>
+            <button class="action-btn action-btn-outline" onclick="downloadCertificate()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span data-en="Download Certificate" data-bn="সনদ ডাউনলোড করুন">Download Certificate</span>
+            </button>
+          </div>
+        </div>
 
-            // Deactivate all button nav items (not anchor tags)
-            document.querySelectorAll('.primary-nav-bar .nav-item').forEach(el => {
-                if (el.tagName === 'BUTTON') el.classList.remove('active');
-            });
+        <!-- Certificate: renders ONLY the original uploaded image/PDF -->
+        <div class="cert-card">
+          <div class="cert-card-body" id="assetContainer"></div>
+        </div>
 
-            // Hide all view sections
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('active');
-            });
+        <div class="success-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span data-en="This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs & Trademarks (DPDT), Bangladesh." data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি) কর্তৃক রক্ষণাবেক্ষিত জাতীয় মেধাসম্পদ ডেটাবেজের বিরুদ্ধে এই ট্রেডমার্ক সনদটি সফলভাবে যাচাই করা হয়েছে।">This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.</span>
+        </div>
+      </div>
 
-            // Activate selected nav button
-            const navEl = document.getElementById(VIEWS[viewKey].navId);
-            if (navEl) navEl.classList.add('active');
+      <!-- Error message -->
+      <div id="errorResult" class="hidden error-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <div>
+          <strong data-en="Record Not Found." data-bn="রেকর্ড পাওয়া যায়নি।">Record Not Found.</strong>
+          <span data-en=" This Trademark / Application number is not registered in the DPDT national database. Please verify the number and try again, or contact the office for assistance." data-bn=" এই ট্রেডমার্ক / আবেদন নম্বরটি ডিপিডিটি জাতীয় ডেটাবেজে নিবন্ধিত নয়। অনুগ্রহ করে নম্বরটি যাচাই করে আবার চেষ্টা করুন, অথবা সহায়তার জন্য অফিসে যোগাযোগ করুন।"> This Trademark / Application number is not registered in the DPDT national database. Please verify the number and try again, or contact the office for assistance.</span>
+        </div>
+      </div>
 
-            // Show selected view
-            const viewEl = document.getElementById(VIEWS[viewKey].viewId);
-            if (viewEl) viewEl.classList.add('active');
+    </div>
+  </section>
 
-            // Update breadcrumb
-            const bc = document.getElementById('breadcrumb-current');
-            if (bc) bc.textContent = VIEWS[viewKey].breadcrumb;
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: FEE STRUCTURE
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-fee">
+    <div class="container page">
 
-            currentView = viewKey;
+      <div class="verify-head">
+        <div class="vh-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <div>
+          <h2 data-en="Trademark Fee Structure" data-bn="ট্রেডমার্ক ফি কাঠামো">Trademark Fee Structure</h2>
+          <p data-en="Official schedule of charges prescribed under the Trademarks Act, 2009, payable at the time of filing or renewal with DPDT, Bangladesh." data-bn="ট্রেডমার্ক আইন, ২০০৯ অনুযায়ী নির্ধারিত ফি, যা বাংলাদেশ ডিপিডিটি-তে দাখিল বা নবায়নের সময় পরিশোধযোগ্য।">Official schedule of charges prescribed under the Trademarks Act, 2009, payable at the time of filing or renewal with DPDT, Bangladesh.</p>
+        </div>
+      </div>
 
-            // Scroll page to content top smoothly
-            const wrapper = document.querySelector('.page-wrapper');
-            if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+      <div class="fee-panel">
+        <div class="fee-panel-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span data-en="Application & Filing Fees" data-bn="আবেদন ও দাখিল ফি">Application &amp; Filing Fees</span>
+        </div>
+        <table class="fee-table">
+          <thead><tr><th data-en="Service Description" data-bn="সেবার বিবরণ">Service Description</th><th data-en="Form No." data-bn="ফরম নং">Form No.</th><th data-en="Fee (BDT)" data-bn="ফি (বিডিটি)">Fee (BDT)</th></tr></thead>
+          <tbody>
+            <tr><td>Application for Registration of a Trademark (per class) <span class="fee-tag fee-tag-new">New</span></td><td>TM-1</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
+            <tr><td>Application for Series of Trademarks (per class, per mark)</td><td>TM-1</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
+            <tr><td>Application for Collective Mark or Certification Mark</td><td>TM-1</td><td><span class="fee-amt">৳ 5,000</span></td></tr>
+            <tr><td>Application for Amendment of Registered Trademark</td><td>TM-26</td><td><span class="fee-amt">৳ 1,500</span></td></tr>
+            <tr><td>Application for Registration of Assignment / Transmission</td><td>TM-24</td><td><span class="fee-amt">৳ 4,000</span></td></tr>
+            <tr><td>Certified Copy of Entry in the Register (per copy)</td><td>TM-31</td><td><span class="fee-amt">৳ 500</span></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-        /* ─────────────────────────────────────────────────────
-           REALTIME DYNAMIC CLOCK REFRESH IN FOOTER
-        ───────────────────────────────────────────────────── */
-        function updateSiteTimestamp() {
-            const currentDateTime = new Date();
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      <div class="fee-panel">
+        <div class="fee-panel-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <span data-en="Renewal Fees" data-bn="নবায়ন ফি">Renewal Fees</span>
+        </div>
+        <table class="fee-table">
+          <thead><tr><th data-en="Service Description" data-bn="সেবার বিবরণ">Service Description</th><th data-en="Form No." data-bn="ফরম নং">Form No.</th><th data-en="Fee (BDT)" data-bn="ফি (বিডিটি)">Fee (BDT)</th></tr></thead>
+          <tbody>
+            <tr><td>Renewal of Registration (per class) — within period <span class="fee-tag fee-tag-renew">Renewal</span></td><td>TM-12</td><td><span class="fee-amt">৳ 4,000</span></td></tr>
+            <tr><td>Renewal with Surcharge (late filing within 6 months)</td><td>TM-12</td><td><span class="fee-amt">৳ 6,000</span></td></tr>
+            <tr><td>Restoration of Removed Mark</td><td>TM-13</td><td><span class="fee-amt">৳ 8,000</span></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-            const hours   = String(currentDateTime.getHours()).padStart(2, '0');
-            const minutes = String(currentDateTime.getMinutes()).padStart(2, '0');
-            const seconds = String(currentDateTime.getSeconds()).padStart(2, '0');
+      <div class="fee-panel">
+        <div class="fee-panel-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span data-en="Opposition & Legal Fees" data-bn="অপোজিশন ও আইনি ফি">Opposition &amp; Legal Fees</span>
+        </div>
+        <table class="fee-table">
+          <thead><tr><th data-en="Service Description" data-bn="সেবার বিবরণ">Service Description</th><th data-en="Form No." data-bn="ফরম নং">Form No.</th><th data-en="Fee (BDT)" data-bn="ফি (বিডিটি)">Fee (BDT)</th></tr></thead>
+          <tbody>
+            <tr><td>Notice of Opposition to Registration</td><td>TM-5</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
+            <tr><td>Counter-Statement to Opposition</td><td>TM-6</td><td><span class="fee-amt">৳ 1,500</span></td></tr>
+            <tr><td>Application for Rectification of Register</td><td>TM-27</td><td><span class="fee-amt">৳ 3,500</span></td></tr>
+            <tr><td>Application for Cancellation of Registration</td><td>TM-28</td><td><span class="fee-amt">৳ 5,000</span></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-            const formattedDate = currentDateTime.toLocaleDateString('en-US', dateOptions);
-            const formattedTime = `${hours}:${minutes}:${seconds}`;
+      <div class="fee-note">
+        <strong data-en="Important Notice" data-bn="গুরুত্বপূর্ণ বিজ্ঞপ্তি">Important Notice</strong>
+        <span data-en="All fees are payable via Treasury Challan (Code: 1-4331-0001-1801) at any scheduled bank. Fees are subject to revision by the Government. For the most current official schedule, please visit dpdt.gov.bd or contact the DPDT office directly. All amounts are in Bangladeshi Taka (BDT ৳)."
+              data-bn="সমস্ত ফি যেকোনো তফসিলি ব্যাংকে ট্রেজারি চালান (কোড: 1-4331-0001-1801) এর মাধ্যমে পরিশোধযোগ্য। ফি সরকার কর্তৃক সংশোধিত হতে পারে। সর্বশেষ সরকারি ফি তালিকার জন্য dpdt.gov.bd দেখুন বা সরাসরি ডিপিডিটি অফিসে যোগাযোগ করুন। সব পরিমাণ বাংলাদেশি টাকা (BDT ৳)।">All fees are payable via Treasury Challan (Code: 1-4331-0001-1801) at any scheduled bank. Fees are subject to revision by the Government. For the most current official schedule, please visit <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener" style="color:#92400e;font-weight:600;">dpdt.gov.bd</a> or contact the DPDT office directly. All amounts are in Bangladeshi Taka (BDT ৳).</span>
+      </div>
 
-            const placeholder = document.getElementById("last-update-placeholder");
-            if (placeholder) {
-                placeholder.innerText = `${formattedDate} ${formattedTime}`;
-            }
-        }
+      <p style="margin-top:16px;font-size:12.5px;color:#64756c;" data-en="See the official revised fee schedule on the DPDT website." data-bn="সরকারি পুনঃনির্ধারিত ফি তালিকা ডিপিডিটি ওয়েবসাইটে দেখুন।">See the official revised fee schedule on the DPDT website: <a href="https://dpdt.gov.bd/pages/static-pages/6922e14d933eb65569e2b677" target="_blank" rel="noopener">dpdt.gov.bd — Revised Fees</a></p>
+    </div>
+  </section>
 
-        updateSiteTimestamp();
-        setInterval(updateSiteTimestamp, 1000);
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: CONTACT
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-contact">
+    <div class="container page">
 
-        /* ─────────────────────────────────────────────────────
-           FORM SUBMIT ACTION -> REDIRECT QUERY ROUTING
-        ───────────────────────────────────────────────────── */
-        function searchTM() {
-            const regNo = document.getElementById('tm').value.trim();
-            if (!regNo) {
-                alert('Please enter a Trademark number.');
-                return;
-            }
-            window.location.href = "?reg_no=" + regNo;
-        }
+      <div class="verify-head">
+        <div class="vh-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <h2 data-en="Contact & Emergency Hotlines" data-bn="যোগাযোগ ও জরুরি হটলাইন">Contact &amp; Emergency Hotlines</h2>
+          <p data-en="DPDT office contact information and Bangladesh national emergency helpline numbers for immediate assistance." data-bn="ডিপিডিটি অফিসের যোগাযোগ তথ্য এবং বাংলাদেশের জাতীয় জরুরি হেল্পলাইন নম্বর।">DPDT office contact information and Bangladesh national emergency helpline numbers for immediate assistance.</p>
+        </div>
+      </div>
 
-        /* ─────────────────────────────────────────────────────
-           MAIN ROUTING CONTROLLER ON PAGE LOAD
-        ───────────────────────────────────────────────────── */
-        window.onload = function () {
-            updateSiteTimestamp();
+      <div class="contact-grid">
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const regParam  = urlParams.get('reg_no') || urlParams.get('regNo');
+        <div>
+          <div class="contact-info-card" style="margin-bottom:22px;">
+            <div class="cic-head">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              <span data-en="DPDT Office — Department of Patents, Designs & Trademarks" data-bn="ডিপিডিটি অফিস — পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর">DPDT Office — Department of Patents, Designs &amp; Trademarks</span>
+            </div>
+            <div class="cic-body">
+              <div>
+                <div class="cic-key" data-en="Address" data-bn="ঠিকানা">Address</div>
+                <div class="cic-value bn">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০<br>127-128 Motijheel C/A, Dhaka-1000</div>
+              </div>
+              <div>
+                <div class="cic-key" data-en="Office Hours" data-bn="অফিস সময়">Office Hours</div>
+                <div class="cic-value">Sunday – Thursday<br>9:00 AM – 5:00 PM (Govt. holidays excluded)</div>
+              </div>
+              <div>
+                <div class="cic-key" data-en="Phone" data-bn="ফোন">Phone</div>
+                <div class="cic-value">+880-2-9559982, 9559983</div>
+              </div>
+              <div>
+                <div class="cic-key" data-en="Email / Website" data-bn="ইমেইল / ওয়েবসাইট">Email / Website</div>
+                <div class="cic-value">
+                  <a href="mailto:dpdt@dpdt.gov.bd">dpdt@dpdt.gov.bd</a><br>
+                  <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener">www.dpdt.gov.bd</a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            if (regParam) {
-                // Ensure trademark view is active when coming from URL
-                switchView('trademark');
-                document.getElementById('tm').value = regParam;
-                verifyTrademark(regParam);
-            }
-        };
+          <p style="font-size:12.5px;color:#64756c;margin-bottom:8px;" data-en="Official contact page on the DPDT website." data-bn="ডিপিডিটি ওয়েবসাইটে অফিসিয়াল যোগাযোগ পাতা।">Official contact page on the DPDT website:</p>
+          <a class="btn btn-outline btn-sm" href="https://dpdt.gov.bd/pages/static-pages/6922de7c933eb65569e1af90" target="_blank" rel="noopener">
+            dpdt.gov.bd — Contact
+          </a>
+        </div>
 
-        /* ─────────────────────────────────────────────────────
-           CORE ASYNC DATA FETCH & VISUAL RENDERING ROUTINE
-           (ORIGINAL LOGIC — 100% PRESERVED)
-        ───────────────────────────────────────────────────── */
-        async function verifyTrademark(regNo) {
-            const tableResult    = document.getElementById('verificationResult');
-            const errorResult    = document.getElementById('errorResult');
-            const assetContainer = document.getElementById('assetContainer');
+        <div>
+          <div class="contact-block">
+            <div class="contact-block-head">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span data-en="Emergency Hotlines" data-bn="জরুরি যোগাযোগ">Emergency Hotlines</span>
+            </div>
+            <div class="contact-block-body">
+              <div class="contact-row"><div class="cr-label">সরকারি তথ্য ও সেবা<em>Government Information &amp; Services</em></div><div class="cr-num">৩৩৩</div></div>
+              <div class="contact-row"><div class="cr-label">জরুরি সেবা<em>National Emergency Service</em></div><div class="cr-num">৯৯৯</div></div>
+              <div class="contact-row"><div class="cr-label">ফায়ার সার্ভিস হটলাইন<em>Fire Service Hotline</em></div><div class="cr-num">১০২</div></div>
+              <div class="contact-row"><div class="cr-label">সুপ্রিম কোর্ট হেল্পলাইন<em>Supreme Court Helpline</em></div><div class="cr-num">১০৩</div></div>
+              <div class="contact-row"><div class="cr-label">নারী ও শিশু নির্যাতন প্রতিরোধ<em>Women &amp; Child Abuse Prevention</em></div><div class="cr-num">১০৯</div></div>
+              <div class="contact-row"><div class="cr-label">দুদক (অনিয়ম অভিযোগ)<em>Anti-Corruption Commission</em></div><div class="cr-num">১০৬</div></div>
+              <div class="contact-row"><div class="cr-label">শিশু সহায়তা লাইন<em>Child Helpline</em></div><div class="cr-num">১০৯৮</div></div>
+              <div class="contact-row"><div class="cr-label">স্বাস্থ্য সেবা হেল্পলাইন<em>Health Services Helpline</em></div><div class="cr-num">১৬২৬৩</div></div>
+            </div>
+          </div>
+        </div>
 
-            try {
-                const response = await fetch('data.json');
-                const data     = await response.json();
+      </div>
+    </div>
+  </section>
 
-                if (data[regNo]) {
-                    const info = data[regNo];
-                    errorResult.classList.add('hidden');
-                    tableResult.classList.remove('hidden');
+</main>
 
-                    // Populate TM number chip
-                    document.getElementById('resNum').innerHTML =
-                        `<span class="tm-number-chip">${regNo}</span>`;
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<div class="footer-topband">
+  <span data-en="Department of Patents, Designs & Trademarks — Official Government Portal of the People's Republic of Bangladesh"
+        data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর — গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের অফিসিয়াল পোর্টাল">Department of Patents, Designs &amp; Trademarks — Official Government Portal of the People's Republic of Bangladesh</span>
+</div>
 
-                    document.getElementById('resName').innerText  = info.name;
-                    document.getElementById('resDate').innerText  = info.application_date || "08/12/2015";
-                    document.getElementById('resAuth').innerText  = info.authority;
+<footer class="footer">
+  <div class="container footer-main">
+    <div class="footer-grid">
 
-                    resolveCertificateAsset(regNo, assetContainer);
-                } else {
-                    tableResult.classList.add('hidden');
-                    errorResult.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Database Layer Error:', error);
-                alert('Database could not be loaded. Please ensure data.json structure is valid.');
-            }
-        }
+      <div>
+        <h4><span data-en="About the Department" data-bn="অধিদপ্তর সম্পর্কে">About the Department</span></h4>
+        <p class="footer-about bn" data-en="The Department of Patents, Designs & Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents, registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh."
+                             data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর ২০০৩ সালে সাবেক ‘পেটেন্ট অফিস’ এবং ‘ট্রেডমার্কস রেজিস্ট্রি’ অফিস দুটি একীভূত করে প্রতিষ্ঠিত হয়। বাংলাদেশের মেধা সম্পদ সুরক্ষায় এটি পেটেন্ট মঞ্জুর করে এবং শিল্প-নকশা, ট্রেডমার্ক ও ভৌগোলিক নির্দেশক পণ্য নিবন্ধন করে।">The Department of Patents, Designs &amp; Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents, registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh.</p>
+        <p style="font-size:12.5px;color:#64756c;margin-top:10px;">
+          <a href="https://dpdt.gov.bd/pages/static-pages/6922defe933eb65569e1f09f" target="_blank" rel="noopener" data-en="Learn more about the Department" data-bn="অধিদপ্তর সম্পর্কে আরও জানুন">Learn more about the Department</a>
+        </p>
+      </div>
 
-        /* ─────────────────────────────────────────────────────
-           FILE EXTENSION LAYER RESOLVER
-           (ORIGINAL LOGIC — 100% PRESERVED)
-        ───────────────────────────────────────────────────── */
-        function resolveCertificateAsset(regNo, container) {
-            const imgUrl     = regNo + ".jpg";
-            const imgChecker = new Image();
+      <div>
+        <h4><span data-en="Quick Links" data-bn="কুইক লিংক">Quick Links</span></h4>
+        <ul class="footer-links">
+          <li><a href="/verify" data-internal="1"><span class="bn">ট্রেডমার্ক যাচাইকরণ</span><span class="en">Trademark Verification</span></a></li>
+          <li><a href="/verify?page=fee" data-internal="1"><span class="bn">ফি কাঠামো</span><span class="en">Fee Structure</span></a></li>
+          <li><a href="/verify?page=contact" data-internal="1"><span class="bn">যোগাযোগ</span><span class="en">Contact</span></a></li>
+          <li><a href="https://dpdt.gov.bd/pages/notices" target="_blank" rel="noopener"><span class="bn">নোটিশ বোর্ড</span><span class="en">Notice Board</span></a></li>
+          <li><a href="https://dpdt.gov.bd/views/sitemap" target="_blank" rel="noopener"><span class="bn">সাইট ম্যাপ</span><span class="en">Site Map</span></a></li>
+        </ul>
+      </div>
 
-            imgChecker.onload = function () {
-                container.innerHTML = `<img src="${imgUrl}" alt="Trademark Certificate">`;
-            };
+      <div>
+        <h4><span data-en="Services" data-bn="সেবাসমূহ">Services</span></h4>
+        <ul class="footer-links">
+          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener"><span class="bn">অনলাইন আবেদন (আইপাস)</span><span class="en">IPAS Online Application</span><span class="ext">↗</span></a></li>
+          <li><a href="https://www.achallan.gov.bd/" target="_blank" rel="noopener"><span class="bn">A চালান</span><span class="en">A-Challan</span><span class="ext">↗</span></a></li>
+          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e08d933eb65569e278d3" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্কস ফরম</span><span class="en">Trademark Forms</span></a></li>
+          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dc84933eb65569e10c76" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্কস জার্নাল</span><span class="en">Trademarks Journal</span></a></li>
+          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e14d933eb65569e2b677" target="_blank" rel="noopener"><span class="bn">পুনঃনির্ধারিত ফি</span><span class="en">Revised Fees</span></a></li>
+        </ul>
+      </div>
 
-            imgChecker.onerror = function () {
-                const pdfUrl = regNo + ".pdf";
-                fetch(pdfUrl)
-                    .then(response => {
-                        if (response.ok) {
-                            container.innerHTML = `<iframe src="${pdfUrl}" title="Trademark Certificate PDF"></iframe>`;
-                        } else {
-                            container.innerHTML = `<p style="font-size:13px;color:#6b7c8d;padding:24px;text-align:center;">Certificate document preview is currently unavailable.</p>`;
-                        }
-                    })
-                    .catch(() => {
-                        container.innerHTML = `<p style="font-size:13px;color:#6b7c8d;padding:24px;text-align:center;">Certificate document preview is currently unavailable.</p>`;
-                    });
-            };
+      <div>
+        <h4><span data-en="Contact" data-bn="যোগাযোগ">Contact</span></h4>
+        <div class="footer-contact">
+          <span class="bn">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০</span><br>
+          <span>127-128 Motijheel C/A, Dhaka-1000, Bangladesh</span><br>
+          <span>Phone: +880-2-9559982, 9559983</span><br>
+          <span>Email: <a href="mailto:dpdt@dpdt.gov.bd">dpdt@dpdt.gov.bd</a></span><br>
+          <span>Web: <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener">www.dpdt.gov.bd</a></span>
+        </div>
+        <div class="footer-support">
+          <p style="font-size:11px;color:#64756c;margin-top:12px;" data-en="Technical Support" data-bn="কারিগরি সহায়তা">Technical Support</p>
+          <img src="footer-banner.png" alt="Technical support partners banner" style="height:38px;mix-blend-mode:multiply;">
+        </div>
+      </div>
 
-            imgChecker.src = imgUrl;
-        }
-    </script>
+    </div>
+  </div>
 
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <div>
+        <span data-en="Planning and Implementation: Cabinet Division, a2i Programme, Bangladesh Computer Council (BCC), Department of ICT & BASIS."
+              data-bn="পরিকল্পনা এবং বাস্তবায়ন: মন্ত্রিপরিষদ বিভাগ, এটুআই, বিসিসি, ডিওআইসিটি ও বেসিস।">Planning and Implementation: Cabinet Division, a2i Programme, Bangladesh Computer Council (BCC), Department of ICT &amp; BASIS.</span>
+      </div>
+      <div class="footer-update">
+        <span data-en="Site last updated:" data-bn="সাইটটি শেষ হাল-নাগাদ করা হয়েছে:">Site last updated:</span>
+        <span id="lastUpdate"></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#05291a;color:rgba(255,255,255,.6);font-size:11.5px;text-align:center;padding:9px 16px;">
+    &copy; 2026 <span data-en="Department of Patents, Designs & Trademarks, Bangladesh. All Rights Reserved." data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর, বাংলাদেশ। সর্বস্বত্ব সংরক্ষিত।">Department of Patents, Designs &amp; Trademarks, Bangladesh. All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>
