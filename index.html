@@ -25,15 +25,17 @@
       <span data-en="Bangladesh National Web Portal" data-bn="বাংলাদেশ জাতীয় তথ্য বাতায়ন">Bangladesh National Web Portal</span>
     </a>
     <div class="national-bar-right">
-      <form class="top-search" id="topSearchForm" role="search">
-        <input type="text" id="topSearchInput" placeholder="Trademark number..." aria-label="Search trademark number">
-        <button type="submit" aria-label="Search">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <form class="top-search" id="topSearchForm" role="search" aria-label="General site search">
+        <svg class="ts-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="topSearchInput" placeholder="Search the portal..." aria-label="Search the portal" autocomplete="off">
+        <button type="submit" id="topSearchBtn" aria-label="Search">
+          <span data-en="Search" data-bn="অনুসন্ধান">Search</span>
         </button>
       </form>
-      <button class="lang-toggle" id="langToggle" type="button">বাংলা</button>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">বাংলা</button>
     </div>
   </div>
+  <div class="search-results hidden" id="siteSearchResults"></div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -44,7 +46,7 @@
     <div class="header-brand">
       <img src="logo.jpeg" alt="Government of the People's Republic of Bangladesh Emblem" class="brand-emblem">
       <div class="brand-text">
-        <span class="brand-gov-line">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</span>
+        <span class="brand-gov-line" data-en="Government of the People's Republic of Bangladesh" data-bn="গণপ্রজাতন্ত্রী বাংলাদেশ সরকার">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</span>
         <h1 class="brand-title" data-en="Department of Patents, Designs & Trademarks" data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর">Department of Patents, Designs &amp; Trademarks</h1>
         <span class="brand-sub" data-en="Ministry of Industries, Government of the People's Republic of Bangladesh" data-bn="শিল্প মন্ত্রণালয়, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার">Ministry of Industries, Government of the People's Republic of Bangladesh</span>
       </div>
@@ -91,7 +93,10 @@
 <div class="mobile-drawer" id="mobileDrawer" aria-label="Mobile menu">
   <div class="mobile-drawer-head">
     <span data-en="Menu" data-bn="মেনু">Menu</span>
-    <button class="mobile-close" id="mobileClose" type="button" aria-label="Close">&times;</button>
+    <span class="mobile-head-actions">
+      <button class="mobile-lang" id="mobileLangToggle" type="button" aria-label="Switch language">বাংলা</button>
+      <button class="mobile-close" id="mobileClose" type="button" aria-label="Close">&times;</button>
+    </span>
   </div>
   <nav class="mobile-nav" id="mobileNav"></nav>
 </div>
@@ -224,7 +229,7 @@
                   <span class="st-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8.5 11.5l2 2 3.5-3.5"/></svg>
                   </span>
-                  <h3 class="bn" data-en="Trademark Verification" data-bn="ট্রেডমার্ক যাচাইকরণ">Trademark Verification</h3>
+                  <h3 data-en="Trademark Verification" data-bn="ট্রেডমার্ক যাচাইকরণ">Trademark Verification</h3>
                   <p data-en="Verify the registration status of a trademark with the national database and view the original certificate." data-bn="জাতীয় ডেটাবেজে ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন এবং মূল সনদ দেখুন।">Verify the registration status of a trademark with the national database and view the original certificate.</p>
                   <span class="st-go" data-en="Verify now" data-bn="এখনই যাচাই করুন">Verify now &rarr;</span>
                 </a>
@@ -233,7 +238,7 @@
                   <span class="st-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
                   </span>
-                  <h3 class="bn" data-en="IPAS 4.0 — Online Application" data-bn="আইপাস ৪.০ — অনলাইন আবেদন">IPAS 4.0 — Online Application</h3>
+                  <h3 data-en="IPAS 4.0 — Online Application" data-bn="আইপাস ৪.০ — অনলাইন আবেদন">IPAS 4.0 — Online Application</h3>
                   <p data-en="Apply online for patents, industrial designs, trademarks and GI through the national IPAS system." data-bn="জাতীয় আইপাস সিস্টেমে পেটেন্ট, শিল্প-নকশা, ট্রেডমার্ক ও জিআই-এর জন্য অনলাইনে আবেদন করুন।">Apply online for patents, industrial designs, trademarks and GI through the national IPAS system.</p>
                   <span class="st-go" data-en="Apply online" data-bn="অনলাইনে আবেদন করুন">Apply online &rarr;</span>
                 </a>
@@ -242,7 +247,7 @@
                   <span class="st-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                   </span>
-                  <h3 class="bn" data-en="A-Challan Payment" data-bn="A চালান লিংক">A-Challan Payment</h3>
+                  <h3 data-en="A-Challan Payment" data-bn="A চালান লিংক">A-Challan Payment</h3>
                   <p data-en="Generate and pay government treasury challans for application and renewal fees online." data-bn="আবেদন ও নবায়ন ফি পরিশোধের জন্য সরকারি ট্রেজারি চালান অনলাইনে তৈরি ও পরিশোধ করুন।">Generate and pay government treasury challans for application and renewal fees online.</p>
                   <span class="st-go" data-en="Pay fees" data-bn="ফি পরিশোধ করুন">Pay fees &rarr;</span>
                 </a>
@@ -251,7 +256,7 @@
                   <span class="st-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                   </span>
-                  <h3 class="bn" data-en="Trademarks Journal" data-bn="ট্রেডমার্কস জার্নাল">Trademarks Journal</h3>
+                  <h3 data-en="Trademarks Journal" data-bn="ট্রেডমার্কস জার্নাল">Trademarks Journal</h3>
                   <p data-en="Browse published trademark journals and opposition notices." data-bn="প্রকাশিত ট্রেডমার্ক জার্নাল ও অপোজিশন নোটিশ দেখুন।">Browse published trademark journals and opposition notices.</p>
                   <span class="st-go" data-en="Browse journal" data-bn="জার্নাল দেখুন">Browse journal &rarr;</span>
                 </a>
@@ -260,7 +265,7 @@
                   <span class="st-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
                   </span>
-                  <h3 class="bn" data-en="Application Forms" data-bn="ফরম">Application Forms</h3>
+                  <h3 data-en="Application Forms" data-bn="ফরম">Application Forms</h3>
                   <p data-en="Download official application forms for patents, designs, trademarks and GI." data-bn="পেটেন্ট, ডিজাইন, ট্রেডমার্ক ও জিআই-এর সরকারি আবেদন ফরম ডাউনলোড করুন।">Download official application forms for patents, designs, trademarks and GI.</p>
                   <span class="st-go" data-en="Download forms" data-bn="ফরম ডাউনলোড করুন">Download forms &rarr;</span>
                 </a>
@@ -269,7 +274,7 @@
                   <span class="st-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
                   </span>
-                  <h3 class="bn" data-en="Geographical Indication (GI)" data-bn="ভৌগোলিক নির্দেশক (জিআই) পণ্য">Geographical Indication (GI)</h3>
+                  <h3 data-en="Geographical Indication (GI)" data-bn="ভৌগোলিক নির্দেশক (জিআই) পণ্য">Geographical Indication (GI)</h3>
                   <p data-en="Registered GI products, application process, forms and fee schedule." data-bn="নিবন্ধিত জিআই পণ্য, আবেদন প্রক্রিয়া, ফরম ও ফি সিডিউল।">Registered GI products, application process, forms and fee schedule.</p>
                   <span class="st-go" data-en="Learn more" data-bn="আরও জানুন">Learn more &rarr;</span>
                 </a>
@@ -649,11 +654,14 @@
             <div class="cic-body">
               <div>
                 <div class="cic-key" data-en="Address" data-bn="ঠিকানা">Address</div>
-                <div class="cic-value bn">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০<br>127-128 Motijheel C/A, Dhaka-1000</div>
+                <div class="cic-value">
+                  <span class="bn">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০</span>
+                  <span class="en">127-128 Motijheel C/A, Dhaka-1000</span>
+                </div>
               </div>
               <div>
                 <div class="cic-key" data-en="Office Hours" data-bn="অফিস সময়">Office Hours</div>
-                <div class="cic-value">Sunday – Thursday<br>9:00 AM – 5:00 PM (Govt. holidays excluded)</div>
+                <div class="cic-value" data-en="Sunday – Thursday, 9:00 AM – 5:00 PM (Govt. holidays excluded)" data-bn="রবিবার – বৃহস্পতিবার, সকাল ৯টা – বিকাল ৫টা (সরকারি ছুটির দিন ব্যতীত)">Sunday – Thursday<br>9:00 AM – 5:00 PM (Govt. holidays excluded)</div>
               </div>
               <div>
                 <div class="cic-key" data-en="Phone" data-bn="ফোন">Phone</div>
@@ -682,14 +690,14 @@
               <span data-en="Emergency Hotlines" data-bn="জরুরি যোগাযোগ">Emergency Hotlines</span>
             </div>
             <div class="contact-block-body">
-              <div class="contact-row"><div class="cr-label">সরকারি তথ্য ও সেবা<em>Government Information &amp; Services</em></div><div class="cr-num">৩৩৩</div></div>
-              <div class="contact-row"><div class="cr-label">জরুরি সেবা<em>National Emergency Service</em></div><div class="cr-num">৯৯৯</div></div>
-              <div class="contact-row"><div class="cr-label">ফায়ার সার্ভিস হটলাইন<em>Fire Service Hotline</em></div><div class="cr-num">১০২</div></div>
-              <div class="contact-row"><div class="cr-label">সুপ্রিম কোর্ট হেল্পলাইন<em>Supreme Court Helpline</em></div><div class="cr-num">১০৩</div></div>
-              <div class="contact-row"><div class="cr-label">নারী ও শিশু নির্যাতন প্রতিরোধ<em>Women &amp; Child Abuse Prevention</em></div><div class="cr-num">১০৯</div></div>
-              <div class="contact-row"><div class="cr-label">দুদক (অনিয়ম অভিযোগ)<em>Anti-Corruption Commission</em></div><div class="cr-num">১০৬</div></div>
-              <div class="contact-row"><div class="cr-label">শিশু সহায়তা লাইন<em>Child Helpline</em></div><div class="cr-num">১০৯৮</div></div>
-              <div class="contact-row"><div class="cr-label">স্বাস্থ্য সেবা হেল্পলাইন<em>Health Services Helpline</em></div><div class="cr-num">১৬২৬৩</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">সরকারি তথ্য ও সেবা</span><span class="en">Government Information &amp; Services</span></div><div class="cr-num">৩৩৩</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">জরুরি সেবা</span><span class="en">National Emergency Service</span></div><div class="cr-num">৯৯৯</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">ফায়ার সার্ভিস হটলাইন</span><span class="en">Fire Service Hotline</span></div><div class="cr-num">১০২</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">সুপ্রিম কোর্ট হেল্পলাইন</span><span class="en">Supreme Court Helpline</span></div><div class="cr-num">১০৩</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">নারী ও শিশু নির্যাতন প্রতিরোধ</span><span class="en">Women &amp; Child Abuse Prevention</span></div><div class="cr-num">১০৯</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">দুদক (অনিয়ম অভিযোগ)</span><span class="en">Anti-Corruption Commission</span></div><div class="cr-num">১০৬</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">শিশু সহায়তা লাইন</span><span class="en">Child Helpline</span></div><div class="cr-num">১০৯৮</div></div>
+              <div class="contact-row"><div class="cr-label"><span class="bn">স্বাস্থ্য সেবা হেল্পলাইন</span><span class="en">Health Services Helpline</span></div><div class="cr-num">১৬২৬৩</div></div>
             </div>
           </div>
         </div>
@@ -714,7 +722,7 @@
 
       <div>
         <h4><span data-en="About the Department" data-bn="অধিদপ্তর সম্পর্কে">About the Department</span></h4>
-        <p class="footer-about bn" data-en="The Department of Patents, Designs & Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents, registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh."
+        <p class="footer-about" data-en="The Department of Patents, Designs & Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents, registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh."
                              data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর ২০০৩ সালে সাবেক ‘পেটেন্ট অফিস’ এবং ‘ট্রেডমার্কস রেজিস্ট্রি’ অফিস দুটি একীভূত করে প্রতিষ্ঠিত হয়। বাংলাদেশের মেধা সম্পদ সুরক্ষায় এটি পেটেন্ট মঞ্জুর করে এবং শিল্প-নকশা, ট্রেডমার্ক ও ভৌগোলিক নির্দেশক পণ্য নিবন্ধন করে।">The Department of Patents, Designs &amp; Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents, registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh.</p>
         <p style="font-size:12.5px;color:#64756c;margin-top:10px;">
           <a href="https://dpdt.gov.bd/pages/static-pages/6922defe933eb65569e1f09f" target="_blank" rel="noopener" data-en="Learn more about the Department" data-bn="অধিদপ্তর সম্পর্কে আরও জানুন">Learn more about the Department</a>
@@ -746,11 +754,14 @@
       <div>
         <h4><span data-en="Contact" data-bn="যোগাযোগ">Contact</span></h4>
         <div class="footer-contact">
-          <span class="bn">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০</span><br>
-          <span>127-128 Motijheel C/A, Dhaka-1000, Bangladesh</span><br>
-          <span>Phone: +880-2-9559982, 9559983</span><br>
-          <span>Email: <a href="mailto:dpdt@dpdt.gov.bd">dpdt@dpdt.gov.bd</a></span><br>
-          <span>Web: <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener">www.dpdt.gov.bd</a></span>
+          <span class="bn">১২৭-১২৮ মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০</span>
+          <span class="en">127-128 Motijheel C/A, Dhaka-1000, Bangladesh</span><br>
+          <span class="bn">ফোন: +৮৮০-২-৯৫৫৯৯৮২, ৯৫৫৯৯৮৩</span>
+          <span class="en">Phone: +880-2-9559982, 9559983</span><br>
+          <span class="bn">ইমেইল: <a href="mailto:dpdt@dpdt.gov.bd">dpdt@dpdt.gov.bd</a></span>
+          <span class="en">Email: <a href="mailto:dpdt@dpdt.gov.bd">dpdt@dpdt.gov.bd</a></span><br>
+          <span class="bn">ওয়েবসাইট: <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener">www.dpdt.gov.bd</a></span>
+          <span class="en">Web: <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener">www.dpdt.gov.bd</a></span>
         </div>
         <div class="footer-support">
           <p style="font-size:11px;color:#64756c;margin-top:12px;" data-en="Technical Support" data-bn="কারিগরি সহায়তা">Technical Support</p>

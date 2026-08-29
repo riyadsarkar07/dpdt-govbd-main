@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════
    DPDT BANGLADESH — PORTAL APP SCRIPT
    Navigation (mirrors real dpdt.gov.bd structure), routing,
-   language toggle, and the preserved trademark-verification engine.
+   language toggle, general site search, and the preserved
+   trademark-verification engine.
    ═══════════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -94,7 +95,6 @@ const NAV = [
       ]},
       { en: 'Rules', bn: 'বিধি', items: [
         { en: 'Patents & Designs Rules, 1933', bn: 'পেটেন্ট ও ডিজাইন বিধিমালা, ১৯৩৩', href: '/pages/static-pages/6922e033933eb65569e25f61' },
-        { en: 'Trademarks Rules, 1963', bn: 'ট্রেডমার্কস বিধিমালা, ১৯৬৩', href: '/site/page/c4e72713-8af7-4762-83f6-876e6c8bb583' },
         { en: 'Trademark Rules, 2015', bn: 'ট্রেডমার্ক বিধিমালা, ২০১৫', href: '/pages/static-pages/6922ddc2933eb65569e1620f' },
         { en: 'GI Product Rules, 2015', bn: 'ভৌগোলিক নির্দেশক পণ্য বিধিমালা, ২০১৫', href: '/pages/static-pages/6922de14933eb65569e1811f' }
       ]},
@@ -103,6 +103,15 @@ const NAV = [
         { en: 'Disclosure of Information Policy, 2015', bn: 'তথ্য অবমুক্তকরণ নীতিমালা ২০১৫', href: '/pages/static-pages/6922df08933eb65569e1f5c2' }
       ]}
     ]
+  },
+
+  {
+    key: 'media', en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী',
+    groups: [{ en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী', items: [
+      { en: 'Photo Gallery', bn: 'ফটো গ্যালারী', href: '/pages/photo-galleries' },
+      { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications' },
+      { en: 'Presentations', bn: 'প্রেজেন্টেশন', href: '/pages/static-pages/6922df0a933eb65569e1f694' }
+    ]}]
   },
 
   {
@@ -148,15 +157,6 @@ const NAV = [
         { en: 'IT Requirement Letters', bn: 'আইটি সংক্রান্ত চাহিদা পত্র', href: '/pages/static-pages/6922de5f933eb65569e1a327' }
       ]}
     ]
-  },
-
-  {
-    key: 'media', en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী',
-    groups: [{ en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী', items: [
-      { en: 'Photo Gallery', bn: 'ফটো গ্যালারী', href: '/pages/photo-galleries' },
-      { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications' },
-      { en: 'Presentations', bn: 'প্রেজেন্টেশন', href: '/pages/static-pages/6922df0a933eb65569e1f694' }
-    ]}]
   },
 
   {
@@ -221,9 +221,24 @@ const HOTLINES = [
 ];
 
 const NOTICES = [
-  { en: 'Information regarding opposition cases filed against trademark applications published in the 340th Trademark Journal.', bn: '৩৪০ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '11', m: 'Aug 2026', href: '/pages/notices/340-opposition-340th-trademark-journal' },
-  { en: 'Meeting with representatives/members of Bangladesh Intellectual Property Attorneys Association (BIPAA).', bn: 'Bangladesh Intellectual Property Attorneys Association (BIPAA) এর প্রতিনিধি/সদস্যগণের সাথে মতবিনিময় সভা।', d: '27', m: 'Jul 2026', href: '/pages/notices/bipaa-representatives-meeting' },
-  { en: 'Information regarding opposition cases filed against trademark applications published in the 339th Trademark Journal.', bn: '৩৩৯ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '24', m: 'Jun 2026', href: '/pages/notices/339-opposition-339th-trademark-journal' }
+  { en: 'Information regarding opposition cases filed against trademark applications published in the 340th Trademark Journal.', bn: '৩৪০ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '11', m: 'Aug 2026', href: '/pages/notices/৩৪০-নং-ট্রেডমার্ক-জার্নালে-প্রকাশিত-ট্রেডমার্ক-দরখাস্ত-সমূহের-বিরুদ্ধে-দায়েরকৃত-অপোজিশন-মামলা-সংক্রান্ত-তথ্য-qe52if-6a7ab7896ab58a3743452384' },
+  { en: 'Meeting with representatives/members of Bangladesh Intellectual Property Attorneys Association (BIPAA).', bn: 'Bangladesh Intellectual Property Attorneys Association (BIPAA) এর প্রতিনিধি/সদস্যগণের সাথে মতবিনিময় সভা।', d: '27', m: 'Jul 2026', href: '/pages/notices/bangladesh-intellectual-property-attorneys-association-bipaa-এর-প্রতিনিধিসদস্যগণের-সাথে-মতবিনিময়-সভা-o9yb8w-6a6879a8a134e8fb07b769b9' },
+  { en: 'Information regarding opposition cases filed against trademark applications published in the 339th Trademark Journal.', bn: '৩৩৯ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '24', m: 'Jun 2026', href: '/pages/notices/৩৩৯-নং-ট্রেডমার্ক-জার্নালে-প্রকাশিত-ট্রেডমার্ক-দরখাস্ত-সমূহের-বিরুদ্ধে-দায়েরকৃত-অপোজিশন-মামলা-সংক্রান্ত-তথ্য-4wcj98-6a3bb1ce96ede6d08b061305' }
+];
+
+/* Additional searchable portal pages (not already covered by NAV). */
+const SEARCH_PAGES = [
+  { en: 'Notice Board', bn: 'নোটিশ বোর্ড', href: '/pages/notices', kw: ['notice', 'নোটিশ', 'বিজ্ঞপ্তি'] },
+  { en: 'News', bn: 'খবর', href: '/pages/news/', kw: ['news', 'খবর'] },
+  { en: 'All Services', bn: 'সকল সেবা', href: '/pages/service-boxes', kw: ['services', 'সেবা'] },
+  { en: 'Service Process Maps', bn: 'সেবা প্রক্রিয়া', href: '/pages/office-process-maps', kw: ['process', 'সেবা প্রক্রিয়া'] },
+  { en: 'Tenders & Notices', bn: 'দরপত্র ও বিজ্ঞপ্তি', href: '/pages/tenders', kw: ['tender', 'দরপত্র', 'বিজ্ঞপ্তি'] },
+  { en: 'Notifications & Circulars', bn: 'প্রজ্ঞাপন ও পরিপত্র', href: '/pages/notification-circulars', kw: ['notification', 'circular', 'প্রজ্ঞাপন'] },
+  { en: 'Office Orders', bn: 'অফিস আদেশ', href: '/pages/office-orders', kw: ['office order', 'অফিস আদেশ'] },
+  { en: 'Photo Gallery', bn: 'ফটো গ্যালারি', href: '/pages/photo-galleries', kw: ['gallery', 'photo', 'ছবি'] },
+  { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications', kw: ['publication', 'প্রকাশনা'] },
+  { en: 'All Laws', bn: 'সকল আইন', href: '/pages/laws', kw: ['law', 'act', 'আইন'] },
+  { en: 'Site Map', bn: 'সাইট ম্যাপ', href: '/views/sitemap', kw: ['sitemap', 'সাইট ম্যাপ'] }
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -253,7 +268,7 @@ let lang = localStorage.getItem('dpdt-lang') || 'en';
 function t(bn, en) { return lang === 'bn' ? bn : en; }
 
 /* ═══════════════════════════════════════════════════════════════
-   RENDER — DESKTOP PRIMARY NAV
+   RENDER — DESKTOP PRIMARY NAV (full official DPDT structure)
 ═══════════════════════════════════════════════════════════════ */
 function barItemHTML(cat) {
   if (cat.type === 'link') {
@@ -283,19 +298,27 @@ function barItemHTML(cat) {
     '</button>' + inner + '</li>';
 }
 
+const ICON_HOME = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+const ICON_SEARCH = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+const ICON_PHONE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+
 function renderBar() {
   const el = document.getElementById('navList');
   if (!el) return;
   const BAR = [
-    { type: 'link', en: 'Home', bn: 'হোম', href: '/', icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
+    { type: 'link', en: 'Home', bn: 'হোম', href: '/', icon: ICON_HOME },
     { type: 'menu', key: 'about' },
     { type: 'menu', key: 'statistics' },
     { type: 'menu', key: 'online' },
-    { type: 'link', en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify', cta: true, icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' },
     { type: 'menu', key: 'publication' },
     { type: 'menu', key: 'acts' },
+    { type: 'menu', key: 'media' },
     { type: 'menu', key: 'download' },
-    { type: 'link', en: 'Contact', bn: 'যোগাযোগ', href: '/verify?page=contact', icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' }
+    { type: 'menu', key: 'classification' },
+    { type: 'menu', key: 'gi' },
+    { type: 'menu', key: 'faq' },
+    { type: 'link', en: 'Contact', bn: 'যোগাযোগ', href: '/verify?page=contact', icon: ICON_PHONE },
+    { type: 'link', en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify', cta: true, icon: ICON_SEARCH }
   ];
   el.innerHTML = BAR.map(barItemHTML).join('');
 }
@@ -315,7 +338,7 @@ function renderMega() {
     html += '<div class="mega-col">' +
       '<div class="mega-col-head">' + t(cat.bn, cat.en) + '</div>';
     cat.groups.forEach(g => {
-      html += '<div class="mega-sub-head" style="font-size:11px;font-weight:700;color:#64756c;margin-top:6px;">' + t(g.bn, g.en) + '</div>';
+      html += '<div class="mega-sub-head">' + t(g.bn, g.en) + '</div>';
       g.items.forEach(item => {
         const isExt = !!item.ext;
         html += '<a href="' + url(item.href) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + '>' +
@@ -328,7 +351,7 @@ function renderMega() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RENDER — MOBILE DRAWER (accordion of all categories)
+   RENDER — MOBILE DRAWER (accordion of ALL categories)
 ═══════════════════════════════════════════════════════════════ */
 function renderMobile() {
   const el = document.getElementById('mobileNav');
@@ -339,7 +362,7 @@ function renderMobile() {
   });
   html += '</div>';
   NAV.forEach(cat => {
-    html += '<div class="mn-group">' +
+    html += '<div class="mn-group" data-cat="' + cat.key + '">' +
       '<button class="mn-toggle" type="button">' +
         '<span>' + t(cat.bn, cat.en) + '</span><span class="arrow">&#9656;</span>' +
       '</button><div class="mn-sub">';
@@ -347,7 +370,7 @@ function renderMobile() {
       g.items.forEach(item => {
         const isExt = !!item.ext;
         html += '<a href="' + url(item.href) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + '>' +
-          '<span>' + item.bn + '</span><span class="en">' + item.en + '</span></a>';
+          '<span class="bn">' + item.bn + '</span><span class="en">' + item.en + '</span></a>';
       });
     });
     html += '</div></div>';
@@ -362,8 +385,7 @@ function renderMobile() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RENDER — SIDE & HOME DYNAMIC LISTS (important links, hotlines,
-   notices, statistics) — filled by elements present in the markup
+   RENDER — SIDE & HOME DYNAMIC LISTS
 ═══════════════════════════════════════════════════════════════ */
 function renderLists() {
   const imp = document.getElementById('importantLinks');
@@ -379,7 +401,7 @@ function renderLists() {
   if (hl) {
     hl.innerHTML = HOTLINES.map(h => {
       return '<a class="hotline-row" href="' + h.href + '" target="_blank" rel="noopener">' +
-        '<span class="hl-name">' + h.bn + '<em>' + h.en + '</em></span>' +
+        '<span class="hl-name"><span class="bn">' + h.bn + '</span><span class="en">' + h.en + '</span></span>' +
         '<span class="hl-num">' + h.num + '</span></a>';
     }).join('');
   }
@@ -394,13 +416,137 @@ function renderLists() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   GENERAL SITE SEARCH
+   Searches the portal's available content and shows matching
+   sections/links.  Trademark-number lookup remains on /verify.
+═══════════════════════════════════════════════════════════════ */
+function buildSearchIndex() {
+  const idx = [];
+  NAV.forEach(cat => {
+    cat.groups.forEach(g => {
+      g.items.forEach(item => {
+        idx.push({
+          groupEn: cat.en, groupBn: cat.bn,
+          en: item.en, bn: item.bn,
+          href: item.href, ext: !!item.ext, kw: item.kw || []
+        });
+      });
+    });
+  });
+  INTERNAL_LINKS.forEach(l => {
+    idx.push({ groupEn: 'This Portal', groupBn: 'এই পোর্টাল', en: l.en, bn: l.bn, href: l.href, ext: false, kw: [] });
+  });
+  SEARCH_PAGES.forEach(p => {
+    idx.push({ groupEn: 'Pages', groupBn: 'পাতা', en: p.en, bn: p.bn, href: p.href, ext: false, kw: p.kw || [] });
+  });
+  return idx;
+}
+const SEARCH_INDEX = buildSearchIndex();
+
+function doSiteSearch(rawQuery) {
+  const panel = document.getElementById('siteSearchResults');
+  if (!panel) return;
+  const query = (rawQuery || '').trim().toLowerCase();
+  if (!query) { panel.classList.add('hidden'); return; }
+  const tokens = query.split(/\s+/).filter(Boolean);
+  const matched = [];
+  SEARCH_INDEX.forEach(entry => {
+    const hay = (entry.en + ' ' + entry.bn + ' ' + entry.kw.join(' ')).toLowerCase();
+    if (tokens.every(tk => hay.indexOf(tk) !== -1)) {
+      let score = 4;
+      const enL = entry.en.toLowerCase();
+      const bnL = entry.bn.toLowerCase();
+      if (enL.indexOf(query) === 0) score = 0;
+      else if (bnL.indexOf(query) === 0) score = 1;
+      else if (enL.indexOf(query) !== -1) score = 2;
+      else if (bnL.indexOf(query) !== -1) score = 3;
+      matched.push({ entry: entry, score: score });
+    }
+  });
+  matched.sort(function (a, b) { return a.score - b.score; });
+  renderSearchResults(panel, matched.slice(0, 12), rawQuery.trim());
+}
+
+function renderSearchResults(panel, results, query) {
+  const label = lang === 'bn' ? 'বাংলা' : 'English';
+  let html = '<div class="sr-head">' + t('অনুসন্ধান ফলাফল:', 'Search results for:') + ' <b>' + query + '</b></div>';
+  if (!results.length) {
+    html += '<div class="sr-empty">' + t('কোনো ফলাফল পাওয়া যায়নি। অন্য কীওয়ার্ড দিয়ে চেষ্টা করুন।', 'No matching sections found. Try a different keyword.') + '</div>';
+  } else {
+    let lastGroup = null;
+    results.forEach(r => {
+      const g = t(r.groupBn, r.groupEn);
+      if (g !== lastGroup) {
+        html += '<div class="sr-group">' + g + '</div>';
+        lastGroup = g;
+      }
+      html += '<a class="sr-item" href="' + url(r.href) + '"' + (r.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
+        '<span class="sr-title">' + t(r.bn, r.en) + '</span>' +
+        (r.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
+        '</a>';
+    });
+  }
+  panel.innerHTML = html;
+  panel.classList.remove('hidden');
+  // eslint-disable-next-line no-unused-vars
+  const _ = label;
+}
+
+function openSearch() {
+  const panel = document.getElementById('siteSearchResults');
+  if (panel) panel.classList.remove('hidden');
+}
+function closeSearch() {
+  const panel = document.getElementById('siteSearchResults');
+  if (panel) panel.classList.add('hidden');
+}
+
+function bindSiteSearch() {
+  const form = document.getElementById('topSearchForm');
+  if (!form) return;
+  const input = document.getElementById('topSearchInput');
+  const btn = document.getElementById('topSearchBtn');
+  let debounce = null;
+
+  if (input) {
+    input.addEventListener('input', function () {
+      clearTimeout(debounce);
+      debounce = setTimeout(function () { doSiteSearch(input.value); }, 180);
+    });
+    input.addEventListener('focus', function () { doSiteSearch(input.value); });
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const v = input ? input.value.trim() : '';
+    if (!v) return;
+    doSiteSearch(v);
+  });
+  if (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const v = input ? input.value.trim() : '';
+      doSiteSearch(v);
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.national-bar')) closeSearch();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSearch();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
    LANGUAGE TOGGLE
 ═══════════════════════════════════════════════════════════════ */
 function applyStaticLang() {
   document.querySelectorAll('[data-en]').forEach(el => {
-    el.textContent = lang === 'bn' ? (el.getAttribute('data-bn') || el.getAttribute('data-en')) : el.getAttribute('data-en');
+    const val = lang === 'bn' ? (el.getAttribute('data-bn') || el.getAttribute('data-en')) : el.getAttribute('data-en');
+    el.innerHTML = val || '';
   });
   document.documentElement.lang = lang === 'bn' ? 'bn' : 'en';
+  const si = document.getElementById('topSearchInput');
+  if (si) si.setAttribute('placeholder', lang === 'bn' ? 'পোর্টাল খুঁজুন...' : 'Search the portal...');
   const btn = document.getElementById('langToggle');
   if (btn) btn.textContent = lang === 'bn' ? 'English' : 'বাংলা';
   const crumb = document.getElementById('crumbCurrent');
@@ -408,6 +554,13 @@ function applyStaticLang() {
     const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact') };
     crumb.textContent = map[state.route] || map.home;
   }
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) {
+    meta.setAttribute('content', lang === 'bn'
+      ? 'পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি), শিল্প মন্ত্রণালয়, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার।'
+      : 'Department of Patents, Designs & Trademarks (DPDT), Ministry of Industries, Government of the People\'s Republic of Bangladesh.');
+  }
+  if (input && input.value) doSiteSearch(input.value);
 }
 
 function setLang(next) {
@@ -424,6 +577,12 @@ function initLang() {
       setLang(lang === 'bn' ? 'en' : 'bn');
     });
   }
+  const mobileLang = document.getElementById('mobileLangToggle');
+  if (mobileLang) {
+    mobileLang.addEventListener('click', function () {
+      setLang(lang === 'bn' ? 'en' : 'bn');
+    });
+  }
   renderBar(); renderMega(); renderMobile(); renderLists();
   applyStaticLang();
 }
@@ -434,6 +593,7 @@ function initLang() {
    Route is derived from the real URL path + query string.
 ═══════════════════════════════════════════════════════════════ */
 const state = { route: 'home', regNo: null };
+let input = null;
 
 function currentRoute() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -451,7 +611,19 @@ const VIEW_TITLES = {
   fee: 'Fee Structure | DPDT Bangladesh',
   contact: 'Contact | DPDT Bangladesh'
 };
-const CRUMB_KEYS = { home: 'home', verify: 'verify', fee: 'fee', contact: 'contact' };
+
+function viewTitle(route) {
+  if (lang === 'bn') {
+    const m = {
+      home: 'হোম | পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর',
+      verify: 'ট্রেডমার্ক যাচাইকরণ | ডিপিডিটি বাংলাদেশ',
+      fee: 'ফি কাঠামো | ডিপিডিটি বাংলাদেশ',
+      contact: 'যোগাযোগ | ডিপিডিটি বাংলাদেশ'
+    };
+    return m[route] || m.home;
+  }
+  return VIEW_TITLES[route] || VIEW_TITLES.home;
+}
 
 function showView(route) {
   state.route = route;
@@ -464,7 +636,7 @@ function showView(route) {
     const cta = document.querySelector('#navList a[href="/verify"]');
     if (cta) cta.classList.add('active');
   }
-  document.title = VIEW_TITLES[route];
+  document.title = viewTitle(route);
 
   const crumb = document.getElementById('crumbCurrent');
   if (crumb) crumb.textContent = (route === 'home' ? t('হোম', 'Home')
@@ -475,8 +647,8 @@ function showView(route) {
   const q = new URLSearchParams(window.location.search);
   const reg = q.get('reg_no') || q.get('regNo');
   if (route === 'verify') {
-    const input = document.getElementById('tm');
-    if (input) input.value = reg || '';
+    const inputEl = document.getElementById('tm');
+    if (inputEl) inputEl.value = reg || '';
     if (reg) verifyTrademark(reg);
   }
   closeAllMenus();
@@ -610,6 +782,29 @@ function openDrawer() { document.getElementById('mobileDrawer').classList.add('o
 function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.getElementById('scrim').classList.remove('open'); document.body.style.overflow = ''; }
 function closeAllMenus() { closeMega(); closeDrawer(); }
 
+/* Close desktop dropdowns */
+function closeBarDropdowns(except) {
+  document.querySelectorAll('.nav-list > li.has-sub.open').forEach(function (li) {
+    if (except && li === except) return;
+    li.classList.remove('open');
+  });
+}
+
+/* Keep an open dropdown inside the viewport (nav wraps / right-aligned rows) */
+function clampDropdown(li) {
+  const dd = li.querySelector('.dropdown');
+  if (!dd) return;
+  const liRect = li.getBoundingClientRect();
+  const w = dd.offsetWidth;
+  let leftPx = 0;
+  if (w <= window.innerWidth - 16) {
+    const minL = 8, maxL = window.innerWidth - w - 8;
+    const ddLeft = dd.getBoundingClientRect().left;
+    leftPx = Math.min(Math.max(ddLeft, minL), maxL) - liRect.left;
+  }
+  dd.style.left = leftPx + 'px';
+}
+
 function bindMenus() {
   const menuBtn = document.getElementById('menuBtn');
   if (menuBtn) menuBtn.addEventListener('click', openMega);
@@ -625,23 +820,52 @@ function bindMenus() {
   const scrim = document.getElementById('scrim');
   if (scrim) scrim.addEventListener('click', closeDrawer);
 
+  /* click-to-open dropdowns (touch / tablet) */
+  const navList = document.getElementById('navList');
+  if (navList) {
+    navList.addEventListener('click', function (e) {
+      const btn = e.target.closest('.nav-link');
+      if (!btn) return;
+      const li = btn.closest('li.has-sub');
+      if (!li) return;
+      const isOpen = li.classList.contains('open');
+      closeBarDropdowns();
+      if (!isOpen) li.classList.add('open');
+      clampDropdown(li);
+    });
+    navList.addEventListener('mouseover', function (e) {
+      const li = e.target.closest('li.has-sub');
+      if (li) clampDropdown(li);
+    });
+    window.addEventListener('resize', function () {
+      document.querySelectorAll('.nav-list > li.has-sub.open').forEach(clampDropdown);
+    });
+    navList.addEventListener('mouseleave', function () { closeBarDropdowns(); });
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeAllMenus();
   });
-}
-
-/* Top national-bar search -> trademark verification lookup */
-function bindTopSearch() {
-  const form = document.getElementById('topSearchForm');
-  if (!form) return;
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const input = document.getElementById('topSearchInput');
-    const v = input ? input.value.trim() : '';
-    if (!v) return;
-    navigate('/verify?reg_no=' + encodeURIComponent(v));
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.primary-nav')) closeBarDropdowns();
   });
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+  input = document.getElementById('topSearchInput');
+  initLang();
+  bindMenus();
+  bindInternalLinks();
+  bindSiteSearch();
+  loadRecordCount();
+  window.addEventListener('popstate', route);
+  route();
+  updateClock();
+  setInterval(updateClock, 1000);
+});
 
 /* Live count of trademark records in data.json (reliable stat) */
 function loadRecordCount() {
@@ -654,18 +878,3 @@ function loadRecordCount() {
     })
     .catch(function () {});
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', function () {
-  initLang();
-  bindMenus();
-  bindInternalLinks();
-  bindTopSearch();
-  loadRecordCount();
-  window.addEventListener('popstate', route);
-  route();
-  updateClock();
-  setInterval(updateClock, 1000);
-});
