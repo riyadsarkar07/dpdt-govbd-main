@@ -26,9 +26,9 @@
     </a>
     <div class="national-bar-right">
       <form class="top-search" id="topSearchForm" role="search">
-        <input type="text" id="topSearchInput" placeholder="Trademark number..." aria-label="Search trademark number">
+        <input type="text" id="topSearchInput" data-ph-en="Search here..." data-ph-bn="এখানে খুঁজুন..." placeholder="Search here..." aria-label="Search the portal">
         <button type="submit" aria-label="Search">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span data-en="Search" data-bn="অনুসন্ধান">Search</span>
         </button>
       </form>
       <button class="lang-toggle" id="langToggle" type="button">বাংলা</button>
@@ -135,11 +135,11 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <span data-en="Verify a Trademark" data-bn="ট্রেডমার্ক যাচাই করুন">Verify a Trademark</span>
           </a>
-          <a class="btn btn-outline" href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener">
+          <a class="btn btn-outline" href="/verify?page=ipas" data-internal="1">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span data-en="IPAS Online Application" data-bn="অনলাইন আবেদন (আইপাস)">IPAS Online Application</span>
           </a>
-          <a class="btn btn-gold" href="https://dpdt.gov.bd/pages/static-pages/6922defe933eb65569e1f09f" target="_blank" rel="noopener">
+          <a class="btn btn-gold" href="/verify?page=about" data-internal="1">
             <span data-en="About the Department" data-bn="অধিদপ্তর সম্পর্কিত">About the Department</span>
           </a>
         </div>
@@ -571,12 +571,12 @@
         <table class="fee-table">
           <thead><tr><th data-en="Service Description" data-bn="সেবার বিবরণ">Service Description</th><th data-en="Form No." data-bn="ফরম নং">Form No.</th><th data-en="Fee (BDT)" data-bn="ফি (বিডিটি)">Fee (BDT)</th></tr></thead>
           <tbody>
-            <tr><td>Application for Registration of a Trademark (per class) <span class="fee-tag fee-tag-new">New</span></td><td>TM-1</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
-            <tr><td>Application for Series of Trademarks (per class, per mark)</td><td>TM-1</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
-            <tr><td>Application for Collective Mark or Certification Mark</td><td>TM-1</td><td><span class="fee-amt">৳ 5,000</span></td></tr>
-            <tr><td>Application for Amendment of Registered Trademark</td><td>TM-26</td><td><span class="fee-amt">৳ 1,500</span></td></tr>
-            <tr><td>Application for Registration of Assignment / Transmission</td><td>TM-24</td><td><span class="fee-amt">৳ 4,000</span></td></tr>
-            <tr><td>Certified Copy of Entry in the Register (per copy)</td><td>TM-31</td><td><span class="fee-amt">৳ 500</span></td></tr>
+            <tr><td><span class="fee-name" data-en="Application for Registration of a Trademark (per class)" data-bn="ট্রেডমার্ক নিবন্ধনের আবেদন (প্রতি শ্রেণিতে)">Application for Registration of a Trademark (per class)</span> <span class="fee-tag fee-tag-new" data-en="New" data-bn="নতুন">New</span></td><td>TM-1</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
+            <tr><td data-en="Application for Series of Trademarks (per class, per mark)" data-bn="সিরিজ ট্রেডমার্কের আবেদন (প্রতি শ্রেণিতে, প্রতি মার্কে)">Application for Series of Trademarks (per class, per mark)</td><td>TM-1</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
+            <tr><td data-en="Application for Collective Mark or Certification Mark" data-bn="সমষ্টিগত মার্ক বা সার্টিফিকেশন মার্কের আবেদন">Application for Collective Mark or Certification Mark</td><td>TM-1</td><td><span class="fee-amt">৳ 5,000</span></td></tr>
+            <tr><td data-en="Application for Amendment of Registered Trademark" data-bn="নিবন্ধিত ট্রেডমার্ক সংশোধনের আবেদন">Application for Amendment of Registered Trademark</td><td>TM-26</td><td><span class="fee-amt">৳ 1,500</span></td></tr>
+            <tr><td data-en="Application for Registration of Assignment / Transmission" data-bn="হস্তান্তর / ট্রান্সমিশন নিবন্ধনের আবেদন">Application for Registration of Assignment / Transmission</td><td>TM-24</td><td><span class="fee-amt">৳ 4,000</span></td></tr>
+            <tr><td data-en="Certified Copy of Entry in the Register (per copy)" data-bn="রেজিস্টারে এন্ট্রির প্রত্যয়িত কপি (প্রতি কপি)">Certified Copy of Entry in the Register (per copy)</td><td>TM-31</td><td><span class="fee-amt">৳ 500</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -589,9 +589,9 @@
         <table class="fee-table">
           <thead><tr><th data-en="Service Description" data-bn="সেবার বিবরণ">Service Description</th><th data-en="Form No." data-bn="ফরম নং">Form No.</th><th data-en="Fee (BDT)" data-bn="ফি (বিডিটি)">Fee (BDT)</th></tr></thead>
           <tbody>
-            <tr><td>Renewal of Registration (per class) — within period <span class="fee-tag fee-tag-renew">Renewal</span></td><td>TM-12</td><td><span class="fee-amt">৳ 4,000</span></td></tr>
-            <tr><td>Renewal with Surcharge (late filing within 6 months)</td><td>TM-12</td><td><span class="fee-amt">৳ 6,000</span></td></tr>
-            <tr><td>Restoration of Removed Mark</td><td>TM-13</td><td><span class="fee-amt">৳ 8,000</span></td></tr>
+            <tr><td><span class="fee-name" data-en="Renewal of Registration (per class) — within period" data-bn="নিবন্ধন নবায়ন (প্রতি শ্রেণিতে) — নির্ধারিত সময়ের মধ্যে">Renewal of Registration (per class) — within period</span> <span class="fee-tag fee-tag-renew" data-en="Renewal" data-bn="নবায়ন">Renewal</span></td><td>TM-12</td><td><span class="fee-amt">৳ 4,000</span></td></tr>
+            <tr><td data-en="Renewal with Surcharge (late filing within 6 months)" data-bn="সারচার্জসহ নবায়ন (৬ মাসের মধ্যে দেরিতে দাখিল)">Renewal with Surcharge (late filing within 6 months)</td><td>TM-12</td><td><span class="fee-amt">৳ 6,000</span></td></tr>
+            <tr><td data-en="Restoration of Removed Mark" data-bn="অপসারিত মার্ক পুনরুদ্ধার">Restoration of Removed Mark</td><td>TM-13</td><td><span class="fee-amt">৳ 8,000</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -604,10 +604,10 @@
         <table class="fee-table">
           <thead><tr><th data-en="Service Description" data-bn="সেবার বিবরণ">Service Description</th><th data-en="Form No." data-bn="ফরম নং">Form No.</th><th data-en="Fee (BDT)" data-bn="ফি (বিডিটি)">Fee (BDT)</th></tr></thead>
           <tbody>
-            <tr><td>Notice of Opposition to Registration</td><td>TM-5</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
-            <tr><td>Counter-Statement to Opposition</td><td>TM-6</td><td><span class="fee-amt">৳ 1,500</span></td></tr>
-            <tr><td>Application for Rectification of Register</td><td>TM-27</td><td><span class="fee-amt">৳ 3,500</span></td></tr>
-            <tr><td>Application for Cancellation of Registration</td><td>TM-28</td><td><span class="fee-amt">৳ 5,000</span></td></tr>
+            <tr><td data-en="Notice of Opposition to Registration" data-bn="নিবন্ধনের বিরুদ্ধে অপোজিশন নোটিশ">Notice of Opposition to Registration</td><td>TM-5</td><td><span class="fee-amt">৳ 3,000</span></td></tr>
+            <tr><td data-en="Counter-Statement to Opposition" data-bn="অপোজিশনের জবাবি বিবৃতি">Counter-Statement to Opposition</td><td>TM-6</td><td><span class="fee-amt">৳ 1,500</span></td></tr>
+            <tr><td data-en="Application for Rectification of Register" data-bn="রেজিস্টার সংশোধনের আবেদন">Application for Rectification of Register</td><td>TM-27</td><td><span class="fee-amt">৳ 3,500</span></td></tr>
+            <tr><td data-en="Application for Cancellation of Registration" data-bn="নিবন্ধন বাতিলের আবেদন">Application for Cancellation of Registration</td><td>TM-28</td><td><span class="fee-amt">৳ 5,000</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -682,19 +682,288 @@
               <span data-en="Emergency Hotlines" data-bn="জরুরি যোগাযোগ">Emergency Hotlines</span>
             </div>
             <div class="contact-block-body">
-              <div class="contact-row"><div class="cr-label">সরকারি তথ্য ও সেবা<em>Government Information &amp; Services</em></div><div class="cr-num">৩৩৩</div></div>
-              <div class="contact-row"><div class="cr-label">জরুরি সেবা<em>National Emergency Service</em></div><div class="cr-num">৯৯৯</div></div>
-              <div class="contact-row"><div class="cr-label">ফায়ার সার্ভিস হটলাইন<em>Fire Service Hotline</em></div><div class="cr-num">১০২</div></div>
-              <div class="contact-row"><div class="cr-label">সুপ্রিম কোর্ট হেল্পলাইন<em>Supreme Court Helpline</em></div><div class="cr-num">১০৩</div></div>
-              <div class="contact-row"><div class="cr-label">নারী ও শিশু নির্যাতন প্রতিরোধ<em>Women &amp; Child Abuse Prevention</em></div><div class="cr-num">১০৯</div></div>
-              <div class="contact-row"><div class="cr-label">দুদক (অনিয়ম অভিযোগ)<em>Anti-Corruption Commission</em></div><div class="cr-num">১০৬</div></div>
-              <div class="contact-row"><div class="cr-label">শিশু সহায়তা লাইন<em>Child Helpline</em></div><div class="cr-num">১০৯৮</div></div>
-              <div class="contact-row"><div class="cr-label">স্বাস্থ্য সেবা হেল্পলাইন<em>Health Services Helpline</em></div><div class="cr-num">১৬২৬৩</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Government Information &amp; Services" data-bn="সরকারি তথ্য ও সেবা">Government Information &amp; Services</div><div class="cr-num">৩৩৩</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="National Emergency Service" data-bn="জরুরি সেবা">National Emergency Service</div><div class="cr-num">৯৯৯</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Fire Service Hotline" data-bn="ফায়ার সার্ভিস হটলাইন">Fire Service Hotline</div><div class="cr-num">১০২</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Supreme Court Helpline" data-bn="সুপ্রিম কোর্ট হেল্পলাইন">Supreme Court Helpline</div><div class="cr-num">১০৩</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Women &amp; Child Abuse Prevention" data-bn="নারী ও শিশু নির্যাতন প্রতিরোধ">Women &amp; Child Abuse Prevention</div><div class="cr-num">১০৯</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Anti-Corruption Commission" data-bn="দুদক (অনিয়ম অভিযোগ)">Anti-Corruption Commission</div><div class="cr-num">১০৬</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Child Helpline" data-bn="শিশু সহায়তা লাইন">Child Helpline</div><div class="cr-num">১০৯৮</div></div>
+              <div class="contact-row"><div class="cr-label" data-en="Health Services Helpline" data-bn="স্বাস্থ্য সেবা হেল্পলাইন">Health Services Helpline</div><div class="cr-num">১৬২৬৩</div></div>
             </div>
           </div>
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: GENERAL WEBSITE SEARCH
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-search">
+    <div class="container page">
+
+      <div class="verify-head">
+        <div class="vh-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div>
+          <h2 data-en="Search the Portal" data-bn="পোর্টালে অনুসন্ধান করুন">Search the Portal</h2>
+          <p data-en="Search across notices, services, publications, online applications, statistics, laws, rules, forms and more. Every result links to the official DPDT website or a service on this portal."
+             data-bn="বিজ্ঞপ্তি, সেবা, প্রকাশনা, অনলাইন আবেদন, পরিসংখ্যান, আইন-বিধি, ফরম এবং আরও অনেক কিছু জুড়ে অনুসন্ধান করুন। প্রতিটি ফলাফল অফিসিয়াল ডিপিডিটি ওয়েবসাইট বা এই পোর্টালের সেবার সাথে সংযুক্ত।">Search across notices, services, publications, online applications, statistics, laws, rules, forms and more. Every result links to the official DPDT website or a service on this portal.</p>
+        </div>
+      </div>
+
+      <!-- Search box -->
+      <div class="search-panel">
+        <div class="search-panel-head">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span data-en="General Website Search" data-bn="সাধারণ ওয়েবসাইট অনুসন্ধান">General Website Search</span>
+        </div>
+        <div class="search-panel-body">
+          <div class="search-form-row">
+            <div class="search-field">
+              <label for="siteSearchInput" data-en="Search keywords" data-bn="অনুসন্ধান শব্দ">Search keywords</label>
+              <div class="search-input-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="siteSearchInput" class="search-input" data-ph-en="Search here..." data-ph-bn="এখানে খুঁজুন..." placeholder="Search here..." autocomplete="off">
+              </div>
+              <p class="search-hint" data-en="Try: trademark journal, online application, statistics, notice, patent, forms, GI, fees..." data-bn="চেষ্টা করুন: ট্রেডমার্ক জার্নাল, অনলাইন আবেদন, পরিসংখ্যান, বিজ্ঞপ্তি, পেটেন্ট, ফরম, জিআই, ফি...">Try: trademark journal, online application, statistics, notice, patent, forms, GI, fees...</p>
+            </div>
+            <button class="search-btn" onclick="runSiteSearch()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span data-en="Search" data-bn="অনুসন্ধান">Search</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-summary">
+        <span data-en="Results found:" data-bn="পাওয়া ফলাফল:">Results found:</span>
+        <strong id="searchCount">0</strong>
+      </div>
+
+      <div id="searchResults"></div>
+
+      <div id="searchEmpty" class="hidden error-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        <div>
+          <strong data-en="No results." data-bn="কোনো ফলাফল নেই।">No results.</strong>
+          <span data-en=" Please try different keywords or browse the sections using the main menu." data-bn=" অনুগ্রহ করে ভিন্ন শব্দ চেষ্টা করুন অথবা মূল মেনু ব্যবহার করে বিভাগগুলো ব্রাউজ করুন।"> Please try different keywords or browse the sections using the main menu.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: IPAS ONLINE APPLICATION (internal page)
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-ipas">
+    <div class="container page">
+
+      <div class="verify-head">
+        <div class="vh-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <h2 data-en="IPAS 4.0 — Online Application" data-bn="আইপাস ৪.০ — অনলাইন আবেদন">IPAS 4.0 — Online Application</h2>
+          <p data-en="File patents, industrial designs and trademarks online through the official DPDT e-filing platform. Steps, videos and payment guidance from the department's online application page."
+             data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরের অফিসিয়াল ই-ফাইলিং প্ল্যাটফর্মের মাধ্যমে অনলাইনে পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্ক দাখিল করুন। অধিদপ্তরের অনলাইন আবেদন পেজ থেকে ধাপ, ভিডিও ও পেমেন্ট নির্দেশনা।">File patents, industrial designs and trademarks online through the official DPDT e-filing platform. Steps, videos and payment guidance from the department's online application page.</p>
+        </div>
+      </div>
+
+      <div class="info-notice">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <strong data-en="Payment must be confirmed before final submission" data-bn="ফাইনাল সাবমিটের আগে পেমেন্ট নিশ্চিত করুন">Payment must be confirmed before final submission</strong>
+          <span data-en="Please make sure the payment fee is confirmed before you press final submit on your application." data-bn="আবেদন করার সময় পেমেন্ট ফি নিশ্চিত হয়ে ফাইনাল সাবমিট করার জন্য অনুরোধ করা হলো।">Please make sure the payment fee is confirmed before you press final submit on your application.</span>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <div class="panel-head">
+          <span class="pt"><span class="bn">অনলাইন আবেদনের ধাপসমূহ</span><span class="en">Online Application Steps</span></span>
+        </div>
+        <div class="panel-body">
+          <p style="font-size:13px;margin-bottom:12px;color:#3d4a43;"
+             data-en="The department's online application page (below) provides step-by-step links and video tutorials for filing online."
+             data-bn="অধিদপ্তরের অনলাইন আবেদন পেজ (নিচে) অনলাইনে দাখিলের জন্য ধাপে ধাপে লিংক ও ভিডিও টিউটোরিয়াল প্রদান করে।">The department's online application page (below) provides step-by-step links and video tutorials for filing online.</p>
+          <div class="ipas-table">
+            <div class="ipas-row">
+              <span class="ipas-no">1</span>
+              <span class="ipas-txt" data-en="Patents, industrial designs and trademarks online application" data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অনলাইন আবেদন">Patents, industrial designs and trademarks online application</span>
+              <a class="ipas-cta" href="https://bd.wipo.net/efiling-dashboard" target="_blank" rel="noopener" data-en="Click" data-bn="ক্লিক">Click</a>
+            </div>
+            <div class="ipas-row">
+              <span class="ipas-no">2</span>
+              <span class="ipas-txt" data-en="Registration for online application ID and password" data-bn="অনলাইন আবেদনের আইডি ও পাসওয়ার্ডের জন্য রেজিস্ট্রেশন">Registration for online application ID and password</span>
+              <a class="ipas-cta" href="https://bd.wipo.net/efiling-dashboard" target="_blank" rel="noopener" data-en="Click" data-bn="ক্লিক">Click</a>
+            </div>
+            <div class="ipas-row">
+              <span class="ipas-no">3</span>
+              <span class="ipas-txt" data-en="Trademarks online application — video tutorial" data-bn="ট্রেডমার্কস অনলাইন আবেদনের ভিডিও টিউটোরিয়াল">Trademarks online application — video tutorial</span>
+              <a class="ipas-cta" href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener" data-en="Click" data-bn="ক্লিক">Click</a>
+            </div>
+            <div class="ipas-row">
+              <span class="ipas-no">4</span>
+              <span class="ipas-txt" data-en="Patent online application — video tutorial" data-bn="পেটেন্ট অনলাইন আবেদনের ভিডিও টিউটোরিয়াল">Patent online application — video tutorial</span>
+              <a class="ipas-cta" href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener" data-en="Click" data-bn="ক্লিক">Click</a>
+            </div>
+            <div class="ipas-row">
+              <span class="ipas-no">5</span>
+              <span class="ipas-txt" data-en="Industrial design online application — video tutorial" data-bn="শিল্প-নকশা অনলাইন আবেদনের ভিডিও টিউটোরিয়াল">Industrial design online application — video tutorial</span>
+              <a class="ipas-cta" href="https://dpdt.gov.bd/pages/static-pages/6922e011933eb65569e25501" target="_blank" rel="noopener" data-en="Click" data-bn="ক্লিক">Click</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-notice" style="border-left-color:var(--gold);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--gold);" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <div>
+          <strong data-en="Patent claims (claim) part updated" data-bn="পেটেন্ট আবেদনের ক্লেইম (claim) অংশ হালনাগাদ">Patent claims (claim) part updated</strong>
+          <span data-en="The claim part of patent applications has been updated. Please fill in the claim (claim) part before filing patent applications."
+                data-bn="পেটেন্ট আবেদনসমূহের ক্লেইম (claim) অংশ হালনাগাদ করা হয়েছে। অতএব, পেটেন্ট আবেদন করার সময় ক্লেইম (claim) অংশ পূরণ করে দাখিল করার অনুরোধ করা হলো।">The claim part of patent applications has been updated. Please fill in the claim (claim) part before filing patent applications.</span>
+        </div>
+      </div>
+
+      <div class="info-notice" style="border-left-color:var(--gold);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--gold);" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-9-9"/><polyline points="22 3 12 13 8 9"/></svg>
+        <div>
+          <strong data-en="e-Challan payment requires an 11-digit mobile number" data-bn="এ-চালান পেমেন্টে ১১ ডিজিটের মোবাইল নম্বর প্রয়োজন">e-Challan payment requires an 11-digit mobile number</strong>
+          <span data-en="For e-Challan payment, only an 11-digit mobile number is accepted. For any assistance on online application payment, contact the IT Unit of DPDT."
+                data-bn="এ-চালান পেমেন্টের ক্ষেত্রে শুধুমাত্র ১১ ডিজিটের মোবাইল নম্বর গৃহীত হয়। অনলাইন আবেদনের পেমেন্ট সংক্রান্ত যেকোনো প্রয়োজনে ডিপিডিটির আইটি ইউনিটের সাথে যোগাযোগ করুন।">For e-Challan payment, only an 11-digit mobile number is accepted. For any assistance on online application payment, contact the IT Unit of DPDT.</span>
+        </div>
+      </div>
+
+      <div class="contact-info-card" style="margin-bottom:18px;">
+        <div class="cic-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span data-en="IT Unit — DPDT (Online Application Helpdesk)" data-bn="আইটি ইউনিট — ডিপিডিটি (অনলাইন আবেদন সহায়তা)">IT Unit — DPDT (Online Application Helpdesk)</span>
+        </div>
+        <div class="cic-body">
+          <div>
+            <div class="cic-key" data-en="Phone" data-bn="ফোন">Phone</div>
+            <div class="cic-value">+880-2-47120635</div>
+          </div>
+          <div>
+            <div class="cic-key" data-en="Mobile" data-bn="মোবাইল">Mobile</div>
+            <div class="cic-value">01817750554</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:14px;font-size:12.5px;color:#64756c;"
+         data-en="The DPDT e-filing platform (bd.wipo.net/efiling-dashboard) is regularly updated. Server maintenance takes place on weekly holidays, so please plan your filing accordingly."
+         data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরের অনলাইনে আবেদন দাখিলের প্লাটফর্ম (bd.wipo.net/efiling-dashboard) নিয়মিত হালনাগাদ করা হচ্ছে। সাপ্তাহিক ছুটির দিনগুলোতে সার্ভার রক্ষণাবেক্ষণ করা হয়, তাই সেই অনুযায়ী আবেদন করার পরিকল্পনা করুন।">The DPDT e-filing platform (<a href="https://bd.wipo.net/efiling-dashboard" target="_blank" rel="noopener">bd.wipo.net/efiling-dashboard</a>) is regularly updated. Server maintenance takes place on weekly holidays, so please plan your filing accordingly.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: ABOUT THE DEPARTMENT (internal page)
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-about">
+    <div class="container page">
+
+      <div class="verify-head">
+        <div class="vh-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div>
+          <h2 data-en="About the Department" data-bn="অধিদপ্তর সম্পর্কে">About the Department</h2>
+          <p data-en="Vision, mission, strategic objectives and values of the Department of Patents, Designs & Trademarks, Bangladesh — from the department's official 'Aims & Objectives' page."
+             data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরের লক্ষ্য, উদ্দেশ্য, কৌশলগত লক্ষ্যমাত্রা ও মূল্যবোধ — অধিদপ্তরের অফিসিয়াল 'লক্ষ্য ও উদ্দেশ্য' পেজ থেকে।">Vision, mission, strategic objectives and values of the Department of Patents, Designs &amp; Trademarks, Bangladesh — from the department's official 'Aims &amp; Objectives' page.</p>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <div class="panel-body" style="font-size:13.5px;line-height:1.7;color:#3d4a43;">
+          <p style="margin-bottom:12px;"
+             data-en="The Department of Patents, Designs & Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents and registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh."
+             data-bn="পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি) ২০০৩ সালে সাবেক ‘পেটেন্ট অফিস’ এবং ‘ট্রেডমার্কস রেজিস্ট্রি’ অফিস দুটি একীভূত করে প্রতিষ্ঠিত হয়। বাংলাদেশের মেধা সম্পদ সুরক্ষায় এটি পেটেন্ট মঞ্জুর করে এবং শিল্প-নকশা, ট্রেডমার্ক ও ভৌগোলিক নির্দেশক পণ্য নিবন্ধন করে।">The Department of Patents, Designs &amp; Trademarks (DPDT) was established in 2003 by merging the former Patent Office and the Trademarks Registry. It grants patents and registers industrial designs, trademarks and geographical indications to protect the intellectual property of Bangladesh.</p>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <div class="panel-head">
+          <span class="pt"><span class="bn">লক্ষ্য ও উদ্দেশ্য</span><span class="en">Aims &amp; Objectives</span></span>
+        </div>
+        <div class="panel-body">
+          <div class="about-block">
+            <span class="ab-title" data-en="Vision" data-bn="ভিশন">Vision</span>
+            <p data-en="World-class service in intellectual property protection." data-bn="মেধাসম্পদ সুরক্ষায় বিশ্বমানের সেবা।">World-class service in intellectual property protection.</p>
+          </div>
+          <div class="about-block">
+            <span class="ab-title" data-en="Mission" data-bn="মিশন">Mission</span>
+            <p data-en="Ensuring effective and up-to-date services by accelerating innovation through intellectual property preservation and awareness building."
+               data-bn="মেধাসম্পদ সংরক্ষণ ও সচেতনতা বৃদ্ধির মাধ্যমে সৃষ্টিশীলতায় (Innovation) গতি আনয়নসহ কার্যকর ও যুগপোযোগী সেবা নিশ্চিতকরণ।">Ensuring effective and up-to-date services by accelerating innovation through intellectual property preservation and awareness building.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <div class="panel-head">
+          <span class="pt"><span class="bn">কৌশলগত লক্ষ্যসমূহ</span><span class="en">Strategic Objectives</span></span>
+        </div>
+        <div class="panel-body">
+          <ul class="about-list">
+            <li>
+              <span data-en="Pre-registration activities for intellectual property protection" data-bn="মেধাসম্পদ সুরক্ষার পূর্ব নিবন্ধন কার্যক্রম (প্রি-রেজিস্ট্রেশন)">Pre-registration activities for intellectual property protection</span>
+            </li>
+            <li>
+              <span data-en="Registration and post-registration activities" data-bn="নিবন্ধন ও উত্তর-নিবন্ধন কার্যক্রম">Registration and post-registration activities</span>
+            </li>
+            <li>
+              <span data-en="Organizational capacity building, human resource development and awareness creation" data-bn="সাংগঠনিক সক্ষমতা বৃদ্ধি, জনবল উন্নয়ন ও সচেতনতা সৃষ্টি">Organizational capacity building, human resource development and awareness creation</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <div class="panel-head">
+          <span class="pt"><span class="bn">মৌলিক কৌশলগত লক্ষ্যমাত্রা</span><span class="en">Mandatory Strategic Objectives</span></span>
+        </div>
+        <div class="panel-body">
+          <ul class="about-list">
+            <li><span data-en="Implementation of Annual Performance Agreement (APA)" data-bn="বার্ষিক কর্মসম্পাদন চুক্তি (এপিএ) বাস্তবায়ন">Implementation of Annual Performance Agreement (APA)</span></li>
+            <li><span data-en="Skill and ethics development" data-bn="দক্ষতা ও নৈতিকতা উন্নয়ন">Skill and ethics development</span></li>
+            <li><span data-en="Implementation of the Right to Information Act" data-bn="তথ্য অধিকার আইন বাস্তবায়ন">Implementation of the Right to Information Act</span></li>
+            <li><span data-en="Improvement of service quality" data-bn="সেবার মান উন্নয়ন">Improvement of service quality</span></li>
+            <li><span data-en="Improvement of work environment" data-bn="কর্মপরিবেশের উন্নয়ন">Improvement of work environment</span></li>
+            <li><span data-en="Improvement of financial management" data-bn="আর্থিক ব্যবস্থাপনার উন্নয়ন">Improvement of financial management</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:18px;">
+        <div class="panel-head">
+          <span class="pt"><span class="bn">মূল্যবোধ</span><span class="en">Values</span></span>
+        </div>
+        <div class="panel-body">
+          <p style="font-size:14px;font-weight:600;color:var(--green-deep);">"We are committed to protect your Intellectual Property Rights (IPRs)."</p>
+        </div>
+      </div>
+
+      <div class="side-widget" style="margin-bottom:18px;">
+        <div class="side-widget-head">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span data-en="Official pages of the Department" data-bn="অধিদপ্তরের অফিসিয়াল পেজসমূহ">Official pages of the Department</span>
+        </div>
+        <div class="side-widget-body">
+          <div class="side-link-list">
+            <a href="https://dpdt.gov.bd/pages/static-pages/6922defe933eb65569e1f09f" target="_blank" rel="noopener"><span class="bn">লক্ষ্য ও উদ্দেশ্য</span><span class="en">Aims &amp; Objectives</span><span class="ext">↗</span></a>
+            <a href="https://dpdt.gov.bd/pages/milestone" target="_blank" rel="noopener"><span class="bn">অর্জনসমূহ</span><span class="en">Milestones</span><span class="ext">↗</span></a>
+            <a href="https://dpdt.gov.bd/pages/office_screen" target="_blank" rel="noopener"><span class="bn">সংগঠন কাঠামো</span><span class="en">Organizational Structure</span><span class="ext">↗</span></a>
+            <a href="https://dpdt.gov.bd/pages/citizen_charter" target="_blank" rel="noopener"><span class="bn">সিটিজেন চার্টার</span><span class="en">Citizen Charter</span><span class="ext">↗</span></a>
+            <a href="https://dpdt.gov.bd/pages/officers" target="_blank" rel="noopener"><span class="bn">কর্মকর্তাবৃন্দ</span><span class="en">Officers</span><span class="ext">↗</span></a>
+            <a href="https://dpdt.gov.bd/pages/static-pages/6922dc84933eb65569e10c76" target="_blank" rel="noopener"><span class="bn">যোগাযোগ</span><span class="en">Contact</span><span class="ext">↗</span></a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
