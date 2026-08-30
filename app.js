@@ -94,7 +94,6 @@ const NAV = [
       ]},
       { en: 'Rules', bn: 'বিধি', items: [
         { en: 'Patents & Designs Rules, 1933', bn: 'পেটেন্ট ও ডিজাইন বিধিমালা, ১৯৩৩', href: '/pages/static-pages/6922e033933eb65569e25f61' },
-        { en: 'Trademarks Rules, 1963', bn: 'ট্রেডমার্কস বিধিমালা, ১৯৬৩', href: '/site/page/c4e72713-8af7-4762-83f6-876e6c8bb583' },
         { en: 'Trademark Rules, 2015', bn: 'ট্রেডমার্ক বিধিমালা, ২০১৫', href: '/pages/static-pages/6922ddc2933eb65569e1620f' },
         { en: 'GI Product Rules, 2015', bn: 'ভৌগোলিক নির্দেশক পণ্য বিধিমালা, ২০১৫', href: '/pages/static-pages/6922de14933eb65569e1811f' }
       ]},
@@ -223,9 +222,9 @@ const HOTLINES = [
 ];
 
 const NOTICES = [
-  { en: 'Information regarding opposition cases filed against trademark applications published in the 340th Trademark Journal.', bn: '৩৪০ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '11', m: 'Aug 2026', href: '/pages/notices/340-opposition-340th-trademark-journal' },
-  { en: 'Meeting with representatives/members of Bangladesh Intellectual Property Attorneys Association (BIPAA).', bn: 'Bangladesh Intellectual Property Attorneys Association (BIPAA) এর প্রতিনিধি/সদস্যগণের সাথে মতবিনিময় সভা।', d: '27', m: 'Jul 2026', href: '/pages/notices/bipaa-representatives-meeting' },
-  { en: 'Information regarding opposition cases filed against trademark applications published in the 339th Trademark Journal.', bn: '৩৩৯ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '24', m: 'Jun 2026', href: '/pages/notices/339-opposition-339th-trademark-journal' }
+  { en: 'Information regarding opposition cases filed against trademark applications published in the 340th Trademark Journal.', bn: '৩৪০ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '11', m: 'Aug 2026', href: '/pages/notices/৩৪০-নং-ট্রেডমার্ক-জার্নালে-প্রকাশিত-ট্রেডমার্ক-দরখাস্ত-সমূহের-বিরুদ্ধে-দায়েরকৃত-অপোজিশন-মামলা-সংক্রান্ত-তথ্য-qe52if-6a7ab7896ab58a3743452384' },
+  { en: 'Meeting with representatives/members of Bangladesh Intellectual Property Attorneys Association (BIPAA).', bn: 'Bangladesh Intellectual Property Attorneys Association (BIPAA) এর প্রতিনিধি/সদস্যগণের সাথে মতবিনিময় সভা।', d: '27', m: 'Jul 2026', href: '/pages/notices/bangladesh-intellectual-property-attorneys-association-bipaa-এর-প্রতিনিধিসদস্যগণের-সাথে-মতবিনিময়-সভা-o9yb8w-6a6879a8a134e8fb07b769b9' },
+  { en: 'Information regarding opposition cases filed against trademark applications published in the 339th Trademark Journal.', bn: '৩৩৯ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '24', m: 'Jun 2026', href: '/pages/notices/৩৩৯-নং-ট্রেডমার্ক-জার্নালে-প্রকাশিত-ট্রেডমার্ক-দরখাস্ত-সমূহের-বিরুদ্ধে-দায়েরকৃত-অপোজিশন-মামলা-সংক্রান্ত-তথ্য-4wcj98-6a3bb1ce96ede6d08b061305' }
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -261,6 +260,12 @@ const SEARCH_PAGES = [
   { cat: 'portal', en: 'Contact & Emergency Hotlines', bn: 'যোগাযোগ ও জরুরি হটলাইন', href: '/verify?page=contact', portal: true },
   { cat: 'notice', en: 'Notice Board', bn: 'নোটিশ বোর্ড', href: OFF + '/pages/notices' },
   { cat: 'notice', en: 'News & Announcements', bn: 'খবর ও ঘোষণা', href: OFF + '/pages/news/' },
+  { cat: 'portal', en: 'All Services', bn: 'সকল সেবা', href: OFF + '/pages/service-boxes' },
+  { cat: 'portal', en: 'Service Process Maps', bn: 'সেবা প্রক্রিয়া', href: OFF + '/pages/office-process-maps' },
+  { cat: 'notice', en: 'Tenders & Notices', bn: 'দরপত্র ও বিজ্ঞপ্তি', href: OFF + '/pages/tenders' },
+  { cat: 'notice', en: 'Notifications & Circulars', bn: 'প্রজ্ঞাপন ও পরিপত্র', href: OFF + '/pages/notification-circulars' },
+  { cat: 'portal', en: 'Office Orders', bn: 'অফিস আদেশ', href: OFF + '/pages/office-orders' },
+  { cat: 'media', en: 'Photo Gallery', bn: 'ফটো গ্যালারী', href: OFF + '/pages/photo-galleries' },
   { cat: 'online', en: 'IPAS 4.0 — Online Application', bn: 'আইপাস ৪.০ — অনলাইন আবেদন', href: '/verify?page=ipas', portal: true },
   { cat: 'about', en: 'About the Department / Aims & Objectives', bn: 'অধিদপ্তর সম্পর্কিত / লক্ষ্য ও উদ্দেশ্য', href: '/verify?page=about', portal: true },
   { cat: 'online', en: 'A-Challan Payment Link', bn: 'A চালান লিংক', href: 'https://www.achallan.gov.bd/', ext: true },
