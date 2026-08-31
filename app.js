@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════
    DPDT BANGLADESH — PORTAL APP SCRIPT
    Navigation (mirrors real dpdt.gov.bd structure), routing,
-   language toggle, and the preserved trademark-verification engine.
+   language toggle, general site search, and the preserved
+   trademark-verification engine.
    ═══════════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -18,7 +19,8 @@ const NAV = [
     key: 'about', en: 'About DPDT', bn: 'অধিদপ্তর সম্পর্কিত',
     groups: [
       { en: 'About the Department', bn: 'অধিদপ্তর', items: [
-        { en: 'Aims & Objectives', bn: 'লক্ষ্য ও উদ্দেশ্য', href: '/verify?page=about' },
+        { en: 'About the Department', bn: 'অধিদপ্তর সম্পর্কে', href: '/about', internal: true },
+        { en: 'Aims & Objectives', bn: 'লক্ষ্য ও উদ্দেশ্য', href: '/pages/static-pages/6922defe933eb65569e1f09f' },
         { en: 'Milestones', bn: 'মাইলস্টোন্স', href: '/pages/static-pages/6922db7a933eb65569e0a514' },
         { en: 'Organizational Structure', bn: 'সাংগঠনিক কাঠামো', href: '/pages/static-pages/6922e04a933eb65569e265a1' },
         { en: 'Citizen Charter', bn: 'নাগরিক সনদ', href: '/pages/static-pages/6922df66933eb65569e21bc3' }
@@ -46,7 +48,7 @@ const NAV = [
   {
     key: 'online', en: 'Online Application', bn: 'অনলাইন আবেদন',
     groups: [{ en: 'Online Application', bn: 'অনলাইন আবেদন', items: [
-      { en: 'IPAS 4.0 — Online Application', bn: 'অনলাইন আবেদন', href: '/verify?page=ipas' },
+      { en: 'IPAS 4.0 — Online Application', bn: 'অনলাইন আবেদন (আইপাস)', href: '/online-application', internal: true },
       { en: 'Online Application Updates', bn: 'অনলাইন আবেদন বিষয়ক হালনাগাদ তথ্য', href: '/pages/static-pages/6922e02a933eb65569e25ca3' },
       { en: 'A-Challan Link', bn: 'A চালান লিংক', href: 'https://www.achallan.gov.bd/', ext: true }
     ]}]
@@ -105,6 +107,15 @@ const NAV = [
   },
 
   {
+    key: 'media', en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী',
+    groups: [{ en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী', items: [
+      { en: 'Photo Gallery', bn: 'ফটো গ্যালারী', href: '/pages/photo-galleries' },
+      { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications' },
+      { en: 'Presentations', bn: 'প্রেজেন্টেশন', href: '/pages/static-pages/6922df0a933eb65569e1f694' }
+    ]}]
+  },
+
+  {
     key: 'download', en: 'Download', bn: 'ডাউনলোড',
     groups: [
       { en: 'Application Process', bn: 'আবেদন প্রক্রিয়া', items: [
@@ -150,15 +161,6 @@ const NAV = [
   },
 
   {
-    key: 'media', en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী',
-    groups: [{ en: 'Media Gallery', bn: 'মিডিয়া গ্যালারী', items: [
-      { en: 'Photo Gallery', bn: 'ফটো গ্যালারী', href: '/pages/photo-galleries' },
-      { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications' },
-      { en: 'Presentations', bn: 'প্রেজেন্টেশন', href: '/pages/static-pages/6922df0a933eb65569e1f694' }
-    ]}]
-  },
-
-  {
     key: 'classification', en: 'International Classification', bn: 'আন্তর্জাতিক শ্রেণিবিভাগ',
     groups: [{ en: 'International Classification', bn: 'আন্তর্জাতিক শ্রেণিবিভাগ', items: [
       { en: 'Trademark Nice Classification', bn: 'ট্রেডমার্ক নিস শ্রেণী বিভাগ', href: '/pages/static-pages/6922df9e933eb65569e230bd' },
@@ -197,9 +199,9 @@ const NAV = [
 /* Portal-internal links (functionality owned by this portal). */
 const INTERNAL_LINKS = [
   { en: 'Home', bn: 'হোম', href: '/' },
+  { en: 'About the Department', bn: 'অধিদপ্তর সম্পর্কে', href: '/about' },
+  { en: 'Online Application (IPAS)', bn: 'অনলাইন আবেদন (আইপাস)', href: '/online-application' },
   { en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify' },
-  { en: 'IPAS Online Application', bn: 'অনলাইন আবেদন (আইপাস)', href: '/verify?page=ipas' },
-  { en: 'About the Department', bn: 'অধিদপ্তর সম্পর্কিত', href: '/verify?page=about' },
   { en: 'Fee Structure', bn: 'ফি কাঠামো', href: '/verify?page=fee' },
   { en: 'Contact & Hotlines', bn: 'যোগাযোগ', href: '/verify?page=contact' }
 ];
@@ -227,149 +229,20 @@ const NOTICES = [
   { en: 'Information regarding opposition cases filed against trademark applications published in the 339th Trademark Journal.', bn: '৩৩৯ নং ট্রেডমার্ক জার্নালে প্রকাশিত ট্রেডমার্ক দরখাস্ত সমূহের বিরুদ্ধে দায়েরকৃত অপোজিশন মামলা সংক্রান্ত তথ্য।', d: '24', m: 'Jun 2026', href: '/pages/notices/৩৩৯-নং-ট্রেডমার্ক-জার্নালে-প্রকাশিত-ট্রেডমার্ক-দরখাস্ত-সমূহের-বিরুদ্ধে-দায়েরকৃত-অপোজিশন-মামলা-সংক্রান্ত-তথ্য-4wcj98-6a3bb1ce96ede6d08b061305' }
 ];
 
-/* ═══════════════════════════════════════════════════════════════
-   GENERAL WEBSITE SEARCH
-   Replaces the former top "trademark number" quick search with a
-   full-site search across notices, services, publications, online
-   applications, statistics, laws, forms, FAQs and portal pages.
-   Results are grouped by category; every result links to a real,
-   working destination (portal routes or official dpdt.gov.bd pages).
-═══════════════════════════════════════════════════════════════ */
-const SEARCH_CATS = {
-  portal:        { en: 'This Portal',      bn: 'এ পোর্টাল' },
-  about:         { en: 'About DPDT',       bn: 'অধিদপ্তর সম্পর্কিত' },
-  statistics:    { en: 'Statistics',       bn: 'পরিসংখ্যান' },
-  online:        { en: 'Online Application', bn: 'অনলাইন আবেদন' },
-  publication:   { en: 'Publications',     bn: 'পাবলিকেশন' },
-  acts:          { en: 'Laws & Rules',     bn: 'আইন-বিধি' },
-  download:      { en: 'Forms & Download', bn: 'ফরম ও ডাউনলোড' },
-  media:         { en: 'Media Gallery',    bn: 'মিডিয়া গ্যালারী' },
-  classification:{ en: 'International Classification', bn: 'আন্তর্জাতিক শ্রেণিবিভাগ' },
-  gi:            { en: 'GI Products',      bn: 'ভৌগোলিক নির্দেশক (জিআই) পণ্য' },
-  faq:           { en: 'FAQ',              bn: 'সচরাচর জিজ্ঞাস্য' },
-  notice:        { en: 'Notices',          bn: 'বিজ্ঞপ্তি' },
-  links:         { en: 'Important Links',  bn: 'গুরুত্বপূর্ণ লিঙ্ক' },
-  hotline:       { en: 'Emergency Hotlines', bn: 'জরুরি যোগাযোগ' }
-};
-
-/* Curated landing pages (portal services + official index pages). */
+/* Additional searchable portal pages (not already covered by NAV). */
 const SEARCH_PAGES = [
-  { cat: 'portal', en: 'Home', bn: 'হোম', href: '/', portal: true },
-  { cat: 'portal', en: 'Trademark Verification Service', bn: 'ট্রেডমার্ক যাচাইকরণ সেবা', href: '/verify', portal: true },
-  { cat: 'portal', en: 'Fee Structure', bn: 'ফি কাঠামো', href: '/verify?page=fee', portal: true },
-  { cat: 'portal', en: 'Contact & Emergency Hotlines', bn: 'যোগাযোগ ও জরুরি হটলাইন', href: '/verify?page=contact', portal: true },
-  { cat: 'notice', en: 'Notice Board', bn: 'নোটিশ বোর্ড', href: OFF + '/pages/notices' },
-  { cat: 'notice', en: 'News & Announcements', bn: 'খবর ও ঘোষণা', href: OFF + '/pages/news/' },
-  { cat: 'portal', en: 'All Services', bn: 'সকল সেবা', href: OFF + '/pages/service-boxes' },
-  { cat: 'portal', en: 'Service Process Maps', bn: 'সেবা প্রক্রিয়া', href: OFF + '/pages/office-process-maps' },
-  { cat: 'notice', en: 'Tenders & Notices', bn: 'দরপত্র ও বিজ্ঞপ্তি', href: OFF + '/pages/tenders' },
-  { cat: 'notice', en: 'Notifications & Circulars', bn: 'প্রজ্ঞাপন ও পরিপত্র', href: OFF + '/pages/notification-circulars' },
-  { cat: 'portal', en: 'Office Orders', bn: 'অফিস আদেশ', href: OFF + '/pages/office-orders' },
-  { cat: 'media', en: 'Photo Gallery', bn: 'ফটো গ্যালারী', href: OFF + '/pages/photo-galleries' },
-  { cat: 'online', en: 'IPAS 4.0 — Online Application', bn: 'আইপাস ৪.০ — অনলাইন আবেদন', href: '/verify?page=ipas', portal: true },
-  { cat: 'about', en: 'About the Department / Aims & Objectives', bn: 'অধিদপ্তর সম্পর্কিত / লক্ষ্য ও উদ্দেশ্য', href: '/verify?page=about', portal: true },
-  { cat: 'online', en: 'A-Challan Payment Link', bn: 'A চালান লিংক', href: 'https://www.achallan.gov.bd/', ext: true },
-  { cat: 'publication', en: 'Publications', bn: 'প্রকাশনা', href: OFF + '/pages/publications' },
-  { cat: 'publication', en: 'Trademarks Journal', bn: 'ট্রেডমার্কস জার্নাল', href: OFF + '/pages/static-pages/6922dc84933eb65569e10c76' },
-  { cat: 'acts', en: 'All Laws', bn: 'সকল আইন', href: OFF + '/pages/laws' },
-  { cat: 'download', en: 'All Application Forms', bn: 'সকল আবেদন ফরম', href: OFF + '/pages/static-pages/6922e08d933eb65569e278d3' },
-  { cat: 'portal', en: 'Site Map', bn: 'সাইট ম্যাপ', href: OFF + '/views/sitemap' }
+  { en: 'Notice Board', bn: 'নোটিশ বোর্ড', href: '/pages/notices', kw: ['notice', 'নোটিশ', 'বিজ্ঞপ্তি'] },
+  { en: 'News', bn: 'খবর', href: '/pages/news/', kw: ['news', 'খবর'] },
+  { en: 'All Services', bn: 'সকল সেবা', href: '/pages/service-boxes', kw: ['services', 'সেবা'] },
+  { en: 'Service Process Maps', bn: 'সেবা প্রক্রিয়া', href: '/pages/office-process-maps', kw: ['process', 'সেবা প্রক্রিয়া'] },
+  { en: 'Tenders & Notices', bn: 'দরপত্র ও বিজ্ঞপ্তি', href: '/pages/tenders', kw: ['tender', 'দরপত্র', 'বিজ্ঞপ্তি'] },
+  { en: 'Notifications & Circulars', bn: 'প্রজ্ঞাপন ও পরিপত্র', href: '/pages/notification-circulars', kw: ['notification', 'circular', 'প্রজ্ঞাপন'] },
+  { en: 'Office Orders', bn: 'অফিস আদেশ', href: '/pages/office-orders', kw: ['office order', 'অফিস আদেশ'] },
+  { en: 'Photo Gallery', bn: 'ফটো গ্যালারি', href: '/pages/photo-galleries', kw: ['gallery', 'photo', 'ছবি'] },
+  { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications', kw: ['publication', 'প্রকাশনা'] },
+  { en: 'All Laws', bn: 'সকল আইন', href: '/pages/laws', kw: ['law', 'act', 'আইন'] },
+  { en: 'Site Map', bn: 'সাইট ম্যাপ', href: '/views/sitemap', kw: ['sitemap', 'সাইট ম্যাপ'] }
 ];
-
-function buildSearchIndex() {
-  const idx = [];
-  function push(cat, en, bn, href, flags) {
-    const ext = !!(flags && flags.ext);
-    const portal = !!(flags && flags.portal);
-    idx.push({ cat, en, bn, href, ext, portal, hay: (en + ' ' + bn).toLowerCase() });
-  }
-  SEARCH_PAGES.forEach(p => push(p.cat, p.en, p.bn, p.href, p));
-  INTERNAL_LINKS.forEach(l => push('portal', l.en, l.bn, l.href, { portal: true }));
-  NAV.forEach(cat => {
-    cat.groups.forEach(g => {
-      g.items.forEach(it => push(cat.key, it.en, it.bn, it.href, it));
-    });
-  });
-  NOTICES.forEach(n => push('notice', n.en, n.bn, url(n.href)));
-  IMPORTANT_LINKS.forEach(l => push('links', l.en, l.bn, l.href, l));
-  HOTLINES.forEach(h => push('hotline', h.en, h.bn, h.href));
-  return idx;
-}
-const SEARCH_INDEX = buildSearchIndex();
-
-function searchSite(q) {
-  const out = document.getElementById('searchResults');
-  const empty = document.getElementById('searchEmpty');
-  const countEl = document.getElementById('searchCount');
-  if (!out) return;
-  q = (q || '').trim();
-  if (!q) {
-    out.innerHTML = '';
-    if (empty) empty.classList.add('hidden');
-    if (countEl) countEl.textContent = '';
-    return;
-  }
-  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
-  const scored = [];
-  SEARCH_INDEX.forEach(e => {
-    if (!terms.every(t => e.hay.indexOf(t) !== -1)) return;
-    const el = e.en.toLowerCase();
-    const bl = e.bn.toLowerCase();
-    const ql = q.toLowerCase();
-    let s = 0;
-    if (el.indexOf(ql) === 0) s += 5;
-    if (bl.indexOf(ql) === 0) s += 5;
-    if (el.indexOf(ql) !== -1) s += 3;
-    if (bl.indexOf(ql) !== -1) s += 3;
-    s += Math.max(0, 18 - e.en.length);
-    scored.push({ e, s });
-  });
-  scored.sort(function (a, b) { return b.s - a.s; });
-
-  if (countEl) countEl.textContent = scored.length;
-
-  let html = '';
-  if (/^\d{4,}$/.test(q)) {
-    html += '<div class="sr-tm-hint">' +
-      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-      '<span>' + t('একটি ট্রেডমার্ক নম্বর খুঁজছেন? সরাসরি যাচাই করে দেখুন —', 'Looking for a trademark number? Verify it directly —') +
-      '</span><a href="/verify?reg_no=' + encodeURIComponent(q) + '" data-internal="1">' + t('ট্রেডমার্ক যাচাই করুন', 'Verify Trademark') + '</a></div>';
-  }
-  if (!scored.length) {
-    if (empty && !/^\d{4,}$/.test(q)) empty.classList.remove('hidden');
-    out.innerHTML = html;
-    return;
-  }
-  if (empty) empty.classList.add('hidden');
-  const order = Object.keys(SEARCH_CATS);
-  const keys = Object.keys(scored.reduce(function (acc, s) { acc[s.e.cat] = 1; return acc; }, {}))
-    .sort(function (a, b) { return order.indexOf(a) - order.indexOf(b); });
-  keys.forEach(function (k) {
-    const cat = SEARCH_CATS[k];
-    html += '<div class="sr-cat">' +
-      '<div class="sr-cat-head">' + t(cat.bn, cat.en) + ' <span class="sr-cat-n">' + scored.filter(s => s.e.cat === k).length + '</span></div>';
-    scored.forEach(function (s) {
-      if (s.e.cat !== k) return;
-      const href = s.e.portal ? s.e.href : url(s.e.href);
-      const ext = s.e.ext || (!s.e.portal && /^https?:/i.test(href));
-      html += '<a class="sr-item" href="' + href + '"' +
-        (ext ? ' target="_blank" rel="noopener"' : '') +
-        (s.e.portal ? ' data-internal="1"' : '') + '>' +
-        '<span class="sr-title">' + t(s.e.bn, s.e.en) + '</span>' +
-        '<span class="sr-sub">' + (s.e.portal ? t('এই পোর্টালে', 'On this portal') : href) + '</span>' +
-        '</a>';
-    });
-    html += '</div>';
-  });
-  out.innerHTML = html;
-}
-
-function runSiteSearch() {
-  const input = document.getElementById('siteSearchInput');
-  const v = input ? input.value.trim() : '';
-  if (!v) return;
-  navigate('/verify?page=search&q=' + encodeURIComponent(v));
-}
 
 /* ═══════════════════════════════════════════════════════════════
    HELPERS
@@ -381,9 +254,14 @@ function url(href) {
 function extIcon() {
   return '<svg class="ext" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
 }
+function hrefFor(item) {
+  if (item.internal) return item.href;
+  return url(item.href);
+}
 function itemHTML(item) {
   const isExt = !!item.ext;
-  return '<a href="' + url(item.href) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + '>' +
+  const isInternal = !!item.internal;
+  return '<a href="' + hrefFor(item) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + (isInternal ? ' data-internal="1"' : '') + '>' +
     '<span class="bn">' + item.bn + '</span>' +
     '<span class="en">' + item.en + '</span>' +
     (isExt ? extIcon() : '') +
@@ -398,7 +276,7 @@ let lang = localStorage.getItem('dpdt-lang') || 'en';
 function t(bn, en) { return lang === 'bn' ? bn : en; }
 
 /* ═══════════════════════════════════════════════════════════════
-   RENDER — DESKTOP PRIMARY NAV
+   RENDER — DESKTOP PRIMARY NAV (full official DPDT structure)
 ═══════════════════════════════════════════════════════════════ */
 function barItemHTML(cat) {
   if (cat.type === 'link') {
@@ -428,19 +306,27 @@ function barItemHTML(cat) {
     '</button>' + inner + '</li>';
 }
 
+const ICON_HOME = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>';
+const ICON_SEARCH = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+const ICON_PHONE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+
 function renderBar() {
   const el = document.getElementById('navList');
   if (!el) return;
   const BAR = [
-    { type: 'link', en: 'Home', bn: 'হোম', href: '/', icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' },
+    { type: 'link', en: 'Home', bn: 'হোম', href: '/', icon: ICON_HOME },
     { type: 'menu', key: 'about' },
     { type: 'menu', key: 'statistics' },
     { type: 'menu', key: 'online' },
-    { type: 'link', en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify', cta: true, icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' },
     { type: 'menu', key: 'publication' },
     { type: 'menu', key: 'acts' },
+    { type: 'menu', key: 'media' },
     { type: 'menu', key: 'download' },
-    { type: 'link', en: 'Contact', bn: 'যোগাযোগ', href: '/verify?page=contact', icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' }
+    { type: 'menu', key: 'classification' },
+    { type: 'menu', key: 'gi' },
+    { type: 'menu', key: 'faq' },
+    { type: 'link', en: 'Contact', bn: 'যোগাযোগ', href: '/verify?page=contact', icon: ICON_PHONE },
+    { type: 'link', en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify', cta: true, icon: ICON_SEARCH }
   ];
   el.innerHTML = BAR.map(barItemHTML).join('');
 }
@@ -460,10 +346,11 @@ function renderMega() {
     html += '<div class="mega-col">' +
       '<div class="mega-col-head">' + t(cat.bn, cat.en) + '</div>';
     cat.groups.forEach(g => {
-      html += '<div class="mega-sub-head" style="font-size:11px;font-weight:700;color:#64756c;margin-top:6px;">' + t(g.bn, g.en) + '</div>';
+      html += '<div class="mega-sub-head">' + t(g.bn, g.en) + '</div>';
       g.items.forEach(item => {
         const isExt = !!item.ext;
-        html += '<a href="' + url(item.href) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + '>' +
+        const isInternal = !!item.internal;
+        html += '<a href="' + hrefFor(item) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + (isInternal ? ' data-internal="1"' : '') + '>' +
           '<span class="bn">' + item.bn + '</span><span class="en">' + item.en + '</span></a>';
       });
     });
@@ -473,7 +360,7 @@ function renderMega() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RENDER — MOBILE DRAWER (accordion of all categories)
+   RENDER — MOBILE DRAWER (accordion of ALL categories)
 ═══════════════════════════════════════════════════════════════ */
 function renderMobile() {
   const el = document.getElementById('mobileNav');
@@ -484,18 +371,16 @@ function renderMobile() {
   });
   html += '</div>';
   NAV.forEach(cat => {
-    html += '<div class="mn-group">' +
+    html += '<div class="mn-group" data-cat="' + cat.key + '">' +
       '<button class="mn-toggle" type="button">' +
         '<span>' + t(cat.bn, cat.en) + '</span><span class="arrow">&#9656;</span>' +
       '</button><div class="mn-sub">';
     cat.groups.forEach(g => {
-      if (cat.groups.length > 1) {
-        html += '<div class="mn-sub-head">' + t(g.bn, g.en) + '</div>';
-      }
       g.items.forEach(item => {
         const isExt = !!item.ext;
-        html += '<a href="' + url(item.href) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + '>' +
-          '<span>' + item.bn + '</span><span class="en">' + item.en + '</span></a>';
+        const isInternal = !!item.internal;
+        html += '<a href="' + hrefFor(item) + '"' + (isExt ? ' target="_blank" rel="noopener"' : '') + (isInternal ? ' data-internal="1"' : '') + '>' +
+          '<span class="bn">' + item.bn + '</span><span class="en">' + item.en + '</span></a>';
       });
     });
     html += '</div></div>';
@@ -510,8 +395,7 @@ function renderMobile() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RENDER — SIDE & HOME DYNAMIC LISTS (important links, hotlines,
-   notices, statistics) — filled by elements present in the markup
+   RENDER — SIDE & HOME DYNAMIC LISTS
 ═══════════════════════════════════════════════════════════════ */
 function renderLists() {
   const imp = document.getElementById('importantLinks');
@@ -527,7 +411,7 @@ function renderLists() {
   if (hl) {
     hl.innerHTML = HOTLINES.map(h => {
       return '<a class="hotline-row" href="' + h.href + '" target="_blank" rel="noopener">' +
-        '<span class="hl-name">' + h.bn + '<em>' + h.en + '</em></span>' +
+        '<span class="hl-name"><span class="bn">' + h.bn + '</span><span class="en">' + h.en + '</span></span>' +
         '<span class="hl-num">' + h.num + '</span></a>';
     }).join('');
   }
@@ -542,23 +426,211 @@ function renderLists() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   GENERAL SITE SEARCH
+   Searches the portal's available content and shows matching
+   sections/links.  Trademark-number lookup remains on /verify.
+═══════════════════════════════════════════════════════════════ */
+function buildSearchIndex() {
+  const idx = [];
+  NAV.forEach(cat => {
+    cat.groups.forEach(g => {
+      g.items.forEach(item => {
+        idx.push({
+          groupEn: cat.en, groupBn: cat.bn,
+          en: item.en, bn: item.bn,
+          href: item.href, ext: !!item.ext, internal: !!item.internal, kw: item.kw || []
+        });
+      });
+    });
+  });
+  INTERNAL_LINKS.forEach(l => {
+    idx.push({ groupEn: 'This Portal', groupBn: 'এই পোর্টাল', en: l.en, bn: l.bn, href: l.href, ext: false, internal: true, kw: [] });
+  });
+  SEARCH_PAGES.forEach(p => {
+    idx.push({ groupEn: 'Pages', groupBn: 'পাতা', en: p.en, bn: p.bn, href: p.href, ext: false, kw: p.kw || [] });
+  });
+  return idx;
+}
+const SEARCH_INDEX = buildSearchIndex();
+
+function scoreSearch(rawQuery) {
+  const query = (rawQuery || '').trim().toLowerCase();
+  if (!query) return [];
+  const tokens = query.split(/\s+/).filter(Boolean);
+  const matched = [];
+  SEARCH_INDEX.forEach(entry => {
+    const hay = (entry.en + ' ' + entry.bn + ' ' + (entry.kw || []).join(' ')).toLowerCase();
+    if (tokens.every(tk => hay.indexOf(tk) !== -1)) {
+      let score = 4;
+      const enL = entry.en.toLowerCase();
+      const bnL = entry.bn.toLowerCase();
+      if (enL.indexOf(query) === 0) score = 0;
+      else if (bnL.indexOf(query) === 0) score = 1;
+      else if (enL.indexOf(query) !== -1) score = 2;
+      else if (bnL.indexOf(query) !== -1) score = 3;
+      matched.push({ entry: entry, score: score });
+    }
+  });
+  matched.sort(function (a, b) { return a.score - b.score; });
+  return matched;
+}
+
+function doSiteSearch(rawQuery) {
+  const panel = document.getElementById('siteSearchResults');
+  if (!panel) return;
+  const query = (rawQuery || '').trim();
+  if (!query) { panel.classList.add('hidden'); return; }
+  const matched = scoreSearch(query);
+  renderSearchResults(panel, matched.slice(0, 12), query);
+}
+
+function renderSearchResults(panel, results, query) {
+  let head = '<div class="sr-head">' + t('অনুসন্ধান ফলাফল:', 'Search results for:') + ' <b>' + query + '</b>';
+  if (results.length) {
+    head += '<a class="sr-viewall" href="/verify?page=search&amp;q=' + encodeURIComponent(query) + '" data-internal="1">' + t('সব ফলাফল দেখুন', 'View all results') + ' &rarr;</a>';
+  }
+  head += '</div>';
+  let html = head;
+  if (!results.length) {
+    html += '<div class="sr-empty">' + t('কোনো ফলাফল পাওয়া যায়নি। অন্য কীওয়ার্ড দিয়ে চেষ্টা করুন।', 'No matching sections found. Try a different keyword.') + '</div>';
+  } else {
+    let lastGroup = null;
+    results.forEach(r => {
+      const g = t(r.groupBn, r.groupEn);
+      if (g !== lastGroup) {
+        html += '<div class="sr-group">' + g + '</div>';
+        lastGroup = g;
+      }
+      html += '<a class="sr-item" href="' + (r.internal ? r.href : url(r.href)) + '"' + (r.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
+        '<span class="sr-title">' + t(r.bn, r.en) + '</span>' +
+        (r.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
+        '</a>';
+    });
+  }
+  panel.innerHTML = html;
+  panel.classList.remove('hidden');
+}
+
+function runFullSearch(rawQuery) {
+  const out = document.getElementById('searchResults');
+  const empty = document.getElementById('searchEmpty');
+  const countEl = document.getElementById('searchCount');
+  if (!out) return;
+  const query = (rawQuery || '').trim();
+  if (!query) {
+    out.innerHTML = '';
+    if (empty) empty.classList.add('hidden');
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+  const matched = scoreSearch(query);
+  if (countEl) countEl.textContent = String(matched.length);
+
+  let html = '';
+  if (/^\d{4,}$/.test(query)) {
+    html += '<div class="sr-tm-hint">' +
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+      '<span>' + t('একটি ট্রেডমার্ক নম্বর খুঁজছেন? সরাসরি যাচাই করে দেখুন —', 'Looking for a trademark number? Verify it directly —') +
+      '</span><a href="/verify?reg_no=' + encodeURIComponent(query) + '" data-internal="1">' + t('ট্রেডমার্ক যাচাই করুন', 'Verify Trademark') + '</a></div>';
+  }
+  if (!matched.length) {
+    if (empty && !/^\d{4,}$/.test(query)) empty.classList.remove('hidden');
+    out.innerHTML = html;
+    return;
+  }
+  if (empty) empty.classList.add('hidden');
+  let lastGroup = null;
+  matched.forEach(r => {
+    const g = t(r.groupBn, r.groupEn);
+    if (g !== lastGroup) {
+      html += '<div class="sr-group">' + g + '</div>';
+      lastGroup = g;
+    }
+    html += '<a class="sr-item" href="' + (r.internal ? r.href : url(r.href)) + '"' + (r.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
+      '<span class="sr-title">' + t(r.bn, r.en) + '</span>' +
+      (r.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
+      '</a>';
+  });
+  out.innerHTML = html;
+}
+
+function runSiteSearch() {
+  const inputEl = document.getElementById('siteSearchInput');
+  if (!inputEl) return;
+  runFullSearch(inputEl.value);
+}
+
+function openSearch() {
+  const panel = document.getElementById('siteSearchResults');
+  if (panel) panel.classList.remove('hidden');
+}
+function closeSearch() {
+  const panel = document.getElementById('siteSearchResults');
+  if (panel) panel.classList.add('hidden');
+}
+
+function bindSiteSearch() {
+  const form = document.getElementById('topSearchForm');
+  if (!form) return;
+  const input = document.getElementById('topSearchInput');
+  const btn = document.getElementById('topSearchBtn');
+  let debounce = null;
+
+  if (input) {
+    input.addEventListener('input', function () {
+      clearTimeout(debounce);
+      debounce = setTimeout(function () { doSiteSearch(input.value); }, 180);
+    });
+    input.addEventListener('focus', function () { doSiteSearch(input.value); });
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const v = input ? input.value.trim() : '';
+    if (!v) return;
+    doSiteSearch(v);
+  });
+  if (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const v = input ? input.value.trim() : '';
+      doSiteSearch(v);
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.national-bar')) closeSearch();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSearch();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
    LANGUAGE TOGGLE
 ═══════════════════════════════════════════════════════════════ */
 function applyStaticLang() {
   document.querySelectorAll('[data-en]').forEach(el => {
-    el.textContent = lang === 'bn' ? (el.getAttribute('data-bn') || el.getAttribute('data-en')) : el.getAttribute('data-en');
-  });
-  document.querySelectorAll('[data-ph-en]').forEach(el => {
-    el.setAttribute('placeholder', lang === 'bn' ? (el.getAttribute('data-ph-bn') || el.getAttribute('data-ph-en')) : el.getAttribute('data-ph-en'));
+    const val = lang === 'bn' ? (el.getAttribute('data-bn') || el.getAttribute('data-en')) : el.getAttribute('data-en');
+    el.innerHTML = val || '';
   });
   document.documentElement.lang = lang === 'bn' ? 'bn' : 'en';
+  const si = document.getElementById('topSearchInput');
+  if (si) si.setAttribute('placeholder', lang === 'bn' ? 'পোর্টাল খুঁজুন...' : 'Search the portal...');
+  const fsi = document.getElementById('siteSearchInput');
+  if (fsi) fsi.setAttribute('placeholder', lang === 'bn' ? 'এখানে খুঁজুন...' : 'Search here...');
   const btn = document.getElementById('langToggle');
   if (btn) btn.textContent = lang === 'bn' ? 'English' : 'বাংলা';
   const crumb = document.getElementById('crumbCurrent');
   if (crumb) {
-    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), ipas: t('অনলাইন আবেদন (আইপাস)', 'IPAS Online Application'), about: t('অধিদপ্তর সম্পর্কিত', 'About the Department') };
+    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
     crumb.textContent = map[state.route] || map.home;
   }
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) {
+    meta.setAttribute('content', lang === 'bn'
+      ? 'পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি), শিল্প মন্ত্রণালয়, গণপ্রজাতন্ত্রী বাংলাদেশ সরকার।'
+      : 'Department of Patents, Designs & Trademarks (DPDT), Ministry of Industries, Government of the People\'s Republic of Bangladesh.');
+  }
+  if (input && input.value) doSiteSearch(input.value);
 }
 
 function setLang(next) {
@@ -566,16 +638,18 @@ function setLang(next) {
   localStorage.setItem('dpdt-lang', lang);
   renderBar(); renderMega(); renderMobile(); renderLists();
   applyStaticLang();
-  if (state.route === 'search') {
-    const q = new URLSearchParams(window.location.search);
-    searchSite(q.get('q') || q.get('search') || '');
-  }
 }
 
 function initLang() {
   const btn = document.getElementById('langToggle');
   if (btn) {
     btn.addEventListener('click', function () {
+      setLang(lang === 'bn' ? 'en' : 'bn');
+    });
+  }
+  const mobileLang = document.getElementById('mobileLangToggle');
+  if (mobileLang) {
+    mobileLang.addEventListener('click', function () {
       setLang(lang === 'bn' ? 'en' : 'bn');
     });
   }
@@ -589,17 +663,18 @@ function initLang() {
    Route is derived from the real URL path + query string.
 ═══════════════════════════════════════════════════════════════ */
 const state = { route: 'home', regNo: null };
+let input = null;
 
 function currentRoute() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   const q = new URLSearchParams(window.location.search);
-  if (q.get('page') === 'search') return 'search';
-  if (q.get('page') === 'ipas') return 'ipas';
-  if (q.get('page') === 'about') return 'about';
   if (q.get('page') === 'fee') return 'fee';
   if (q.get('page') === 'contact') return 'contact';
+  if (q.get('page') === 'search') return 'search';
   if (q.has('reg_no') || q.has('regNo')) return 'verify';
   if (/\/verify/.test(path)) return 'verify';
+  if (/\/online-application/.test(path)) return 'online-application';
+  if (/\/about/.test(path)) return 'about';
   return 'home';
 }
 
@@ -608,11 +683,26 @@ const VIEW_TITLES = {
   verify: 'Trademark Verification | DPDT Bangladesh',
   fee: 'Fee Structure | DPDT Bangladesh',
   contact: 'Contact | DPDT Bangladesh',
-  search: 'Search | DPDT Bangladesh',
-  ipas: 'IPAS Online Application | DPDT Bangladesh',
+  search: 'Search the Portal | DPDT Bangladesh',
+  'online-application': 'Online Application (IPAS) | DPDT Bangladesh',
   about: 'About the Department | DPDT Bangladesh'
 };
-const CRUMB_KEYS = { home: 'home', verify: 'verify', fee: 'fee', contact: 'contact', search: 'search', ipas: 'ipas', about: 'about' };
+
+function viewTitle(route) {
+  if (lang === 'bn') {
+    const m = {
+      home: 'হোম | পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর',
+      verify: 'ট্রেডমার্ক যাচাইকরণ | ডিপিডিটি বাংলাদেশ',
+      fee: 'ফি কাঠামো | ডিপিডিটি বাংলাদেশ',
+      contact: 'যোগাযোগ | ডিপিডিটি বাংলাদেশ',
+      search: 'পোর্টালে অনুসন্ধান | ডিপিডিটি বাংলাদেশ',
+      'online-application': 'অনলাইন আবেদন (আইপাস) | ডিপিডিটি বাংলাদেশ',
+      about: 'অধিদপ্তর সম্পর্কে | ডিপিডিটি বাংলাদেশ'
+    };
+    return m[route] || m.home;
+  }
+  return VIEW_TITLES[route] || VIEW_TITLES.home;
+}
 
 function showView(route) {
   state.route = route;
@@ -625,29 +715,26 @@ function showView(route) {
     const cta = document.querySelector('#navList a[href="/verify"]');
     if (cta) cta.classList.add('active');
   }
-  document.title = VIEW_TITLES[route];
+  document.title = viewTitle(route);
 
   const crumb = document.getElementById('crumbCurrent');
-  if (crumb) crumb.textContent = (route === 'home' ? t('হোম', 'Home')
-    : route === 'verify' ? t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification')
-    : route === 'fee' ? t('ফি কাঠামো', 'Fee Structure')
-    : route === 'search' ? t('অনুসন্ধান', 'Search')
-    : route === 'ipas' ? t('অনলাইন আবেদন (আইপাস)', 'IPAS Online Application')
-    : route === 'about' ? t('অধিদপ্তর সম্পর্কিত', 'About the Department')
-    : t('যোগাযোগ', 'Contact'));
+  if (crumb) {
+    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
+    crumb.textContent = map[route] || map.home;
+  }
 
   const q = new URLSearchParams(window.location.search);
   const reg = q.get('reg_no') || q.get('regNo');
-  if (route === 'verify') {
-    const input = document.getElementById('tm');
-    if (input) input.value = reg || '';
-    if (reg) verifyTrademark(reg);
-  }
   if (route === 'search') {
     const term = q.get('q') || q.get('search') || '';
-    const si = document.getElementById('siteSearchInput');
-    if (si) si.value = term;
-    searchSite(term);
+    const searchInput = document.getElementById('siteSearchInput');
+    if (searchInput) searchInput.value = term;
+    runFullSearch(term);
+  }
+  if (route === 'verify') {
+    const inputEl = document.getElementById('tm');
+    if (inputEl) inputEl.value = reg || '';
+    if (reg) verifyTrademark(reg);
   }
   closeAllMenus();
   window.scrollTo({ top: 0, behavior: 'auto' });
@@ -780,6 +867,29 @@ function openDrawer() { document.getElementById('mobileDrawer').classList.add('o
 function closeDrawer() { document.getElementById('mobileDrawer').classList.remove('open'); document.getElementById('scrim').classList.remove('open'); document.body.style.overflow = ''; }
 function closeAllMenus() { closeMega(); closeDrawer(); }
 
+/* Close desktop dropdowns */
+function closeBarDropdowns(except) {
+  document.querySelectorAll('.nav-list > li.has-sub.open').forEach(function (li) {
+    if (except && li === except) return;
+    li.classList.remove('open');
+  });
+}
+
+/* Keep an open dropdown inside the viewport (nav wraps / right-aligned rows) */
+function clampDropdown(li) {
+  const dd = li.querySelector('.dropdown');
+  if (!dd) return;
+  const liRect = li.getBoundingClientRect();
+  const w = dd.offsetWidth;
+  let leftPx = 0;
+  if (w <= window.innerWidth - 16) {
+    const minL = 8, maxL = window.innerWidth - w - 8;
+    const ddLeft = dd.getBoundingClientRect().left;
+    leftPx = Math.min(Math.max(ddLeft, minL), maxL) - liRect.left;
+  }
+  dd.style.left = leftPx + 'px';
+}
+
 function bindMenus() {
   const menuBtn = document.getElementById('menuBtn');
   if (menuBtn) menuBtn.addEventListener('click', openMega);
@@ -795,32 +905,52 @@ function bindMenus() {
   const scrim = document.getElementById('scrim');
   if (scrim) scrim.addEventListener('click', closeDrawer);
 
+  /* click-to-open dropdowns (touch / tablet) */
+  const navList = document.getElementById('navList');
+  if (navList) {
+    navList.addEventListener('click', function (e) {
+      const btn = e.target.closest('.nav-link');
+      if (!btn) return;
+      const li = btn.closest('li.has-sub');
+      if (!li) return;
+      const isOpen = li.classList.contains('open');
+      closeBarDropdowns();
+      if (!isOpen) li.classList.add('open');
+      clampDropdown(li);
+    });
+    navList.addEventListener('mouseover', function (e) {
+      const li = e.target.closest('li.has-sub');
+      if (li) clampDropdown(li);
+    });
+    window.addEventListener('resize', function () {
+      document.querySelectorAll('.nav-list > li.has-sub.open').forEach(clampDropdown);
+    });
+    navList.addEventListener('mouseleave', function () { closeBarDropdowns(); });
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeAllMenus();
   });
-}
-
-/* Top national-bar search -> general website search */
-function bindTopSearch() {
-  const form = document.getElementById('topSearchForm');
-  if (!form) return;
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const input = document.getElementById('topSearchInput');
-    const v = input ? input.value.trim() : '';
-    if (!v) return;
-    navigate('/verify?page=search&q=' + encodeURIComponent(v));
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.primary-nav')) closeBarDropdowns();
   });
 }
 
-/* Search page: Enter key submits */
-function bindSiteSearch() {
-  const input = document.getElementById('siteSearchInput');
-  if (!input) return;
-  input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') { e.preventDefault(); runSiteSearch(); }
-  });
-}
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+  input = document.getElementById('topSearchInput');
+  initLang();
+  bindMenus();
+  bindInternalLinks();
+  bindSiteSearch();
+  loadRecordCount();
+  window.addEventListener('popstate', route);
+  route();
+  updateClock();
+  setInterval(updateClock, 1000);
+});
 
 /* Live count of trademark records in data.json (reliable stat) */
 function loadRecordCount() {
@@ -833,19 +963,3 @@ function loadRecordCount() {
     })
     .catch(function () {});
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', function () {
-  initLang();
-  bindMenus();
-  bindInternalLinks();
-  bindTopSearch();
-  bindSiteSearch();
-  loadRecordCount();
-  window.addEventListener('popstate', route);
-  route();
-  updateClock();
-  setInterval(updateClock, 1000);
-});

@@ -32,6 +32,8 @@ def resolve(path):
         return "verify.html"
     if path == "index":
         return "index.html"
+    if path in ("online-application", "about"):
+        return "index.html"
 
     candidate = os.path.join(ROOT, path)
     if os.path.isfile(candidate):
