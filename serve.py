@@ -7,7 +7,8 @@ Mirrors the Vercel deployment behaviour (vercel.json cleanUrls + rewrites):
   /verify.html -> verify.html
   /index.html  -> index.html
 Any other path: if it matches an existing .html file, serve it (cleanUrls);
-otherwise serve the static file or 404.
+otherwise serve the static file, or fall back to index.html so the
+client-side portal routes (/acts/..., /statistics/..., ...) work on reload.
 
 Usage:
   python3 serve.py [port]
@@ -44,7 +45,8 @@ def resolve(path):
     if os.path.isfile(html_candidate):
         return path + ".html"
 
-    return None
+    # SPA fallback: internal portal routes (e.g. /acts/...) load index.html
+    return "index.html"
 
 
 class Handler(SimpleHTTPRequestHandler):

@@ -622,7 +622,12 @@ function applyStaticLang() {
   const crumb = document.getElementById('crumbCurrent');
   if (crumb) {
     const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
-    crumb.textContent = map[state.route] || map.home;
+    const portalPg = window.PORTAL_DATA ? portalPath() : null;
+    if (state.route === 'portal' && portalPg && window.PORTAL_DATA[portalPg]) {
+      crumb.textContent = tv(window.PORTAL_DATA[portalPg].title);
+    } else {
+      crumb.textContent = map[state.route] || map.home;
+    }
   }
   const meta = document.querySelector('meta[name="description"]');
   if (meta) {
@@ -963,3 +968,194 @@ function loadRecordCount() {
     })
     .catch(function () {});
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PORTAL PAGES — data-driven internal pages (portal-data.js)
+   Renders the ~75 bilingual internal DPDT pages that previously
+   opened external dpdt.gov.bd links.
+═══════════════════════════════════════════════════════════════ */
+
+/* 1) Rewrite NAV/SEARCH so official hrefs become internal pages */
+(function internalizeNav() {
+  const alias = window.PORTAL_ALIAS || {};
+  const extPdf = {};
+  Object.keys(alias).forEach(function (k) {
+    if (/objectstorage/.test(k)) extPdf[k] = alias[k];
+  });
+  const PATCH = function (item) {
+    if (!item) return item;
+    if (item.internal) return item;
+    if (alias[item.href]) { item.href = alias[item.href]; item.internal = true; item.ext = false; return item; }
+    if (item.ext && /objectstorage/.test(item.href || '')) {
+      const hit = Object.keys(extPdf).find(function (k) { return k === item.href; });
+      if (hit) { item.href = extPdf[hit]; item.internal = true; item.ext = false; }
+    }
+    return item;
+  };
+  NAV.forEach(function (cat) {
+    cat.groups.forEach(function (g) { g.items.forEach(PATCH); });
+  });
+  SEARCH_PAGES.forEach(PATCH);
+})();
+
+/* 2) helpers */
+function portalPath() {
+  const p = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+  const data = window.PORTAL_DATA || {};
+  if (data[p]) return p;
+  return null;
+}
+function portalPage() {
+  const p = portalPath();
+  return p ? (window.PORTAL_DATA || {})[p] : null;
+}
+function tv(o) {
+  if (o == null) return '';
+  if (typeof o === 'string') return o;
+  const e = o.e != null ? o.e : (o.en != null ? o.en : '');
+  const b = o.b != null ? o.b : (o.bn != null ? o.bn : '');
+  const v = lang === 'bn' ? b : e;
+  const alt = lang === 'bn' ? e : b;
+  return v != null && v !== '' ? v : alt;
+}
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function portalLink(href, label, cls) {
+  const attrs = /^https?:\/\//i.test(href) ? ' target="_blank" rel="noopener"' : ' data-internal="1"';
+  return '<a class="' + (cls || 'pp-link') + '" href="' + esc(href) + '"' + attrs + '>' + label + '</a>';
+}
+function cellHTML(c) {
+  if (!c) return '';
+  if (c.dl) return '<a class="pp-dl" href="' + esc(c.dl) + '" target="_blank" rel="noopener" title="Download">' + dlIcon() + '<span>' + (lang === 'bn' ? 'ডাউনলোড' : 'Download') + '</span></a>';
+  return esc(tv(c));
+}
+function dlIcon() {
+  return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+}
+
+/* 3) section renderers */
+function renderPortalSection(sec) {
+  const h = sec.h ? '<h3 class="pp-sec-h">' + esc(tv(sec.h)) + '</h3>' : '';
+  switch (sec.t) {
+    case 'text': {
+      const paras = tv(sec.p).split(/\n+/).filter(Boolean).map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('');
+      return '<section class="pp-block pp-text">' + h + paras + '</section>';
+    }
+    case 'list': {
+      const items = (sec.items || []).map(function (it) {
+        let inner = '<span class="pp-li-bullet">•</span><span class="pp-li-t">' + esc(tv(it.t)) + '</span>';
+        if (it.m) inner += '<span class="pp-li-m">' + esc(tv(it.m)) + '</span>';
+        if (it.href) return '<li>' + portalLink(it.href, inner, 'pp-li') + '</li>';
+        return '<li>' + inner + '</li>';
+      }).join('');
+      return '<section class="pp-block pp-list">' + h + '<ul class="pp-ul">' + items + '</ul></section>';
+    }
+    case 'cards': {
+      const cards = (sec.items || []).map(function (c) {
+        let body = '<div class="pp-card-b">';
+        if (c.m) body += '<div class="pp-card-m">' + esc(tv(c.m)) + '</div>';
+        body += '<h4>' + esc(tv(c.t)) + '</h4>';
+        if (c.d) body += '<p>' + esc(tv(c.d)) + '</p>';
+        body += '</div>';
+        if (c.href) return '<div class="pp-card">' + portalLink(c.href, body, 'pp-card-inner') + '</div>';
+        return '<div class="pp-card">' + body + '</div>';
+      }).join('');
+      return '<section class="pp-block">' + h + '<div class="pp-cards">' + cards + '</div></section>';
+    }
+    case 'files': {
+      const rows = (sec.files || []).map(function (f) {
+        const name = f.n ? tv(f.n) : 'Document';
+        const d = f.d ? '<span class="pp-file-d">' + esc(tv(f.d)) + '</span>' : '';
+        return '<li class="pp-file">' + dlIcon() +
+          '<span class="pp-file-info">' + '<span class="pp-file-n">' + esc(name) + '</span>' + d + '</span>' +
+          '<a class="pp-dl" href="' + esc(f.u) + '" target="_blank" rel="noopener">' + (lang === 'bn' ? 'ডাউনলোড' : 'Download') + '</a></li>';
+      }).join('');
+      const note = sec.note ? '<p class="pp-note">' + esc(tv(sec.note)) + '</p>' : '';
+      return '<section class="pp-block pp-files">' + h + '<ul class="pp-file-list">' + rows + '</ul>' + note + '</section>';
+    }
+    case 'table': {
+      const cols = sec.cols || [];
+      const head = '<tr>' + cols.map(function (c) { return '<th>' + esc(tv(c)) + '</th>'; }).join('') + '</tr>';
+      const body = (sec.rows || []).map(function (r) {
+        return '<tr>' + cols.map(function (_, i) { return '<td>' + cellHTML(r[i]) + '</td>'; }).join('') + '</tr>';
+      }).join('');
+      const note = sec.note ? '<p class="pp-note">' + esc(tv(sec.note)) + '</p>' : '';
+      return '<section class="pp-block pp-tbl">' + h + '<div class="pp-scroll"><table class="pp-table"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' + note + '</section>';
+    }
+    case 'accordion': {
+      const items = (sec.items || []).map(function (it, i) {
+        return '<details class="pp-acc"' + (i === 0 ? ' open' : '') + '><summary>' + esc(tv(it.q)) + '</summary><div class="pp-acc-a">' + esc(tv(it.a)) + '</div></details>';
+      }).join('');
+      return '<section class="pp-block pp-acc">' + h + items + '</section>';
+    }
+    case 'timeline': {
+      const items = (sec.items || []).map(function (it) {
+        return '<li class="pp-tl"><span class="pp-tl-y">' + esc(it.y) + '</span><span class="pp-tl-t">' + esc(tv({ b: it.b, e: it.e })) + '</span></li>';
+      }).join('');
+      return '<section class="pp-block"><ol class="pp-timeline">' + items + '</ol></section>';
+    }
+    default: return '';
+  }
+}
+
+function ensurePortalView() {
+  let v = document.getElementById('view-portal');
+  if (!v) {
+    v = document.createElement('section');
+    v.className = 'view';
+    v.id = 'view-portal';
+    v.innerHTML = '<div class="container page"><div class="pp-crumb-wrap" id="portalCrumb"></div><div id="portalContainer"></div></div>';
+    const main = document.getElementById('main-content');
+    if (main) main.appendChild(v);
+  }
+  return v;
+}
+
+function renderPortal() {
+  const pg = portalPage();
+  if (!pg) return;
+  ensurePortalView();
+  const c = document.getElementById('portalContainer');
+  if (!c) return;
+  let html = '<div class="verify-head pp-head">' +
+    '<div class="vh-icon">' + dlIcon() + '</div>' +
+    '<div><h2>' + esc(tv(pg.title)) + '</h2>' +
+    (pg.lead ? '<p>' + esc(tv(pg.lead)) + '</p>' : '') +
+    '</div></div>';
+  (pg.sections || []).forEach(function (s) { html += renderPortalSection(s); });
+  c.innerHTML = html;
+  applyStaticLang();
+}
+
+/* 4) wrap routing */
+const _portalCr = currentRoute;
+currentRoute = function () {
+  if (portalPath()) return 'portal';
+  return _portalCr();
+};
+const _portalSv = showView;
+showView = function (route) {
+  _portalSv(route);
+  if (route === 'portal') {
+    const v = ensurePortalView();
+    if (v) v.classList.add('active');
+    renderPortal();
+    const pg = portalPage();
+    const crumb = document.getElementById('crumbCurrent');
+    if (crumb && pg) crumb.textContent = tv(pg.title);
+    const t = pg ? tv(pg.title) : '';
+    document.title = (t ? t + ' | ' : '') + (lang === 'bn' ? 'ডিপিডিটি বাংলাদেশ' : 'DPDT Bangladesh');
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+};
+const _portalLang = setLang;
+setLang = function (next) {
+  _portalLang(next);
+  if (state.route === 'portal' || portalPath()) {
+    renderPortal();
+    const pg = portalPage();
+    const t = pg ? tv(pg.title) : '';
+    document.title = (t ? t + ' | ' : '') + (lang === 'bn' ? 'ডিপিডিটি বাংলাদেশ' : 'DPDT Bangladesh');
+  }
+};
