@@ -887,9 +887,36 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 
 @media (max-width: 992px) {
-  .nav-list { display: none; }
+  .nav-inner {
+    padding-left: 8px;
+    padding-right: 0;
+    overflow: hidden;
+  }
+  .nav-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    flex: 1;
+    min-width: 0;
+    scrollbar-width: none;
+  }
+  .nav-list::-webkit-scrollbar { display: none; }
+  .nav-list > li { flex-shrink: 0; }
+  .nav-list > li:hover > .dropdown,
+  .nav-list > li.open > .dropdown,
+  .nav-list > li:hover > .dropdown.wide,
+  .nav-list > li.open > .dropdown.wide { display: none !important; }
+  .nav-link { padding: 11px 10px; font-size: 12.5px; }
   .nav-menu-btn { display: none; }
-  .nav-hamburger { display: flex; }
+  .nav-hamburger {
+    display: flex;
+    flex-shrink: 0;
+    min-height: 42px;
+    box-shadow: -8px 0 10px rgba(0, 106, 78, .35);
+  }
   .service-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-band { grid-template-columns: repeat(2, 1fr); row-gap: 18px; }
 }

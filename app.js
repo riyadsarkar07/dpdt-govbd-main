@@ -918,6 +918,17 @@ function bindMenus() {
       if (!btn) return;
       const li = btn.closest('li.has-sub');
       if (!li) return;
+      if (window.matchMedia('(max-width: 992px)').matches) {
+        e.preventDefault();
+        const key = li.getAttribute('data-cat');
+        openDrawer();
+        document.querySelectorAll('#mobileNav .mn-group').forEach(function (g) {
+          const match = key && g.getAttribute('data-cat') === key;
+          g.classList.toggle('open', match);
+          if (match) g.scrollIntoView({ block: 'nearest' });
+        });
+        return;
+      }
       const isOpen = li.classList.contains('open');
       closeBarDropdowns();
       if (!isOpen) li.classList.add('open');
