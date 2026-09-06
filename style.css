@@ -867,7 +867,25 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 .footer-about .bn { font-family: var(--font-bangla); }
 .footer-contact { font-size: 13px; color: var(--ink-2); line-height: 1.8; }
 .footer-contact .bn { font-family: var(--font-bangla); }
-.footer-support img { height: 40px; margin-top: 8px; mix-blend-mode: multiply; }
+.footer-support {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.footer-support p {
+  font-size: 11px;
+  color: #64756c;
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.footer-support img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
 .footer-bottom {
   background: var(--green-deep); color: rgba(255,255,255,.85);
   padding: 14px 0; font-size: 12.5px;
