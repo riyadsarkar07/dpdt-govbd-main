@@ -468,13 +468,13 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 <input type="text" id="tm" class="search-input" placeholder="e.g. 261029" autocomplete="off" onkeydown="if(event.key==='Enter') searchTM()">
               </div>
-              <p class="search-hint" data-en="Enter the numeric registration or application number assigned by DPDT." data-bn="ডিপিডিটি কর্তৃক প্রদত্ত সংখ্যাসূচক নিবন্ধন বা আবেদন নম্বর লিখুন।">Enter the numeric registration or application number assigned by DPDT.</p>
             </div>
             <button class="search-btn" onclick="searchTM()">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <span data-en="Verify Now" data-bn="এখনই যাচাই করুন">Verify Now</span>
             </button>
           </div>
+          <p class="search-hint" data-en="Enter the numeric registration or application number assigned by DPDT." data-bn="ডিপিডিটি কর্তৃক প্রদত্ত সংখ্যাসূচক নিবন্ধন বা আবেদন নম্বর লিখুন।">Enter the numeric registration or application number assigned by DPDT.</p>
         </div>
       </div>
 
@@ -984,9 +984,9 @@
         <ul class="footer-links">
           <li><a href="/online-application" data-internal="1"><span class="bn">অনলাইন আবেদন (আইপাস)</span><span class="en">IPAS Online Application</span></a></li>
           <li><a href="https://www.achallan.gov.bd/" target="_blank" rel="noopener"><span class="bn">A চালান</span><span class="en">A-Challan</span><span class="ext">↗</span></a></li>
-          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e08d933eb65569e278d3" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্কস ফরম</span><span class="en">Trademark Forms</span></a></li>
-          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922dc84933eb65569e10c76" target="_blank" rel="noopener"><span class="bn">ট্রেডমার্কস জার্নাল</span><span class="en">Trademarks Journal</span></a></li>
-          <li><a href="https://dpdt.gov.bd/pages/static-pages/6922e14d933eb65569e2b677" target="_blank" rel="noopener"><span class="bn">পুনঃনির্ধারিত ফি</span><span class="en">Revised Fees</span></a></li>
+          <li><a href="/trademark-forms" data-internal="1"><span class="bn">ট্রেডমার্কস ফরম</span><span class="en">Trademark Forms</span></a></li>
+          <li><a href="/trademarks-journal" data-internal="1"><span class="bn">ট্রেডমার্কস জার্নাল</span><span class="en">Trademarks Journal</span></a></li>
+          <li><a href="/revised-fees" data-internal="1"><span class="bn">পুনঃনির্ধারিত ফি</span><span class="en">Revised Fees</span></a></li>
         </ul>
       </div>
 
@@ -1003,8 +1003,10 @@
           <span class="en">Web: <a href="https://dpdt.gov.bd/" target="_blank" rel="noopener">www.dpdt.gov.bd</a></span>
         </div>
         <div class="footer-support">
-          <p style="font-size:11px;color:#64756c;margin-top:12px;" data-en="Technical Support" data-bn="কারিগরি সহায়তা">Technical Support</p>
-          <img src="footer-banner.png" alt="Technical support partners banner" style="height:38px;mix-blend-mode:multiply;">
+          <p class="footer-support-title"><span data-en="Technical Support" data-bn="কারিগরি সহায়তা">Technical Support</span></p>
+          <div class="footer-support-logos">
+            <img src="technical-support.svg" width="269" height="49" alt="Technical Support - a2i, Cabinet Division, ICT Division &amp; UNDP">
+          </div>
         </div>
       </div>
 

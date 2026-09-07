@@ -1010,11 +1010,16 @@ function loadRecordCount() {
 })();
 
 /* 2) helpers */
+const PORTAL_PAGE_ALIAS = {
+  '/trademark-forms': '/download/trademark-forms',
+  '/trademarks-journal': '/publication/trademark-journal',
+  '/revised-fees': '/fees/revised'
+};
 function portalPath() {
   const p = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
   const data = window.PORTAL_DATA || {};
   if (data[p]) return p;
-  return null;
+  return PORTAL_PAGE_ALIAS[p] || null;
 }
 function portalPage() {
   const p = portalPath();
