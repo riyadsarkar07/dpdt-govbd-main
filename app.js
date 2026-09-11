@@ -496,14 +496,15 @@ function renderSearchResults(panel, results, query) {
   } else {
     let lastGroup = null;
     results.forEach(r => {
-      const g = t(r.groupBn, r.groupEn);
+      const e = r.entry;
+      const g = t(e.groupBn, e.groupEn);
       if (g !== lastGroup) {
         html += '<div class="sr-group">' + g + '</div>';
         lastGroup = g;
       }
-      html += '<a class="sr-item" href="' + (r.internal ? r.href : url(r.href)) + '"' + (r.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
-        '<span class="sr-title">' + t(r.bn, r.en) + '</span>' +
-        (r.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
+      html += '<a class="sr-item" href="' + (e.internal ? e.href : url(e.href)) + '"' + (e.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
+        '<span class="sr-title">' + t(e.bn, e.en) + '</span>' +
+        (e.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
         '</a>';
     });
   }
@@ -541,14 +542,15 @@ function runFullSearch(rawQuery) {
   if (empty) empty.classList.add('hidden');
   let lastGroup = null;
   matched.forEach(r => {
-    const g = t(r.groupBn, r.groupEn);
+    const e = r.entry;
+    const g = t(e.groupBn, e.groupEn);
     if (g !== lastGroup) {
       html += '<div class="sr-group">' + g + '</div>';
       lastGroup = g;
     }
-    html += '<a class="sr-item" href="' + (r.internal ? r.href : url(r.href)) + '"' + (r.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
-      '<span class="sr-title">' + t(r.bn, r.en) + '</span>' +
-      (r.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
+    html += '<a class="sr-item" href="' + (e.internal ? e.href : url(e.href)) + '"' + (e.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
+      '<span class="sr-title">' + t(e.bn, e.en) + '</span>' +
+      (e.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
       '</a>';
   });
   out.innerHTML = html;
