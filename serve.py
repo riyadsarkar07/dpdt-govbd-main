@@ -53,6 +53,16 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
+    def end_headers(self):
+        path = getattr(self, "path", "") or ""
+        path = path.split("?", 1)[0].lower()
+        if path.endswith(".jpg") or path.endswith(".pdf"):
+            self.send_header(
+                "Cache-Control",
+                "public, max-age=3600, stale-while-revalidate=86400",
+            )
+        super().end_headers()
+
     def do_GET(self):
         target = resolve(self.path)
         if target is None:
@@ -60,6 +70,14 @@ class Handler(SimpleHTTPRequestHandler):
             return
         self.path = "/" + target
         super().do_GET()
+
+    def do_HEAD(self):
+        target = resolve(self.path)
+        if target is None:
+            self.send_error(404, "Not Found")
+            return
+        self.path = "/" + target
+        super().do_HEAD()
 
 
 def main():

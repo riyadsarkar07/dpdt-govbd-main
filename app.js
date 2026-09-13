@@ -814,32 +814,89 @@ async function verifyTrademark(regNo) {
   }
 }
 
+function certUnavailableHtml() {
+  return '<p style="font-size:13px;color:#64756c;padding:24px;text-align:center;">Certificate document preview is currently unavailable.</p>';
+}
+
 /* File-extension resolver — renders ONLY the original certificate
-   asset (image or PDF). No injected text, captions or overlays. */
+   asset (image or PDF). No injected text, captions or overlays.
+   Single <img> request (no probe + second fetch). Skeleton + reserved
+   aspect-ratio show immediately; the JPG starts when near the viewport. */
+let certObserver = null;
+
 function resolveCertificateAsset(regNo, container) {
   const imgUrl = regNo + '.jpg';
-  const imgChecker = new Image();
+  const pdfUrl = regNo + '.pdf';
 
-  imgChecker.onload = function () {
-    container.innerHTML = '<img src="' + imgUrl + '" alt="">';
+  if (certObserver) {
+    certObserver.disconnect();
+    certObserver = null;
+  }
+
+  const frame = document.createElement('div');
+  frame.className = 'cert-frame';
+  frame.setAttribute('aria-busy', 'true');
+
+  const skeleton = document.createElement('div');
+  skeleton.className = 'cert-skeleton';
+  skeleton.setAttribute('aria-hidden', 'true');
+
+  const img = document.createElement('img');
+  img.alt = '';
+  img.width = 2373;
+  img.height = 3508;
+  img.decoding = 'async';
+  img.className = 'cert-img is-loading';
+
+  img.onload = function () {
+    if (currentRegNo !== regNo) return;
+    img.classList.remove('is-loading');
+    frame.setAttribute('aria-busy', 'false');
+    if (skeleton.parentNode) skeleton.parentNode.removeChild(skeleton);
   };
 
-  imgChecker.onerror = function () {
-    const pdfUrl = regNo + '.pdf';
+  img.onerror = function () {
+    if (currentRegNo !== regNo) return;
     fetch(pdfUrl)
-      .then(response => {
+      .then(function (response) {
+        if (currentRegNo !== regNo) return;
         if (response.ok) {
           container.innerHTML = '<iframe src="' + pdfUrl + '" title=""></iframe>';
         } else {
-          container.innerHTML = '<p style="font-size:13px;color:#64756c;padding:24px;text-align:center;">Certificate document preview is currently unavailable.</p>';
+          container.innerHTML = certUnavailableHtml();
         }
       })
       .catch(function () {
-        container.innerHTML = '<p style="font-size:13px;color:#64756c;padding:24px;text-align:center;">Certificate document preview is currently unavailable.</p>';
+        if (currentRegNo !== regNo) return;
+        container.innerHTML = certUnavailableHtml();
       });
   };
 
-  imgChecker.src = imgUrl;
+  frame.appendChild(skeleton);
+  frame.appendChild(img);
+  container.innerHTML = '';
+  container.appendChild(frame);
+
+  function startLoad() {
+    if (currentRegNo !== regNo) return;
+    if (!img.getAttribute('src')) img.src = imgUrl;
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    startLoad();
+    return;
+  }
+
+  certObserver = new IntersectionObserver(function (entries) {
+    if (!entries[0] || !entries[0].isIntersecting) return;
+    if (certObserver) {
+      certObserver.disconnect();
+      certObserver = null;
+    }
+    startLoad();
+  }, { rootMargin: '400px 0px', threshold: 0.01 });
+
+  certObserver.observe(frame);
 }
 
 /* Download the ORIGINAL certificate file (no regeneration). */

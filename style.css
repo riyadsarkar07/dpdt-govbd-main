@@ -756,6 +756,41 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 .cert-card-body iframe { width: 100%; height: 820px; border: 1px solid var(--line); }
 
+/* Reserved A4-portrait slot (certificate JPG is 2373×3508) so the
+   verification table can paint before the image arrives. */
+.cert-frame {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 2373 / 3508;
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.cert-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  border: 0;
+  background: #fff;
+  display: block;
+}
+.cert-img.is-loading { opacity: 0; }
+.cert-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #eef3f0 0%, #f7faf8 50%, #eef3f0 100%);
+  background-size: 200% 100%;
+  animation: cert-shimmer 1.2s ease-in-out infinite;
+}
+@keyframes cert-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
 .success-note {
   background: #fff; border: 1px solid rgba(0,106,78,.3);
   border-left: 3px solid var(--green); border-radius: 2px;
@@ -971,6 +1006,8 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   body { background: #fff; }
   .page { padding: 0; }
   .result-doc, .cert-card { box-shadow: none; border-color: #ccc; }
+  .cert-skeleton { display: none !important; animation: none; }
+  .cert-img.is-loading { opacity: 1; }
   @page { margin: 12mm; }
 }
 
