@@ -29,6 +29,9 @@
   --shadow-sm: 0 1px 2px rgba(15, 50, 33, .08);
   --shadow-md: 0 3px 10px rgba(15, 50, 33, .10);
   --shadow-lg: 0 8px 28px rgba(15, 50, 33, .14);
+
+  --content-max: 1180px;
+  --cert-max: 880px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,7 +55,7 @@ a:hover { text-decoration: underline; }
 
 img { max-width: 100%; }
 
-.container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: var(--content-max); margin: 0 auto; padding: 0 20px; }
 
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 300;
@@ -204,7 +207,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 .header-inner {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 18px; padding: 16px 20px;
+  gap: 18px; padding-top: 14px; padding-bottom: 14px;
 }
 .header-brand { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .brand-emblem {
@@ -243,13 +246,13 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   box-shadow: 0 2px 10px rgba(6,53,31,.25);
   position: sticky; top: 0; z-index: 120;
 }
-.nav-inner { display: flex; align-items: stretch; }
-.nav-list { display: flex; flex-wrap: wrap; list-style: none; align-items: stretch; flex: 1; }
+.nav-inner { display: flex; align-items: stretch; min-width: 0; }
+.nav-list { display: flex; flex-wrap: wrap; list-style: none; align-items: stretch; flex: 1; min-width: 0; }
 .nav-list > li { position: relative; display: flex; align-items: stretch; }
 .nav-link {
-  display: flex; align-items: center; gap: 6px;
-  color: rgba(255,255,255,.9); font-size: 13px; font-weight: 500;
-  padding: 12px 11px; white-space: nowrap; letter-spacing: .2px;
+  display: flex; align-items: center; gap: 5px;
+  color: rgba(255,255,255,.9); font-size: 12.75px; font-weight: 500;
+  padding: 11px 9px; white-space: nowrap; letter-spacing: .15px;
   transition: background .15s, color .15s; cursor: pointer;
   background: none; border: none; font-family: var(--font-body);
 }
@@ -302,11 +305,11 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 /* Full menu button + overlay */
 .nav-menu-btn {
   display: flex; align-items: center; gap: 8px;
-  align-self: flex-start;
+  align-self: stretch; margin-left: auto;
   background: var(--green-deep); color: #fff; border: none; cursor: pointer;
-  font-family: var(--font-bangla); font-size: 13px; font-weight: 600;
-  padding: 0 18px; min-height: 44px; white-space: nowrap; letter-spacing: .2px;
-  transition: background .15s;
+  font-family: var(--font-bangla); font-size: 12.75px; font-weight: 600;
+  padding: 0 16px; min-height: 42px; white-space: nowrap; letter-spacing: .2px;
+  transition: background .15s; flex-shrink: 0;
 }
 .nav-menu-btn:hover { background: #0a4a2c; }
 .nav-menu-btn .burger { display: flex; flex-direction: column; gap: 3px; }
@@ -422,9 +425,12 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 ═══════════════════════════════════════════════════════════════ */
 .breadcrumb {
   background: #fff; border-bottom: 1px solid var(--line);
-  font-size: 12.5px; padding: 8px 20px;
+  font-size: 12.5px; padding: 8px 0;
 }
-.breadcrumb .crumb-inner { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; max-width: 1180px; margin: 0 auto; color: var(--muted); }
+.breadcrumb .crumb-inner {
+  display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  max-width: 1180px; margin: 0 auto; padding: 0 20px; color: var(--muted);
+}
 .breadcrumb a { color: var(--green); font-weight: 500; }
 .breadcrumb .sep { color: #b9c4bd; }
 .breadcrumb .current { color: var(--ink-2); font-weight: 600; }
@@ -435,7 +441,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 .view { display: none; }
 .view.active { display: block; }
 
-.page { padding: 26px 0 48px; }
+.page { padding-top: 26px; padding-bottom: 48px; }
 
 /* Section heading (government style) */
 .gov-heading { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; }
@@ -640,16 +646,17 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
    VERIFICATION VIEW
 ═══════════════════════════════════════════════════════════════ */
 #view-verify .page {
-  max-width: 1600px;
-  padding: 16px 8px 28px;
+  max-width: 1180px;
+  padding-top: 16px;
+  padding-bottom: 28px;
 }
-#view-verify .verify-head { margin-bottom: 12px; padding-bottom: 10px; }
-#view-verify .info-notice { margin-bottom: 12px; padding: 9px 14px; }
+#view-verify .verify-head { margin-bottom: 14px; padding-bottom: 12px; }
+#view-verify .info-notice { margin-bottom: 14px; padding: 10px 16px; }
 #view-verify .search-panel { margin-bottom: 16px; }
 #view-verify .search-panel-body { padding: 16px 20px 14px; }
 #view-verify .search-hint { margin-top: 8px; }
-#view-verify .result-doc { margin-bottom: 12px; }
-#view-verify .success-note { margin-top: 12px; padding: 9px 14px; }
+#view-verify .result-doc { margin-bottom: 16px; }
+#view-verify .success-note { margin-top: 14px; padding: 10px 16px; }
 
 .verify-head {
   display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
@@ -712,12 +719,12 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 
 /* Result slip */
 .result-doc {
-  background: #fff; border: 1px solid #c9d1cd; border-radius: 2px;
-  box-shadow: none; overflow: hidden; margin-bottom: 20px;
+  background: #fff; border: 1px solid #c9d1cd; border-radius: 3px;
+  box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 16px;
 }
 .result-doc-head {
   background: var(--green-deep);
-  padding: 13px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   border-bottom: 2px solid var(--gold);
 }
 .result-doc-title { display: flex; align-items: center; gap: 10px; }
@@ -734,7 +741,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 .result-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .result-table tr { border-bottom: 1px solid var(--line); }
 .result-table tr:last-child { border-bottom: none; }
-.result-table td { padding: 12px 22px; vertical-align: top; }
+.result-table td { padding: 10px 20px; vertical-align: top; }
 .result-table td.label-cell {
   width: 32%; background: #f7f9f8; font-weight: 600; color: var(--ink-2);
   border-right: 1px solid var(--line); font-size: 12.5px; letter-spacing: .1px; white-space: nowrap;
@@ -751,49 +758,62 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 .status-ok::before { content: '✓'; margin-right: 6px; font-weight: 700; }
 
-.result-actions { background: #fff; border-top: 1px solid var(--line); padding: 12px 22px; display: flex; gap: 8px; flex-wrap: wrap; }
-.action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 2px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: all .15s; }
-.action-btn svg { width: 12px; height: 12px; }
+.result-actions {
+  background: #f7f9f8; border-top: 1px solid var(--line);
+  padding: 12px 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+}
+.action-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 8px 16px; border-radius: 3px; font-size: 12.5px; font-weight: 600;
+  cursor: pointer; font-family: var(--font-body); transition: all .15s; min-height: 36px;
+}
+.action-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
 .action-btn-green { background: var(--green); color: #fff; border: 1px solid var(--green); box-shadow: none; }
 .action-btn-green:hover { background: var(--green-deep); }
 .action-btn-outline { background: #fff; color: var(--green-deep); border: 1px solid var(--green); }
 .action-btn-outline:hover { background: var(--green-soft); }
 
 /* Certificate */
-.cert-card { background: #fff; border: 1px solid #c9d1cd; border-radius: 2px; box-shadow: none; overflow: hidden; }
+.cert-card {
+  background: #fff; border: 1px solid #c9d1cd; border-radius: 3px;
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
 .cert-card-body {
-  padding: 0;
+  padding: 18px 16px 20px;
   display: flex;
   justify-content: center;
-  background: #fff;
+  align-items: flex-start;
+  background: #eef3f0;
 }
 .cert-card-body img {
-  max-width: 100%; height: auto; object-fit: contain;
+  max-width: 100%; width: 100%; height: auto; object-fit: contain;
   border: 1px solid var(--line); background: #fff;
 }
 .cert-card-body iframe {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--cert-max);
   aspect-ratio: 2373 / 3508;
   height: auto;
   border: 1px solid var(--line);
   margin: 0 auto;
   display: block;
+  background: #fff;
+  box-shadow: var(--shadow-md);
 }
 
-/* Reserved A4-portrait slot (certificate JPG is 2373×3508) so the
-   verification table can paint before the image arrives.
-   Uses the full content column width so certificate text stays
-   readable. Vertical scrolling is expected and preferred. */
+/* Reserved A4-portrait slot (certificate JPG is 2373×3508).
+   Desktop preview is 850–900px wide, centered, original ratio kept.
+   Full document remains reachable by vertical scroll. */
 .cert-frame {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--cert-max);
   aspect-ratio: 2373 / 3508;
   position: relative;
   background: #fff;
-  border: 1px solid var(--line);
+  border: 1px solid #c9d1cd;
   overflow: hidden;
   margin: 0 auto;
+  box-shadow: var(--shadow-md);
 }
 .cert-frame img {
   position: absolute;
@@ -957,7 +977,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .nav-inner {
     padding-left: 8px;
     padding-right: 0;
-    overflow: hidden;
+    overflow: visible;
   }
   .nav-list {
     display: flex;
@@ -992,7 +1012,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .national-bar-inner { flex-direction: column; gap: 6px; padding: 6px 0; }
   .top-search { width: 100%; }
   .top-search input { flex: 1; }
-  .header-inner { flex-direction: column; text-align: center; padding: 14px 12px; }
+  .header-inner { flex-direction: column; text-align: center; padding-top: 14px; padding-bottom: 14px; }
   .header-brand { flex-direction: column; gap: 10px; }
   .header-side { display: none; }
   .brand-emblem { width: 62px; height: 62px; }
@@ -1009,11 +1029,12 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .hero h2 .en-title { font-size: 17px; }
   .result-table td.label-cell { width: 40%; white-space: normal; font-size: 12px; }
   .result-table td { padding: 10px 14px; }
-  .cert-card-body { padding: 0; }
-  .cert-card-body iframe { width: 100%; height: auto; }
-  .cert-frame { width: 100%; }
+  .cert-card-body { padding: 8px; background: #eef3f0; }
+  .cert-card-body iframe { width: 100%; max-width: 100%; height: auto; box-shadow: none; }
+  .cert-frame { width: 100%; max-width: 100%; box-shadow: none; }
+  html, body { overflow-x: hidden; }
   .result-doc-head { flex-direction: column; align-items: flex-start; }
-  #view-verify .page { padding: 12px 0 20px; }
+  #view-verify .page { padding-top: 12px; padding-bottom: 20px; }
   #view-verify .verify-head { gap: 10px; }
   #view-verify .verify-head .vh-icon { width: 42px; height: 42px; }
   #view-verify .verify-head h2 { font-size: 18px; }
@@ -1036,24 +1057,48 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   }
 }
 
-/* Laptop screens (1366×768): tighten chrome around the search/result
-   panels. Certificate width stays full content column for readability. */
+/* Desktop: 1366×768 — condensed chrome, certificate ~850px */
+@media (min-width: 1100px) and (max-width: 1439px) {
+  :root { --cert-max: 850px; }
+  .nav-link { padding: 10px 8px; font-size: 12.5px; }
+  #view-verify .page { padding-top: 14px; padding-bottom: 24px; }
+  #view-verify .verify-head { margin-bottom: 12px; padding-bottom: 10px; }
+  .cert-card-body { padding: 16px 14px 18px; }
+}
+
+/* Desktop: 1440×900 — certificate ~880px (default --cert-max) */
+@media (min-width: 1440px) and (max-width: 1599px) {
+  :root { --cert-max: 880px; }
+  .nav-link { padding: 11px 9px; font-size: 12.75px; }
+  #view-verify .page { padding-top: 16px; padding-bottom: 28px; }
+}
+
+/* Desktop: 1920×1080 — certificate 900px, still centered */
+@media (min-width: 1600px) {
+  :root { --cert-max: 900px; }
+  .nav-link { padding: 11px 10px; font-size: 13px; }
+  #view-verify .page { padding-top: 18px; padding-bottom: 32px; }
+  .cert-card-body { padding: 22px 20px 24px; }
+}
+
+/* Short laptop viewports (1366×768): tighten vertical rhythm */
 @media (min-width: 761px) and (max-height: 800px) {
-  #view-verify .page { padding: 10px 0 16px; }
-  #view-verify .verify-head { margin-bottom: 8px; padding-bottom: 8px; gap: 10px; }
-  #view-verify .verify-head .vh-icon { width: 40px; height: 40px; }
-  #view-verify .verify-head h2 { font-size: 18px; }
-  #view-verify .verify-head p { font-size: 12px; }
-  #view-verify .info-notice { margin-bottom: 8px; padding: 7px 12px; font-size: 12px; }
-  #view-verify .search-panel { margin-bottom: 10px; }
-  #view-verify .search-panel-head { padding: 8px 16px; }
-  #view-verify .search-panel-body { padding: 12px 16px 10px; }
-  #view-verify .search-input { height: 40px; }
-  #view-verify .search-btn { height: 40px; padding: 0 20px; }
-  #view-verify .result-doc { margin-bottom: 8px; }
-  #view-verify .result-table td { padding: 7px 16px; }
-  #view-verify .result-actions { padding: 8px 16px; }
-  #view-verify .success-note { margin-top: 8px; padding: 8px 12px; }
+  #view-verify .page { padding-top: 12px; padding-bottom: 20px; }
+  #view-verify .verify-head { margin-bottom: 10px; padding-bottom: 8px; gap: 10px; }
+  #view-verify .verify-head .vh-icon { width: 42px; height: 42px; }
+  #view-verify .verify-head h2 { font-size: 20px; }
+  #view-verify .verify-head p { font-size: 12.5px; }
+  #view-verify .info-notice { margin-bottom: 10px; padding: 8px 14px; font-size: 12.5px; }
+  #view-verify .search-panel { margin-bottom: 12px; }
+  #view-verify .search-panel-head { padding: 9px 18px; }
+  #view-verify .search-panel-body { padding: 14px 18px 12px; }
+  #view-verify .search-input { height: 42px; }
+  #view-verify .search-btn { height: 42px; padding: 0 22px; }
+  #view-verify .result-doc { margin-bottom: 12px; }
+  #view-verify .result-table td { padding: 8px 18px; }
+  #view-verify .result-actions { padding: 10px 18px; }
+  #view-verify .success-note { margin-top: 10px; padding: 9px 14px; }
+  .cert-card-body { padding: 14px 12px 16px; }
 }
 
 @media (max-width: 480px) {
@@ -1061,6 +1106,9 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .search-form-row { flex-direction: column; align-items: stretch; }
   .search-btn { width: 100%; justify-content: center; }
   .footer-bottom-inner { flex-direction: column; text-align: center; }
+  .cert-card-body { padding: 6px; }
+  .container { padding: 0 12px; }
+  .breadcrumb .crumb-inner { padding: 0 12px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
