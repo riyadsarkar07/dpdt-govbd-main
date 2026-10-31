@@ -304,11 +304,12 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 
 /* Full menu button + overlay */
 .nav-menu-btn {
-  display: flex; align-items: center; gap: 8px;
-  align-self: stretch; margin-left: auto;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  align-self: center; margin-left: auto;
   background: var(--green-deep); color: #fff; border: none; cursor: pointer;
   font-family: var(--font-bangla); font-size: 12.75px; font-weight: 600;
-  padding: 0 16px; min-height: 42px; white-space: nowrap; letter-spacing: .2px;
+  height: 46px; min-height: 46px; max-height: 46px;
+  padding: 0 16px; white-space: nowrap; letter-spacing: .2px;
   transition: background .15s; flex-shrink: 0;
 }
 .nav-menu-btn:hover { background: #0a4a2c; }
