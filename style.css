@@ -1010,6 +1010,31 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 
 @media (max-width: 760px) {
+  .nav-inner {
+    padding: 0 0 0 6px;
+    overflow: hidden;
+  }
+  .nav-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+  }
+  .nav-list > li:nth-child(n+4) { display: none; }
+  .nav-link { padding: 11px 8px; font-size: 12.5px; }
+  .nav-hamburger {
+    display: flex;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+    padding: 0 14px;
+    gap: 7px;
+    margin-left: auto;
+    box-shadow: none;
+    align-self: center;
+    font-size: 13px;
+  }
   .national-bar-inner { flex-direction: column; gap: 6px; padding: 6px 0; }
   .top-search { width: 100%; }
   .top-search input { flex: 1; }
@@ -1022,7 +1047,22 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .service-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .contact-info-card .cic-body { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 22px; }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 18px;
+  }
+  .footer-grid > :first-child,
+  .footer-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+  .footer-main { padding: 22px 0 18px; }
+  .footer h4 { font-size: 13px; margin-bottom: 10px; padding-bottom: 6px; }
+  .footer-links li { margin-bottom: 8px; }
+  .footer-links a { font-size: 13px; line-height: 1.5; align-items: flex-start; }
+  .footer-about { font-size: 13px; line-height: 1.65; }
+  .footer-contact { font-size: 13px; line-height: 1.7; }
+  .footer-support { margin-top: 14px; padding-top: 12px; }
+  .footer-support-logos img { width: 180px; max-width: 100%; height: auto; }
   .mega-body { grid-template-columns: 1fr; }
   .imp-links { grid-template-columns: 1fr; }
   .hero { padding: 22px 18px; }
@@ -1106,7 +1146,8 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .stats-band { grid-template-columns: repeat(2, 1fr); }
   .search-form-row { flex-direction: column; align-items: stretch; }
   .search-btn { width: 100%; justify-content: center; }
-  .footer-bottom-inner { flex-direction: column; text-align: center; }
+  .footer-bottom-inner { flex-direction: column; text-align: center; gap: 8px; }
+  .footer-bottom { padding: 12px 0; font-size: 12px; line-height: 1.55; }
   .cert-card-body { padding: 6px; }
   .container { padding: 0 12px; }
   .breadcrumb .crumb-inner { padding: 0 12px; }
