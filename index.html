@@ -62,11 +62,16 @@
 ═══════════════════════════════════════════════════════════ -->
 <nav class="primary-nav" aria-label="Main navigation">
   <div class="container nav-inner">
-    <ul class="nav-list" id="navList"></ul>
-    <button class="nav-menu-btn" id="menuBtn" type="button">
-      <span class="burger"><span></span><span></span><span></span></span>
-      <span class="menu-label" data-en="Full Menu" data-bn="সকল মেনু">Full Menu</span>
-    </button>
+    <div class="nav-rows" id="navList">
+      <ul class="nav-list nav-row-primary" id="navRowPrimary"></ul>
+      <div class="nav-row-secondary">
+        <ul class="nav-list" id="navRowSecondary"></ul>
+        <button class="nav-menu-btn" id="menuBtn" type="button">
+          <span class="burger"><span></span><span></span><span></span></span>
+          <span class="menu-label" data-en="Full Menu" data-bn="সকল মেনু">Full Menu</span>
+        </button>
+      </div>
+    </div>
     <button class="nav-hamburger" id="navHamburger" type="button" aria-label="Open menu">
       <span><i></i><i></i><i></i></span>
       <span class="menu-label" data-en="Menu" data-bn="মেনু">Menu</span>

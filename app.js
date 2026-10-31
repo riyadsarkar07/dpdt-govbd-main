@@ -311,8 +311,9 @@ const ICON_SEARCH = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none"
 const ICON_PHONE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
 
 function renderBar() {
-  const el = document.getElementById('navList');
-  if (!el) return;
+  const primary = document.getElementById('navRowPrimary');
+  const secondary = document.getElementById('navRowSecondary');
+  if (!primary || !secondary) return;
   const BAR = [
     { type: 'link', en: 'Home', bn: 'হোম', href: '/', icon: ICON_HOME },
     { type: 'menu', key: 'about' },
@@ -328,7 +329,8 @@ function renderBar() {
     { type: 'link', en: 'Contact', bn: 'যোগাযোগ', href: '/verify?page=contact', icon: ICON_PHONE },
     { type: 'link', en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify', cta: true, icon: ICON_SEARCH }
   ];
-  el.innerHTML = BAR.map(barItemHTML).join('');
+  primary.innerHTML = BAR.slice(0, 9).map(barItemHTML).join('');
+  secondary.innerHTML = BAR.slice(9).map(barItemHTML).join('');
 }
 
 /* ═══════════════════════════════════════════════════════════════
