@@ -262,7 +262,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 .nav-row-secondary {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   width: 100%;
   min-width: 0;
 }
@@ -270,6 +270,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   flex: 1;
   min-width: 0;
   min-height: 42px;
+  align-self: stretch;
 }
 .nav-link {
   display: flex; align-items: center; gap: 5px;
@@ -283,12 +284,6 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 .nav-link .caret { font-size: 9px; opacity: .8; transition: transform .15s; }
 .nav-list > li:hover > .nav-link .caret { transform: rotate(180deg); }
 .nav-link.active { background: rgba(0,0,0,.18); color: #fff; font-weight: 700; box-shadow: inset 0 -3px 0 var(--gold); }
-.nav-link.cta {
-  background: var(--green-mid); color: #fff; font-weight: 700;
-  box-shadow: inset 0 -3px 0 var(--gold);
-}
-.nav-link.cta:hover { background: var(--green); color: #fff; }
-.nav-link.cta.active { background: var(--green); color: #fff; box-shadow: inset 0 -3px 0 var(--gold); }
 .nav-link.cta .badge-verify { background: var(--gold); color: var(--green-deep); font-size: 9.5px; padding: 1px 5px; border-radius: 8px; letter-spacing: .4px; font-weight: 700; }
 
 /* Dropdown panel */
@@ -326,18 +321,19 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 
 /* Full menu button + overlay */
 .nav-menu-btn {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  align-self: stretch; margin-left: auto;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  align-self: center; margin-left: auto;
   background: var(--green-deep); color: #fff; border: none; cursor: pointer;
   font-family: var(--font-bangla); font-size: 12.75px; font-weight: 600;
-  min-height: 42px;
-  padding: 0 14px; white-space: nowrap; letter-spacing: .2px;
+  height: 36px; min-height: 36px; max-height: 38px;
+  padding: 0 12px; white-space: nowrap; letter-spacing: .2px;
+  border-radius: 3px;
   transition: background .15s; flex-shrink: 0;
 }
 .nav-menu-btn:hover { background: #0a4a2c; }
-.nav-menu-btn .burger { display: flex; flex-direction: column; gap: 3px; }
-.nav-menu-btn .burger span { width: 16px; height: 2px; background: var(--gold); display: block; }
-.nav-menu-btn .menu-label { color: #fff; }
+.nav-menu-btn .burger { display: flex; flex-direction: column; gap: 2.5px; flex-shrink: 0; }
+.nav-menu-btn .burger span { width: 14px; height: 2px; background: var(--gold); display: block; }
+.nav-menu-btn .menu-label { color: #fff; line-height: 1; }
 
 /* Hamburger (mobile) */
 .nav-hamburger {

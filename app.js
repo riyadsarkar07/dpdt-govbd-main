@@ -331,6 +331,7 @@ function renderBar() {
   ];
   primary.innerHTML = BAR.slice(0, 9).map(barItemHTML).join('');
   secondary.innerHTML = BAR.slice(9).map(barItemHTML).join('');
+  updateNavActive();
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -713,17 +714,89 @@ function viewTitle(route) {
   return VIEW_TITLES[route] || VIEW_TITLES.home;
 }
 
+function updateNavActive() {
+  const path = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+  const qs = new URLSearchParams(window.location.search);
+  const page = qs.get('page');
+  const isVerifyPath = path === '/verify' || path === '/verify.html';
+  const isHome = (path === '/' || path === '/index.html' || path === '/index') &&
+    !isVerifyPath && !page && !qs.has('reg_no') && !qs.has('regNo');
+
+  document.querySelectorAll('#navList .nav-link.active').forEach(function (el) {
+    el.classList.remove('active');
+  });
+
+  function mark(selector) {
+    const el = document.querySelector(selector);
+    if (el) el.classList.add('active');
+  }
+  function markCat(key) {
+    const li = document.querySelector('#navList li.has-sub[data-cat="' + key + '"]');
+    if (!li) return;
+    const btn = li.querySelector(':scope > .nav-link');
+    if (btn) btn.classList.add('active');
+  }
+
+  if (isHome) {
+    mark('#navRowPrimary a.nav-link[href="/"]');
+    return;
+  }
+
+  if (isVerifyPath && page === 'contact') {
+    mark('#navList a.nav-link[href="/verify?page=contact"]');
+    return;
+  }
+
+  if (isVerifyPath && page !== 'fee' && page !== 'search' && page !== 'contact') {
+    mark('#navList a.nav-link[href="/verify"]');
+    return;
+  }
+
+  const first = path.replace(/^\//, '').split('/')[0];
+  const KEY_MAP = {
+    about: 'about',
+    statistics: 'statistics',
+    'online-application': 'online',
+    'online-updates': 'online',
+    publication: 'publication',
+    acts: 'acts',
+    laws: 'acts',
+    policies: 'acts',
+    media: 'media',
+    download: 'download',
+    fees: 'download',
+    classification: 'classification',
+    gi: 'gi',
+    faq: 'faq'
+  };
+  let matchedKey = KEY_MAP[first] || null;
+
+  if (!matchedKey) {
+    NAV.some(function (cat) {
+      return cat.groups.some(function (g) {
+        return g.items.some(function (item) {
+          if (!item || !item.href || /^https?:/i.test(item.href)) return false;
+          const hrefPath = item.href.split('?')[0].replace(/\/+$/, '') || '/';
+          if (hrefPath === path) {
+            matchedKey = cat.key;
+            return true;
+          }
+          return false;
+        });
+      });
+    });
+  }
+
+  if (matchedKey) markCat(matchedKey);
+}
+
 function showView(route) {
   state.route = route;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const view = document.getElementById('view-' + route);
   if (view) view.classList.add('active');
 
-  document.querySelectorAll('.nav-link.active').forEach(el => el.classList.remove('active'));
-  if (route === 'verify') {
-    const cta = document.querySelector('#navList a[href="/verify"]');
-    if (cta) cta.classList.add('active');
-  }
+  updateNavActive();
   document.title = viewTitle(route);
 
   const crumb = document.getElementById('crumbCurrent');
