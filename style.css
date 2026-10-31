@@ -639,6 +639,15 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 /* ═══════════════════════════════════════════════════════════════
    VERIFICATION VIEW
 ═══════════════════════════════════════════════════════════════ */
+#view-verify .page { padding: 16px 0 28px; }
+#view-verify .verify-head { margin-bottom: 12px; padding-bottom: 10px; }
+#view-verify .info-notice { margin-bottom: 12px; padding: 9px 14px; }
+#view-verify .search-panel { margin-bottom: 16px; }
+#view-verify .search-panel-body { padding: 16px 20px 14px; }
+#view-verify .search-hint { margin-top: 8px; }
+#view-verify .result-doc { margin-bottom: 12px; }
+#view-verify .success-note { margin-top: 12px; padding: 9px 14px; }
+
 .verify-head {
   display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
   padding-bottom: 16px; border-bottom: 1px solid var(--line);
@@ -749,23 +758,33 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 
 /* Certificate */
 .cert-card { background: #fff; border: 1px solid #c9d1cd; border-radius: 2px; box-shadow: none; overflow: hidden; }
-.cert-card-body { padding: 16px; display: flex; justify-content: center; background: #fff; }
+.cert-card-body { padding: 10px 12px; display: flex; justify-content: center; background: #fff; }
 .cert-card-body img {
   max-width: 100%; height: auto; object-fit: contain;
   border: 1px solid var(--line); background: #fff;
 }
-.cert-card-body iframe { width: 100%; height: 820px; border: 1px solid var(--line); }
+.cert-card-body iframe {
+  width: min(100%, 640px);
+  height: min(85vh, 900px);
+  max-width: 100%;
+  border: 1px solid var(--line);
+  margin: 0 auto;
+  display: block;
+}
 
 /* Reserved A4-portrait slot (certificate JPG is 2373×3508) so the
-   verification table can paint before the image arrives. */
+   verification table can paint before the image arrives.
+   Width is capped so portrait height does not force 2–3 full scrolls
+   on 1366×768 / 1920×1080 laptops. Proportions stay 2373×3508. */
 .cert-frame {
-  width: 100%;
+  width: min(100%, 640px, calc(90vh * 2373 / 3508));
   max-width: 100%;
   aspect-ratio: 2373 / 3508;
   position: relative;
   background: #fff;
   border: 1px solid var(--line);
   overflow: hidden;
+  margin: 0 auto;
 }
 .cert-frame img {
   position: absolute;
@@ -981,13 +1000,59 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .hero h2 .en-title { font-size: 17px; }
   .result-table td.label-cell { width: 40%; white-space: normal; font-size: 12px; }
   .result-table td { padding: 10px 14px; }
-  .cert-card-body iframe { height: 520px; }
+  .cert-card-body { padding: 8px; }
+  .cert-card-body iframe { width: 100%; height: min(70vh, 640px); }
+  .cert-frame { width: 100%; }
   .result-doc-head { flex-direction: column; align-items: flex-start; }
+  #view-verify .page { padding: 12px 0 20px; }
+  #view-verify .verify-head { gap: 10px; }
+  #view-verify .verify-head .vh-icon { width: 42px; height: 42px; }
+  #view-verify .verify-head h2 { font-size: 18px; }
+  #view-verify .search-panel-body { padding: 14px 14px 12px; }
+  #view-verify .result-doc-head { padding: 10px 14px; }
+  #view-verify .result-actions { padding: 10px 14px; }
 }
 
 @media (max-width: 620px) {
   .search-form-row { flex-direction: column; align-items: stretch; }
   .search-btn { width: 100%; justify-content: center; }
+  #view-verify .result-table,
+  #view-verify .result-table tbody,
+  #view-verify .result-table tr { display: block; width: 100%; }
+  #view-verify .result-table td.label-cell {
+    display: block; width: 100%; border-right: none; padding: 8px 14px 2px;
+  }
+  #view-verify .result-table td.value-cell {
+    display: block; width: 100%; padding: 2px 14px 10px;
+  }
+}
+
+/* Laptop screens (1366×768): keep the certificate within one viewport height. */
+@media (min-width: 761px) and (max-height: 800px) {
+  #view-verify .page { padding: 10px 0 16px; }
+  #view-verify .verify-head { margin-bottom: 8px; padding-bottom: 8px; gap: 10px; }
+  #view-verify .verify-head .vh-icon { width: 40px; height: 40px; }
+  #view-verify .verify-head h2 { font-size: 18px; }
+  #view-verify .verify-head p { font-size: 12px; }
+  #view-verify .info-notice { margin-bottom: 8px; padding: 7px 12px; font-size: 12px; }
+  #view-verify .search-panel { margin-bottom: 10px; }
+  #view-verify .search-panel-head { padding: 8px 16px; }
+  #view-verify .search-panel-body { padding: 12px 16px 10px; }
+  #view-verify .search-input { height: 40px; }
+  #view-verify .search-btn { height: 40px; padding: 0 20px; }
+  #view-verify .result-doc { margin-bottom: 8px; }
+  #view-verify .result-table td { padding: 7px 16px; }
+  #view-verify .result-actions { padding: 8px 16px; }
+  #view-verify .success-note { margin-top: 8px; padding: 8px 12px; }
+  .cert-card-body { padding: 8px 10px; }
+  .cert-frame { width: min(100%, calc(78vh * 2373 / 3508)); }
+  .cert-card-body iframe { width: min(100%, 520px); height: min(78vh, 620px); }
+}
+
+/* Standard 1080p laptops: slightly larger preview, still one-screen height. */
+@media (min-width: 761px) and (min-height: 801px) {
+  .cert-frame { width: min(100%, 680px, calc(86vh * 2373 / 3508)); }
+  .cert-card-body iframe { width: min(100%, 680px); height: min(86vh, 920px); }
 }
 
 @media (max-width: 480px) {
@@ -1006,6 +1071,9 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   body { background: #fff; }
   .page { padding: 0; }
   .result-doc, .cert-card { box-shadow: none; border-color: #ccc; }
+  .cert-card-body { padding: 0; }
+  .cert-frame { width: 100%; max-width: 100%; }
+  .cert-card-body iframe { width: 100%; height: 90vh; }
   .cert-skeleton { display: none !important; animation: none; }
   .cert-img.is-loading { opacity: 1; }
   @page { margin: 12mm; }
