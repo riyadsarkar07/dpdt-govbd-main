@@ -256,8 +256,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 }
 .nav-list { display: flex; flex-wrap: wrap; list-style: none; align-items: stretch; min-width: 0; }
 .nav-list > li { position: relative; display: flex; align-items: stretch; }
-.nav-row-primary,
-.nav-row-secondary {
+.nav-row-primary {
   min-height: 42px;
 }
 .nav-row-secondary {
@@ -265,11 +264,13 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   align-items: center;
   width: 100%;
   min-width: 0;
+  min-height: 46px;
+  height: 46px;
 }
 .nav-row-secondary .nav-list {
   flex: 1;
   min-width: 0;
-  min-height: 42px;
+  height: 100%;
   align-self: stretch;
 }
 .nav-link {
@@ -321,13 +322,14 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 
 /* Full menu button + overlay */
 .nav-menu-btn {
-  display: flex; align-items: center; justify-content: center; gap: 7px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   align-self: center; margin-left: auto;
   background: var(--green-deep); color: #fff; border: none; cursor: pointer;
-  font-family: var(--font-bangla); font-size: 12.75px; font-weight: 600;
-  height: 36px; min-height: 36px; max-height: 38px;
-  padding: 0 12px; white-space: nowrap; letter-spacing: .2px;
-  border-radius: 3px;
+  font-family: var(--font-bangla); font-size: 12.5px; font-weight: 600;
+  height: 30px; min-height: 30px; max-height: 32px;
+  line-height: 1;
+  padding: 0 10px; white-space: nowrap; letter-spacing: .2px;
+  border-radius: 4px;
   transition: background .15s; flex-shrink: 0;
 }
 .nav-menu-btn:hover { background: #0a4a2c; }
