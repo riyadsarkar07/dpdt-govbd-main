@@ -285,7 +285,35 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 .nav-link .caret { font-size: 9px; opacity: .8; transition: transform .15s; }
 .nav-list > li:hover > .nav-link .caret { transform: rotate(180deg); }
 .nav-link.active { background: rgba(0,0,0,.18); color: #fff; font-weight: 700; box-shadow: inset 0 -3px 0 var(--gold); }
-.nav-link.cta .badge-verify { background: var(--gold); color: var(--green-deep); font-size: 9.5px; padding: 1px 5px; border-radius: 8px; letter-spacing: .4px; font-weight: 700; }
+.nav-link.cta {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-link.cta > svg,
+.nav-link.cta > span { flex-shrink: 0; line-height: 1; }
+.nav-link.cta .badge-verify {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--gold);
+  color: var(--green-deep);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .45px;
+  line-height: 1;
+  padding: 2.5px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.nav-link.cta.active {
+  background: rgba(0,0,0,.22);
+  box-shadow: inset 0 -3px 0 var(--gold);
+}
 
 /* Dropdown panel */
 .dropdown {
