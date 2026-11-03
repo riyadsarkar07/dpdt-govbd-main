@@ -519,16 +519,19 @@ function runFullSearch(rawQuery) {
   const out = document.getElementById('searchResults');
   const empty = document.getElementById('searchEmpty');
   const countEl = document.getElementById('searchCount');
+  const summaryEl = document.getElementById('searchSummary');
   if (!out) return;
   const query = (rawQuery || '').trim();
   if (!query) {
     out.innerHTML = '';
     if (empty) empty.classList.add('hidden');
     if (countEl) countEl.textContent = '';
+    if (summaryEl) summaryEl.classList.add('hidden');
     return;
   }
   const matched = scoreSearch(query);
   if (countEl) countEl.textContent = String(matched.length);
+  if (summaryEl) summaryEl.classList.remove('hidden');
 
   let html = '';
   if (/^\d{4,}$/.test(query)) {
@@ -747,7 +750,12 @@ function updateNavActive() {
     return;
   }
 
-  if (isVerifyPath && page !== 'fee' && page !== 'search' && page !== 'contact') {
+  if (isVerifyPath && (page === 'fee' || page === 'search')) {
+    mark('#navList a.nav-link[href="/verify"]');
+    return;
+  }
+
+  if (isVerifyPath && page !== 'contact') {
     mark('#navList a.nav-link[href="/verify"]');
     return;
   }
@@ -851,9 +859,24 @@ function bindInternalLinks() {
 let currentRegNo = null;
 
 function searchTM() {
-  const regNo = document.getElementById('tm').value.trim();
-  if (!regNo) { alert('Please enter a Trademark number.'); return; }
+  const tmEl = document.getElementById('tm');
+  if (!tmEl) return;
+  const regNo = tmEl.value.trim();
+  if (!regNo) {
+    tmEl.focus();
+    tmEl.classList.add('input-invalid');
+    setTimeout(function () { tmEl.classList.remove('input-invalid'); }, 1400);
+    return;
+  }
   navigate('?reg_no=' + encodeURIComponent(regNo));
+}
+
+function fillSample(regNo) {
+  const tmEl = document.getElementById('tm');
+  if (tmEl) tmEl.value = regNo;
+  const heroTm = document.getElementById('heroTm');
+  if (heroTm) heroTm.value = regNo;
+  searchTM();
 }
 
 async function verifyTrademark(regNo) {
