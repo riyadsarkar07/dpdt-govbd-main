@@ -173,7 +173,7 @@
               <label for="heroTm" data-en="Trademark / Application Number" data-bn="ট্রেডমার্ক / আবেদন নম্বর">Trademark / Application Number</label>
               <div class="hero-input-wrap">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input id="heroTm" type="text" inputmode="numeric" placeholder="e.g. 261029" autocomplete="off" aria-label="Trademark number">
+                <input id="heroTm" type="text" inputmode="numeric" placeholder="Enter Trademark Registration / Application Number" autocomplete="off" aria-label="Trademark registration or application number">
               </div>
               <button class="btn btn-green" type="submit">
                 <span data-en="Check Now" data-bn="এখনই যাচাই করুন">Check Now</span>
@@ -181,9 +181,7 @@
               </button>
             </form>
             <div class="hero-card-foot">
-              <span data-en="Sample:" data-bn="নমুনা:">Sample:</span>
-              <a href="/verify?reg_no=261029" data-internal="1">261029</a>
-              <a href="/verify?reg_no=261060" data-internal="1">261060</a>
+              <span data-en="Enter the number exactly as printed on the trademark document." data-bn="ট্রেডমার্ক নথিতে যে নম্বরটি মুদ্রিত আছে তা হুবহু লিখুন।">Enter the number exactly as printed on the trademark document.</span>
             </div>
           </aside>
         </div>
@@ -289,7 +287,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8.5 11.5l2 2 3.5-3.5"/></svg>
                   </span>
                   <h3 data-en="Trademark Verification" data-bn="ট্রেডমার্ক যাচাইকরণ">Trademark Verification</h3>
-                  <p data-en="Verify the registration status of a trademark with the national database and view the original certificate." data-bn="জাতীয় ডেটাবেজে ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন এবং মূল সনদ দেখুন।">Verify the registration status of a trademark with the national database and view the original certificate.</p>
+                  <p data-en="Verify a trademark registration and view its certificate record." data-bn="ট্রেডমার্কের নিবন্ধন যাচাই করুন এবং সনদ রেকর্ড দেখুন।">Verify a trademark registration and view its certificate record.</p>
                   <span class="st-go" data-en="Verify now" data-bn="এখনই যাচাই করুন">Verify now &rarr;</span>
                 </a>
 
@@ -427,7 +425,7 @@
               <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8.5 11.5l2 2 3.5-3.5"/></svg>
             </div>
             <h3 data-en="Trademark Verification Service" data-bn="ট্রেডমার্ক যাচাইকরণ সেবা">Trademark Verification Service</h3>
-            <p data-en="Check the registration status of any trademark filed with DPDT. View the original certificate instantly." data-bn="ডিপিডিটি-তে দাখিলকৃত যেকোনো ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন। সাথে সাথে মূল সনদ দেখুন।">Check the registration status of any trademark filed with DPDT. View the original certificate instantly.</p>
+            <p data-en="Search for a trademark record and view its stored certificate file." data-bn="ট্রেডমার্কের রেকর্ড খুঁজুন এবং সংরক্ষিত সনদ ফাইল দেখুন।">Search for a trademark record and view its stored certificate file.</p>
             <a class="btn btn-green" href="/verify" data-internal="1" style="width:100%;justify-content:center;">
               <span data-en="Start Verification" data-bn="যাচাইকরণ শুরু করুন">Start Verification</span>
             </a>
@@ -498,121 +496,155 @@
   <section class="view" id="view-verify">
     <div class="container page">
 
-      <div class="verify-head">
-        <div class="vh-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </div>
-        <div>
+      <div class="verify-hero">
+        <div class="verify-hero-main">
+          <div class="verify-eyebrow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+            <span data-en="Record Lookup" data-bn="রেকর্ড অনুসন্ধান">Record Lookup</span>
+          </div>
           <h2 data-en="Trademark Verification Portal" data-bn="ট্রেডমার্ক যাচাইকরণ পোর্টাল">Trademark Verification Portal</h2>
-          <p data-en="Verify the registration status of any trademark filed with the Department of Patents, Designs & Trademarks (DPDT), Bangladesh." data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরে দাখিলকৃত যেকোনো ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন।">Verify the registration status of any trademark filed with the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.</p>
+          <p data-en="Verify the registration status of a trademark filed with the Department of Patents, Designs & Trademarks (DPDT), Bangladesh." data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তরে দাখিলকৃত যেকোনো ট্রেডমার্কের নিবন্ধন অবস্থা যাচাই করুন।">Verify the registration status of a trademark filed with the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.</p>
+        </div>
+        <div class="verify-hero-badge" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
         </div>
       </div>
 
-      <div class="info-notice">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span data-en="Enter the Trademark Application/Registration number to retrieve verified information directly from the DPDT national intellectual property database." data-bn="জাতীয় মেধাসম্পদ ডেটাবেজ থেকে সরাসরি যাচাইকৃত তথ্য পেতে ট্রেডমার্ক আবেদন/নিবন্ধন নম্বর লিখুন।">Enter the Trademark Application/Registration number to retrieve verified information directly from the DPDT national intellectual property database.</span>
+      <div class="info-notice" role="note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span data-en="Enter the Trademark Application / Registration number to retrieve the stored verification record and certificate file. Confirm legally significant details with DPDT." data-bn="সংরক্ষিত যাচাইকরণ রেকর্ড ও সনদ ফাইল পেতে ট্রেডমার্ক আবেদন / নিবন্ধন নম্বর লিখুন। আইনগতভাবে গুরুত্বপূর্ণ তথ্য ডিপিডিটির সাথে নিশ্চিত করুন।">Enter the Trademark Application / Registration number to retrieve the stored verification record and certificate file. Confirm legally significant details with DPDT.</span>
       </div>
 
-      <!-- Search panel -->
-      <div class="search-panel">
+      <div class="search-panel verify-search-panel">
         <div class="search-panel-head">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <span data-en="Trademark Number Lookup" data-bn="ট্রেডমার্ক নম্বর অনুসন্ধান">Trademark Number Lookup</span>
         </div>
         <div class="search-panel-body">
-          <form class="search-form-row" onsubmit="event.preventDefault(); searchTM();">
+          <form class="search-form-row" id="verifyForm" novalidate onsubmit="event.preventDefault(); searchTM();">
             <div class="search-field">
-              <label for="tm" data-en="Trademark / Application Number" data-bn="ট্রেডমার্ক / আবেদন নম্বর">Trademark / Application Number</label>
+              <label for="tm" data-en="Trademark Registration / Application Number" data-bn="ট্রেডমার্ক নিবন্ধন / আবেদন নম্বর">Trademark Registration / Application Number</label>
               <div class="search-input-wrap">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input type="text" id="tm" class="search-input" placeholder="e.g. 261029" inputmode="numeric" autocomplete="off" autofocus>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="tm" class="search-input" placeholder="Enter Trademark Registration / Application Number" inputmode="numeric" autocomplete="off" spellcheck="false" aria-describedby="verifyHint verifyInputError" required>
               </div>
+              <p class="field-error" id="verifyInputError" role="alert" hidden></p>
             </div>
-            <button class="search-btn" type="submit">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <span data-en="Verify Now" data-bn="এখনই যাচাই করুন">Verify Now</span>
+            <button class="search-btn" type="submit" id="verifySubmit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span data-en="Verify Record" data-bn="রেকর্ড যাচাই করুন">Verify Record</span>
             </button>
           </form>
-          <div class="search-hint-row">
-            <p class="search-hint" data-en="Enter the numeric registration or application number assigned by DPDT." data-bn="ডিপিডিটি কর্তৃক প্রদত্ত সংখ্যাসূচক নিবন্ধন বা আবেদন নম্বর লিখুন।">Enter the numeric registration or application number assigned by DPDT.</p>
-            <div class="sample-row">
-              <span class="sample-label" data-en="Try a sample:" data-bn="নমুনা চেষ্টা করুন:">Try a sample:</span>
-              <button type="button" class="sample-chip" onclick="fillSample('261029')">261029</button>
-              <button type="button" class="sample-chip" onclick="fillSample('261060')">261060</button>
-              <button type="button" class="sample-chip" onclick="fillSample('255781')">255781</button>
-            </div>
-          </div>
+          <p class="search-hint" id="verifyHint" data-en="Enter the numeric registration or application number assigned by DPDT." data-bn="ডিপিডিটি কর্তৃক প্রদত্ত সংখ্যাসূচক নিবন্ধন বা আবেদন নম্বর লিখুন।">Enter the numeric registration or application number exactly as it appears on the document. The field is intentionally left blank.</p>
+        </div>
+      </div>
+
+      <!-- Idle / empty state -->
+      <div class="verify-state" id="verifyIdle">
+        <div class="vs-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+        </div>
+        <div>
+          <h3 data-en="No lookup in progress" data-bn="কোনো অনুসন্ধান চলছে না">No lookup in progress</h3>
+          <p data-en="Enter a number above to retrieve the record, if one exists." data-bn="সংরক্ষিত রেকর্ড থাকলে তা দেখতে উপরে একটি নম্বর লিখুন।">Enter a number above to retrieve the record, if one exists.</p>
+        </div>
+      </div>
+
+      <!-- Loading state -->
+      <div class="verify-state verify-loading hidden" id="verifyLoading" role="status" aria-live="polite">
+        <span class="vs-spinner" aria-hidden="true"></span>
+        <div>
+          <h3 data-en="Checking the record…" data-bn="রেকর্ড যাচাই করা হচ্ছে…">Checking the record…</h3>
+          <p data-en="Retrieving the record for the number you entered." data-bn="আপনার দেওয়া নম্বরের রেকর্ড আনা হচ্ছে।">Retrieving the record for the number you entered.</p>
+        </div>
+      </div>
+
+      <!-- Not found -->
+      <div class="verify-state verify-notfound hidden" id="verifyNotFound" role="alert">
+        <div class="vs-icon vs-icon-warn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16.5" x2="12.01" y2="16.5"/></svg>
+        </div>
+        <div>
+          <h3 data-en="No record found for this number" data-bn="এই নম্বরের কোনো রেকর্ড পাওয়া যায়নি">No record found for this number</h3>
+          <p><span data-en="The number" data-bn="নম্বরটি">The number</span> <strong class="vs-number" id="notFoundNumber"></strong> <span data-en="is not present in the verification dataset. Check the number against the source document and try again." data-bn="যাচাইকরণ ডেটাসেটে নেই। মূল নথির সাথে নম্বরটি মিলিয়ে আবার চেষ্টা করুন।">is not present in the verification dataset. Check the number against the source document and try again.</span></p>
+        </div>
+      </div>
+
+      <!-- Server / data error -->
+      <div class="verify-state verify-error hidden" id="verifyError" role="alert">
+        <div class="vs-icon vs-icon-error">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <div>
+          <h3 data-en="The record could not be loaded" data-bn="রেকর্ড লোড করা যায়নি">The record could not be loaded</h3>
+          <p data-en="A network or data error prevented the lookup from completing. This is not a confirmation that the record does not exist. Please retry." data-bn="নেটওয়ার্ক বা ডেটা ত্রুটির কারণে অনুসন্ধান সম্পন্ন হয়নি। এর অর্থ এই নয় যে রেকর্ডটি নেই। অনুগ্রহ করে আবার চেষ্টা করুন।">A network or data error prevented the lookup from completing. This is not a confirmation that the record does not exist. Please retry.</p>
+          <button class="action-btn action-btn-outline" type="button" id="verifyRetry" data-en="Retry lookup" data-bn="আবার চেষ্টা করুন">Retry lookup</button>
         </div>
       </div>
 
       <!-- Verification result -->
-      <div id="verificationResult" class="hidden">
-        <div class="result-doc">
+      <div id="verificationResult" class="hidden" aria-live="polite">
+        <div class="result-doc" id="printableReport">
           <div class="result-doc-head">
             <div class="result-doc-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
               <div>
-                <div class="tt" data-en="Trademark Verification Slip" data-bn="ট্রেডমার্ক যাচাইকরণ স্লিপ">Trademark Verification Slip</div>
-                <div class="ts" data-en="Issued by Department of Patents, Designs & Trademarks (DPDT)" data-bn="ইস্যুকারী: পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি)">Issued by Department of Patents, Designs &amp; Trademarks (DPDT)</div>
+                <div class="tt" data-en="Trademark Verification Report" data-bn="ট্রেডমার্ক যাচাইকরণ প্রতিবেদন">Trademark Verification Report</div>
+                <div class="ts" data-en="Issued by Department of Patents, Designs &amp; Trademarks (DPDT)" data-bn="ইস্যুকারী: পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি)">Issued by Department of Patents, Designs &amp; Trademarks (DPDT)</div>
               </div>
             </div>
-            <span class="verified-badge"><span data-en="Verified" data-bn="যাচাইকৃত">Verified</span></span>
+            <span class="verified-badge" data-en="Verified" data-bn="যাচাইকৃত">Verified</span>
           </div>
+
+          <div class="report-meta">
+            <div class="rm-item">
+              <span class="rm-label" data-en="Report reference" data-bn="প্রতিবেদন সূত্র">Report reference</span>
+              <span class="rm-value" id="reportRef">—</span>
+            </div>
+            <div class="rm-item">
+              <span class="rm-label" data-en="Generated" data-bn="প্রস্তুতকাল">Generated</span>
+              <span class="rm-value" id="reportGenerated">—</span>
+            </div>
+            <div class="rm-item">
+              <span class="rm-label" data-en="Data source" data-bn="ডেটা উৎস">Data source</span>
+              <span class="rm-value" data-en="Verification record" data-bn="যাচাইকরণ রেকর্ড">Verification record</span>
+            </div>
+          </div>
+
           <div class="result-table-wrap">
             <table class="result-table">
-              <tbody>
-                <tr>
-                  <td class="label-cell" data-en="Trademark Number" data-bn="ট্রেডমার্ক নম্বর">Trademark Number</td>
-                  <td id="resNum" class="value-cell"></td>
-                </tr>
-                <tr>
-                  <td class="label-cell" data-en="Owner / Brand Name" data-bn="মালিক / ব্র্যান্ড নাম">Owner / Brand Name</td>
-                  <td id="resName" class="value-cell value-bold"></td>
-                </tr>
-                <tr>
-                  <td class="label-cell" data-en="Filing / Application Date" data-bn="আবেদনের তারিখ">Filing / Application Date</td>
-                  <td id="resDate" class="value-cell"></td>
-                </tr>
-                <tr>
-                  <td class="label-cell" data-en="Registration Status" data-bn="নিবন্ধন অবস্থা">Registration Status</td>
-                  <td class="value-cell"><span class="status-ok"><span data-en="Registered & Verified" data-bn="নিবন্ধিত ও যাচাইকৃত">Registered &amp; Verified</span></span></td>
-                </tr>
-                <tr>
-                  <td class="label-cell" data-en="Issuing Authority" data-bn="ইস্যুকারী কর্তৃপক্ষ">Issuing Authority</td>
-                  <td id="resAuth" class="value-cell"></td>
-                </tr>
-              </tbody>
+              <tbody id="resultTableBody"></tbody>
             </table>
           </div>
+
+          <div class="report-disclaimer">
+            <strong data-en="Verification note" data-bn="যাচাইকরণ নোট">Verification note</strong>
+            <span data-en=" This report reproduces the fields held in the verification dataset for the number entered. Only stored fields are shown; nothing is inferred." data-bn=" এই প্রতিবেদনটি প্রবেশ করানো নম্বরের জন্য যাচাইকরণ ডেটাসেটে সংরক্ষিত ক্ষেত্রগুলো পুনরুৎপাদন করে। শুধুমাত্র সংরক্ষিত তথ্য দেখানো হয়; কোনো কিছু অনুমান করা হয় না।"> This report reproduces the fields held in the verification dataset for the number entered. Only stored fields are shown; nothing is inferred.</span>
+          </div>
+
           <div class="result-actions">
-            <button class="action-btn action-btn-green" onclick="window.print()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              <span data-en="Print Verification Report" data-bn="যাচাইকরণ প্রতিবেদন প্রিন্ট করুন">Print Verification Report</span>
+            <button class="action-btn action-btn-green" type="button" id="printReportBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span data-en="Print report" data-bn="প্রতিবেদন প্রিন্ট করুন">Print report</span>
             </button>
-            <button class="action-btn action-btn-outline" onclick="downloadCertificate()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span data-en="Download Certificate" data-bn="সনদ ডাউনলোড করুন">Download Certificate</span>
+            <button class="action-btn action-btn-outline" type="button" id="downloadCertBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span data-en="Download certificate file" data-bn="সনদ ফাইল ডাউনলোড করুন">Download certificate file</span>
             </button>
           </div>
         </div>
 
-        <!-- Certificate: renders ONLY the original uploaded image/PDF -->
         <div class="cert-card">
+          <div class="cert-card-head">
+            <span data-en="Certificate document on file" data-bn="সংরক্ষিত সনদপত্র">Certificate document on file</span>
+            <span class="cert-card-note" data-en="Original file, unmodified" data-bn="মূল ফাইল, অপরিবর্তিত">Original file, unmodified</span>
+          </div>
           <div class="cert-card-body" id="assetContainer"></div>
         </div>
 
         <div class="success-note">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span data-en="This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs & Trademarks (DPDT), Bangladesh." data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি) কর্তৃক রক্ষণাবেক্ষিত জাতীয় মেধাসম্পদ ডেটাবেজের বিরুদ্ধে এই ট্রেডমার্ক সনদটি সফলভাবে যাচাই করা হয়েছে।">This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.</span>
-        </div>
-      </div>
-
-      <!-- Error message -->
-      <div id="errorResult" class="hidden error-box">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-        <div>
-          <strong data-en="Record Not Found." data-bn="রেকর্ড পাওয়া যায়নি।">Record Not Found.</strong>
-          <span data-en=" This Trademark / Application number is not registered in the DPDT national database. Please verify the number and try again, or contact the office for assistance." data-bn=" এই ট্রেডমার্ক / আবেদন নম্বরটি ডিপিডিটি জাতীয় ডেটাবেজে নিবন্ধিত নয়। অনুগ্রহ করে নম্বরটি যাচাই করে আবার চেষ্টা করুন, অথবা সহায়তার জন্য অফিসে যোগাযোগ করুন।"> This Trademark / Application number is not registered in the DPDT national database. Please verify the number and try again, or contact the office for assistance.</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span data-en="This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh." data-bn="বাংলাদেশ পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর (ডিপিডিটি) কর্তৃক রক্ষণাবেক্ষিত জাতীয় মেধাসম্পদ ডেটাবেজের বিরুদ্ধে এই ট্রেডমার্ক সনদটি সফলভাবে যাচাই করা হয়েছে।">This trademark certificate has been successfully verified against the national intellectual property database maintained by the Department of Patents, Designs &amp; Trademarks (DPDT), Bangladesh.</span>
         </div>
       </div>
 
@@ -1011,6 +1043,7 @@
 
     </div>
   </section>
+
 
 </main>
 

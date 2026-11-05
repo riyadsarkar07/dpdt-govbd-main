@@ -251,6 +251,12 @@ function url(href) {
   if (/^https?:\/\//i.test(href)) return href;
   return OFF + href;
 }
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function extIcon() {
   return '<svg class="ext" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
 }
@@ -488,7 +494,8 @@ function doSiteSearch(rawQuery) {
 }
 
 function renderSearchResults(panel, results, query) {
-  let head = '<div class="sr-head">' + t('অনুসন্ধান ফলাফল:', 'Search results for:') + ' <b>' + query + '</b>';
+  const safeQuery = escapeHtml(query);
+  let head = '<div class="sr-head">' + t('অনুসন্ধান ফলাফল:', 'Search results for:') + ' <b>' + safeQuery + '</b>';
   if (results.length) {
     head += '<a class="sr-viewall" href="/verify?page=search&amp;q=' + encodeURIComponent(query) + '" data-internal="1">' + t('সব ফলাফল দেখুন', 'View all results') + ' &rarr;</a>';
   }
@@ -502,11 +509,11 @@ function renderSearchResults(panel, results, query) {
       const e = r.entry;
       const g = t(e.groupBn, e.groupEn);
       if (g !== lastGroup) {
-        html += '<div class="sr-group">' + g + '</div>';
+        html += '<div class="sr-group">' + escapeHtml(g) + '</div>';
         lastGroup = g;
       }
       html += '<a class="sr-item" href="' + (e.internal ? e.href : url(e.href)) + '"' + (e.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
-        '<span class="sr-title">' + t(e.bn, e.en) + '</span>' +
+        '<span class="sr-title">' + escapeHtml(t(e.bn, e.en)) + '</span>' +
         (e.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
         '</a>';
     });
@@ -551,11 +558,11 @@ function runFullSearch(rawQuery) {
     const e = r.entry;
     const g = t(e.groupBn, e.groupEn);
     if (g !== lastGroup) {
-      html += '<div class="sr-group">' + g + '</div>';
+      html += '<div class="sr-group">' + escapeHtml(g) + '</div>';
       lastGroup = g;
     }
     html += '<a class="sr-item" href="' + (e.internal ? e.href : url(e.href)) + '"' + (e.ext ? ' target="_blank" rel="noopener"' : ' data-internal="1"') + '>' +
-      '<span class="sr-title">' + t(e.bn, e.en) + '</span>' +
+      '<span class="sr-title">' + escapeHtml(t(e.bn, e.en)) + '</span>' +
       (e.ext ? extIcon() : '<span class="sr-go">' + t('যান', 'Go') + ' &rarr;</span>') +
       '</a>';
   });
@@ -823,8 +830,16 @@ function showView(route) {
   }
   if (route === 'verify') {
     const inputEl = document.getElementById('tm');
-    if (inputEl) inputEl.value = reg || '';
-    if (reg) verifyTrademark(reg);
+    const normalised = normaliseTmNumber(reg || '');
+    if (inputEl) inputEl.value = normalised;
+    setFieldError('');
+    if (normalised) {
+      verifyTrademark(normalised);
+    } else {
+      currentRegNo = null;
+      currentAssetUrl = null;
+      setVerifyState('idle');
+    }
   }
   closeAllMenus();
   window.scrollTo({ top: 0, behavior: 'auto' });
@@ -854,77 +869,239 @@ function bindInternalLinks() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TRADEMARK VERIFICATION — ORIGINAL CORE LOGIC (PRESERVED)
+   TRADEMARK VERIFICATION
+   Read-only lookup against the project's verification dataset
+   (data.json). No sample numbers, no auto-filled values and no
+   fabricated fields.
 ═══════════════════════════════════════════════════════════════ */
 let currentRegNo = null;
+let currentAssetUrl = null;
+let archivePromise = null;
+
+const VERIFY_STATE_IDS = ['verifyIdle', 'verifyLoading', 'verifyNotFound', 'verifyError'];
+const VERIFY_RESULT_ID = 'verificationResult';
+
+function setVerifyState(state) {
+  VERIFY_STATE_IDS.forEach(function (id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  const result = document.getElementById(VERIFY_RESULT_ID);
+  if (result) result.classList.add('hidden');
+
+  if (state === 'result') {
+    if (result) result.classList.remove('hidden');
+    return;
+  }
+  const target = document.getElementById(state === 'idle' ? 'verifyIdle' : state === 'loading' ? 'verifyLoading' : state === 'notfound' ? 'verifyNotFound' : 'verifyError');
+  if (target) target.classList.remove('hidden');
+}
+
+function setFieldError(message) {
+  const input = document.getElementById('tm');
+  const err = document.getElementById('verifyInputError');
+  if (input) {
+    input.classList.toggle('input-invalid', !!message);
+    input.setAttribute('aria-invalid', message ? 'true' : 'false');
+  }
+  if (err) {
+    if (message) {
+      err.textContent = message;
+      err.hidden = false;
+    } else {
+      err.textContent = '';
+      err.hidden = true;
+    }
+  }
+}
+
+function normaliseTmNumber(raw) {
+  return String(raw == null ? '' : raw).replace(/[\s\u200e\u200f-]/g, '').trim();
+}
+
+function validateTmNumber(value) {
+  if (!value) return 'Enter a trademark registration or application number to continue.';
+  if (!/^\d+$/.test(value)) return 'Use digits only. The number should contain no letters or symbols.';
+  if (value.length < 3) return 'That number is too short. Enter the full number from the document.';
+  if (value.length > 20) return 'That number is too long. Enter the full number from the document.';
+  return '';
+}
 
 function searchTM() {
   const tmEl = document.getElementById('tm');
   if (!tmEl) return;
-  const regNo = tmEl.value.trim();
-  if (!regNo) {
+  const regNo = normaliseTmNumber(tmEl.value);
+  const error = validateTmNumber(regNo);
+  if (error) {
+    setFieldError(error);
+    setVerifyState('idle');
     tmEl.focus();
-    tmEl.classList.add('input-invalid');
-    setTimeout(function () { tmEl.classList.remove('input-invalid'); }, 1400);
     return;
   }
-  navigate('?reg_no=' + encodeURIComponent(regNo));
+  setFieldError('');
+  tmEl.value = regNo;
+  navigate('/verify?reg_no=' + encodeURIComponent(regNo));
 }
 
-function fillSample(regNo) {
-  const tmEl = document.getElementById('tm');
-  if (tmEl) tmEl.value = regNo;
-  const heroTm = document.getElementById('heroTm');
-  if (heroTm) heroTm.value = regNo;
-  searchTM();
+function loadArchive() {
+  if (!archivePromise) {
+    archivePromise = fetch('data.json', { cache: 'no-cache' }).then(function (response) {
+      if (!response.ok) throw new Error('Data request failed with status ' + response.status);
+      return response.json();
+    }).catch(function (error) {
+      archivePromise = null;
+      throw error;
+    });
+  }
+  return archivePromise;
+}
+
+function formatArchiveDate(value) {
+  if (!value) return '';
+  const str = String(value).trim();
+  const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!m) return str;
+  const day = Number(m[1]);
+  const month = Number(m[2]);
+  const year = Number(m[3]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return str;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (Number.isNaN(date.getTime())) return str;
+  return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+function reportReference(regNo) {
+  const stamp = new Date();
+  const pad = function (n) { return String(n).padStart(2, '0'); };
+  return 'DPDT-VR-' + regNo + '-' + stamp.getFullYear() + pad(stamp.getMonth() + 1) + pad(stamp.getDate()) + '-' + pad(stamp.getHours()) + pad(stamp.getMinutes()) + pad(stamp.getSeconds());
+}
+
+/* Build the report strictly from fields present in the record.
+   Unknown/absent fields are omitted; nothing is inferred. */
+function buildReportRows(regNo, info) {
+  const rows = [];
+  const push = function (en, bn, value, opts) {
+    if (value == null || String(value).trim() === '') return;
+    rows.push({ en: en, bn: bn, value: String(value).trim(), cls: (opts && opts.cls) || '' });
+  };
+
+  const recordNo = info.registration_number || info.registrationNumber || regNo;
+  push('Trademark Number', 'ট্রেডমার্ক নম্বর', recordNo, { cls: 'value-mono' });
+
+  if (info.application_number || info.applicationNumber) {
+    push('Application Number', 'আবেদন নম্বর', info.application_number || info.applicationNumber, { cls: 'value-mono' });
+  }
+  push('Trademark / Brand Name', 'ট্রেডমার্ক / ব্র্যান্ড নাম', info.name || info.trademark_name || info.trademarkName || info.mark, { cls: 'value-bold' });
+  push('Owner / Proprietor', 'মালিক / স্বত্বাধিকারী', info.owner || info.proprietor || info.applicant);
+  push('Filing / Application Date', 'আবেদনের তারিখ', formatArchiveDate(info.application_date || info.applicationDate || info.filing_date || info.filingDate));
+  push('Registration Date', 'নিবন্ধনের তারিখ', formatArchiveDate(info.registration_date || info.registrationDate));
+  push('Registration Status', 'নিবন্ধন অবস্থা', info.status || info.registration_status || info.registrationStatus);
+  push('Trademark Class', 'ট্রেডমার্ক শ্রেণি', info.class || info.trademark_class || info.trademarkClass || info.nice_class);
+  push('Goods and Services', 'পণ্য ও সেবা', info.goods_services || info.goodsServices || info.goods);
+  push('Issuing Authority', 'ইস্যুকারী কর্তৃপক্ষ', info.authority);
+  push('Source / Reference', 'উৎস / সূত্র', info.source || info.reference || info.source_url || info.sourceUrl);
+  push('Certificate Document', 'সনদপত্র', info.certificate || info.certificate_file || info.certificateFile);
+  return rows;
+}
+
+function renderReport(regNo, info) {
+  const tbody = document.getElementById('resultTableBody');
+  if (!tbody) return;
+  const rows = buildReportRows(regNo, info);
+  tbody.innerHTML = '';
+  rows.forEach(function (row) {
+    const tr = document.createElement('tr');
+    const th = document.createElement('td');
+    th.className = 'label-cell';
+    th.setAttribute('data-en', row.en);
+    th.setAttribute('data-bn', row.bn);
+    th.textContent = lang === 'bn' ? row.bn : row.en;
+    const td = document.createElement('td');
+    td.className = 'value-cell ' + row.cls;
+    if (/^https?:\/\//i.test(row.value)) {
+      const a = document.createElement('a');
+      a.href = row.value;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = row.value;
+      td.appendChild(a);
+    } else {
+      td.textContent = row.value;
+    }
+    tr.appendChild(th);
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+
+  const ref = document.getElementById('reportRef');
+  if (ref) ref.textContent = reportReference(regNo);
+  const gen = document.getElementById('reportGenerated');
+  if (gen) gen.textContent = new Date().toLocaleString(lang === 'bn' ? 'bn-BD' : 'en-GB', {
+    day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  });
 }
 
 async function verifyTrademark(regNo) {
-  currentRegNo = regNo;
-  const tableResult = document.getElementById('verificationResult');
-  const errorResult = document.getElementById('errorResult');
-  const assetContainer = document.getElementById('assetContainer');
-  if (!tableResult || !errorResult || !assetContainer) return;
+  const normalised = normaliseTmNumber(regNo);
+  const container = document.getElementById('assetContainer');
+  if (!container) return;
+  currentAssetUrl = null;
+
+  if (!normalised) {
+    currentRegNo = null;
+    setVerifyState('idle');
+    return;
+  }
+
+  const validationError = validateTmNumber(normalised);
+  if (validationError) {
+    currentRegNo = null;
+    setFieldError(validationError);
+    setVerifyState('idle');
+    return;
+  }
+
+  currentRegNo = normalised;
+  setFieldError('');
+  setVerifyState('loading');
 
   try {
-    const response = await fetch('data.json');
-    const data = await response.json();
+    const data = await loadArchive();
+    if (currentRegNo !== normalised) return;
 
-    if (data[regNo]) {
-      const info = data[regNo];
-      errorResult.classList.add('hidden');
-      tableResult.classList.remove('hidden');
-
-      document.getElementById('resNum').innerHTML =
-        '<span class="tm-chip">' + regNo + '</span>';
-      document.getElementById('resName').textContent = info.name;
-      document.getElementById('resDate').textContent = info.application_date || '08/12/2015';
-      document.getElementById('resAuth').textContent = info.authority;
-
-      resolveCertificateAsset(regNo, assetContainer);
-    } else {
-      tableResult.classList.add('hidden');
-      errorResult.classList.remove('hidden');
+    const info = Object.prototype.hasOwnProperty.call(data, normalised) ? data[normalised] : null;
+    if (!info || typeof info !== 'object') {
+      const num = document.getElementById('notFoundNumber');
+      if (num) num.textContent = normalised;
+      setVerifyState('notfound');
+      return;
     }
+
+    renderReport(normalised, info);
+    setVerifyState('result');
+    resolveCertificateAsset(normalised, container, info);
   } catch (error) {
-    console.error('Database Layer Error:', error);
-    alert('Database could not be loaded. Please ensure data.json structure is valid.');
+    console.error('Verification data error:', error);
+    if (currentRegNo !== normalised) return;
+    setVerifyState('error');
   }
 }
 
 function certUnavailableHtml() {
-  return '<p style="font-size:13px;color:#64756c;padding:24px;text-align:center;">Certificate document preview is currently unavailable.</p>';
+  return '<p class="cert-unavailable">No certificate image or PDF is stored for this record.</p>';
 }
 
 /* File-extension resolver — renders ONLY the original certificate
    asset (image or PDF). No injected text, captions or overlays.
-   Single <img> request (no probe + second fetch). Skeleton + reserved
-   aspect-ratio show immediately; the JPG starts when near the viewport. */
+   Single <img> request; skeleton + reserved aspect-ratio show
+   immediately and the JPG starts when near the viewport. */
 let certObserver = null;
 
-function resolveCertificateAsset(regNo, container) {
-  const imgUrl = regNo + '.jpg';
-  const pdfUrl = regNo + '.pdf';
+function resolveCertificateAsset(regNo, container, info) {
+  const declared = info && (info.certificate || info.certificate_file || info.certificateFile);
+  const imgUrl = declared && /\.(jpe?g|png|webp)$/i.test(declared) ? declared : regNo + '.jpg';
+  const pdfUrl = declared && /\.pdf$/i.test(declared) ? declared : regNo + '.pdf';
+  currentAssetUrl = imgUrl;
 
   if (certObserver) {
     certObserver.disconnect();
@@ -940,7 +1117,7 @@ function resolveCertificateAsset(regNo, container) {
   skeleton.setAttribute('aria-hidden', 'true');
 
   const img = document.createElement('img');
-  img.alt = '';
+  img.alt = 'Certificate document for trademark ' + regNo;
   img.width = 2373;
   img.height = 3508;
   img.decoding = 'async';
@@ -955,17 +1132,24 @@ function resolveCertificateAsset(regNo, container) {
 
   img.onerror = function () {
     if (currentRegNo !== regNo) return;
-    fetch(pdfUrl)
+    fetch(pdfUrl, { method: 'HEAD' })
       .then(function (response) {
         if (currentRegNo !== regNo) return;
         if (response.ok) {
-          container.innerHTML = '<iframe src="' + pdfUrl + '" title=""></iframe>';
+          currentAssetUrl = pdfUrl;
+          const iframe = document.createElement('iframe');
+          iframe.src = pdfUrl;
+          iframe.title = 'Certificate PDF for trademark ' + regNo;
+          container.innerHTML = '';
+          container.appendChild(iframe);
         } else {
+          currentAssetUrl = null;
           container.innerHTML = certUnavailableHtml();
         }
       })
       .catch(function () {
         if (currentRegNo !== regNo) return;
+        currentAssetUrl = null;
         container.innerHTML = certUnavailableHtml();
       });
   };
@@ -999,13 +1183,32 @@ function resolveCertificateAsset(regNo, container) {
 
 /* Download the ORIGINAL certificate file (no regeneration). */
 function downloadCertificate() {
-  if (!currentRegNo) return;
+  if (!currentRegNo || !currentAssetUrl) return;
   const a = document.createElement('a');
-  a.href = currentRegNo + '.jpg';
-  a.download = currentRegNo + '.jpg';
+  a.href = currentAssetUrl;
+  a.download = currentAssetUrl.split('/').pop();
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+}
+
+function bindVerifyUi() {
+  const retry = document.getElementById('verifyRetry');
+  if (retry) {
+    retry.addEventListener('click', function () {
+      if (currentRegNo) verifyTrademark(currentRegNo);
+    });
+  }
+  const printBtn = document.getElementById('printReportBtn');
+  if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+  const dl = document.getElementById('downloadCertBtn');
+  if (dl) dl.addEventListener('click', downloadCertificate);
+  const input = document.getElementById('tm');
+  if (input) {
+    input.addEventListener('input', function () {
+      if (input.classList.contains('input-invalid')) setFieldError('');
+    });
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1118,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', function () {
   bindMenus();
   bindInternalLinks();
   bindSiteSearch();
+  bindVerifyUi();
   loadRecordCount();
   window.addEventListener('popstate', route);
   route();
