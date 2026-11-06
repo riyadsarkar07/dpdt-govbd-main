@@ -1035,10 +1035,6 @@ function renderReport(regNo, info) {
 
   const ref = document.getElementById('reportRef');
   if (ref) ref.textContent = reportReference(regNo);
-  const gen = document.getElementById('reportGenerated');
-  if (gen) gen.textContent = new Date().toLocaleString(lang === 'bn' ? 'bn-BD' : 'en-GB', {
-    day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-  });
 }
 
 async function verifyTrademark(regNo) {

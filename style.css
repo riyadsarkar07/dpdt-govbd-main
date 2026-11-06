@@ -1000,7 +1000,7 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
 .result-doc { border-radius: var(--radius-md); }
 #verificationResult { margin-top: 4px; }
 .report-meta {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(2, 1fr);
   border-bottom: 1px solid var(--line); background: #fbfcfb;
 }
 .rm-item {
@@ -1013,11 +1013,6 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   text-transform: uppercase; color: var(--muted);
 }
 .rm-value { font-size: 12.5px; font-weight: 600; color: var(--ink); word-break: break-word; }
-.report-disclaimer {
-  background: #fffdf6; border-top: 1px solid #ece1c6;
-  padding: 12px 20px; font-size: 12px; line-height: 1.65; color: #6b5312;
-}
-.report-disclaimer strong { color: #5a4510; }
 .result-table td.value-mono { font-family: 'Courier New', monospace; letter-spacing: 1px; font-weight: 700; color: var(--green-deep); }
 .result-table td.value-cell a { word-break: break-word; }
 .cert-card-head {
@@ -1063,7 +1058,6 @@ html[lang="bn"] .hero .bn-text { font-family: var(--font-bangla); }
   .result-doc-title svg { color: #111 !important; }
   .verified-badge { color: #111 !important; border-color: #111 !important; }
   .report-meta { background: #fff !important; }
-  .report-disclaimer { background: #fff !important; color: #333 !important; border-top: 1px solid #999 !important; }
   .result-table td { padding: 7px 10px !important; }
   .result-table td.label-cell { background: #f4f4f4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .cert-card { page-break-before: auto; }
