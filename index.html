@@ -643,6 +643,173 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
+       VIEW: ADVANCED TRADEMARK SEARCH
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-trademarks">
+    <div class="container page">
+
+      <div class="verify-hero">
+        <div class="verify-hero-main">
+          <div class="verify-eyebrow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span data-en="Trademark Database" data-bn="ট্রেডমার্ক ডেটাবেজ">Trademark Database</span>
+          </div>
+          <h2 data-en="Advanced Trademark Search" data-bn="উন্নত ট্রেডমার্ক অনুসন্ধান">Advanced Trademark Search</h2>
+          <p data-en="Search the published verification records by number, brand name, owner, class or status. Results reflect only the fields stored in the public dataset." data-bn="নম্বর, ব্র্যান্ড নাম, মালিক, শ্রেণি বা অবস্থা দিয়ে প্রকাশিত যাচাইকরণ রেকর্ড অনুসন্ধান করুন। ফলাফল শুধুমাত্র পাবলিক ডেটাসেটে সংরক্ষিত তথ্য প্রতিফলিত করে।">Search the published verification records by number, brand name, owner, class or status. Results reflect only the fields stored in the public dataset.</p>
+        </div>
+        <div class="verify-hero-badge" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+      </div>
+
+      <div class="adv-search-panel">
+        <form id="advSearchForm" novalidate onsubmit="event.preventDefault(); runAdvancedSearch(true);">
+          <div class="adv-grid">
+            <div class="adv-field">
+              <label for="advRegNo" data-en="Registration number" data-bn="নিবন্ধন নম্বর">Registration number</label>
+              <input type="text" id="advRegNo" autocomplete="off" spellcheck="false" placeholder="e.g. 261029">
+            </div>
+            <div class="adv-field">
+              <label for="advAppNo" data-en="Application number" data-bn="আবেদন নম্বর">Application number</label>
+              <input type="text" id="advAppNo" autocomplete="off" spellcheck="false" placeholder="e.g. 261029">
+            </div>
+            <div class="adv-field">
+              <label for="advName" data-en="Trademark name" data-bn="ট্রেডমার্কের নাম">Trademark name</label>
+              <input type="text" id="advName" autocomplete="off" spellcheck="false" placeholder="e.g. Otc Rajon">
+            </div>
+            <div class="adv-field">
+              <label for="advOwner" data-en="Owner / company name" data-bn="মালিক / প্রতিষ্ঠানের নাম">Owner / company name</label>
+              <input type="text" id="advOwner" autocomplete="off" spellcheck="false" placeholder="e.g. Unilever">
+            </div>
+            <div class="adv-field">
+              <label for="advClass" data-en="Trademark class" data-bn="ট্রেডমার্ক শ্রেণি">Trademark class</label>
+              <input type="text" id="advClass" autocomplete="off" spellcheck="false" placeholder="e.g. 41">
+            </div>
+            <div class="adv-field">
+              <label for="advStatus" data-en="Registration status" data-bn="নিবন্ধন অবস্থা">Registration status</label>
+              <input type="text" id="advStatus" autocomplete="off" spellcheck="false" placeholder="e.g. Registered">
+            </div>
+            <div class="adv-field">
+              <label for="advMatch" data-en="Matching mode" data-bn="মিলকরণ মোড">Matching mode</label>
+              <select id="advMatch">
+                <option value="contains" data-en="Contains (partial)" data-bn="ধারণ করে (আংশিক)">Contains (partial)</option>
+                <option value="exact" data-en="Exact match" data-bn="হুবহু মিল">Exact match</option>
+              </select>
+            </div>
+          </div>
+          <div class="adv-actions">
+            <button class="search-btn" type="submit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span data-en="Search records" data-bn="রেকর্ড অনুসন্ধান করুন">Search records</span>
+            </button>
+            <button class="action-btn action-btn-outline" type="button" id="advReset" data-en="Reset" data-bn="রিসেট">Reset</button>
+          </div>
+        </form>
+        <p class="adv-hint" id="advCoverage"></p>
+      </div>
+
+      <div class="adv-loading hidden" id="advLoading" role="status" aria-live="polite">
+        <div class="adv-skel"></div><div class="adv-skel"></div><div class="adv-skel"></div>
+      </div>
+
+      <div class="adv-summary hidden" id="advSummary" role="status" aria-live="polite"></div>
+
+      <div id="advResults" class="adv-results"></div>
+
+      <div id="advEmpty" class="verify-state hidden">
+        <div class="vs-icon vs-icon-warn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div>
+          <h3 data-en="No matching records" data-bn="কোনো মিলে যাওয়া রেকর্ড নেই">No matching records</h3>
+          <p data-en="No published record matches these filters. Try fewer or broader criteria." data-bn="এই ফিল্টারগুলোর সাথে কোনো প্রকাশিত রেকর্ড মেলে না। কম বা বিস্তৃত মানদণ্ড চেষ্টা করুন।">No published record matches these filters. Try fewer or broader criteria.</p>
+        </div>
+      </div>
+
+      <nav class="adv-pager hidden" id="advPager" aria-label="Search results pages"></nav>
+
+      <section class="db-stats" aria-labelledby="dbStatsTitle">
+        <div class="db-stats-head">
+          <span class="db-stats-head-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="4" width="3" height="14"/></svg>
+          </span>
+          <div class="db-stats-head-text">
+            <h3 id="dbStatsTitle" data-en="Trademark Database at a Glance" data-bn="এক নজরে ট্রেডমার্ক ডেটাবেজ">Trademark Database at a Glance</h3>
+            <p data-en="National cumulative figures published by DPDT, alongside the records searchable in this portal." data-bn="ডিপিডিটি প্রকাশিত জাতীয় ক্রমপুঞ্জিত পরিসংখ্যান এবং এই পোর্টালে অনুসন্ধানযোগ্য রেকর্ড।">National cumulative figures published by DPDT, alongside the records searchable in this portal.</p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card kpi-official">
+            <div class="kpi-top">
+              <span class="kpi-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+              </span>
+              <span class="kpi-tag kpi-tag-official" data-en="Official DPDT statistics" data-bn="সরকারি ডিপিডিটি পরিসংখ্যান">Official DPDT statistics</span>
+            </div>
+            <div class="kpi-num" id="kpiOfficialApps" data-count="345117">345,117</div>
+            <div class="kpi-title" data-en="Total Trademark Applications Received" data-bn="সর্বমোট প্রাপ্ত ট্রেডমার্ক আবেদন">Total Trademark Applications Received</div>
+            <div class="kpi-meta"><span data-en="Period" data-bn="সময়কাল">Period</span>: <b>1971&ndash;2025</b></div>
+          </article>
+
+          <article class="kpi-card kpi-official">
+            <div class="kpi-top">
+              <span class="kpi-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              </span>
+              <span class="kpi-tag kpi-tag-official" data-en="Official DPDT statistics" data-bn="সরকারি ডিপিডিটি পরিসংখ্যান">Official DPDT statistics</span>
+            </div>
+            <div class="kpi-num" id="kpiOfficialCerts" data-count="85211">85,211</div>
+            <div class="kpi-title" data-en="Certificates Issued" data-bn="ইস্যুকৃত সনদ">Certificates Issued</div>
+            <div class="kpi-meta"><span data-en="Period" data-bn="সময়কাল">Period</span>: <b>1971&ndash;2025</b></div>
+          </article>
+
+          <article class="kpi-card kpi-portal">
+            <div class="kpi-top">
+              <span class="kpi-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+              </span>
+              <span class="kpi-tag kpi-tag-portal" data-en="This portal &middot; live" data-bn="এই পোর্টাল &middot; সরাসরি">This portal &middot; live</span>
+            </div>
+            <div class="kpi-num" id="kpiSearchable" data-count="0">0</div>
+            <div class="kpi-title" data-en="Searchable Records" data-bn="অনুসন্ধানযোগ্য রেকর্ড">Searchable Records</div>
+            <div class="kpi-meta" data-en="Records currently available in this public portal." data-bn="এই পাবলিক পোর্টালে বর্তমানে উপলব্ধ রেকর্ড।">Records currently available in this public portal.</div>
+          </article>
+
+          <article class="kpi-card kpi-portal">
+            <div class="kpi-top">
+              <span class="kpi-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              </span>
+              <span class="kpi-tag kpi-tag-portal" data-en="This portal &middot; live" data-bn="এই পোর্টাল &middot; সরাসরি">This portal &middot; live</span>
+            </div>
+            <div class="kpi-num" id="kpiBrands" data-count="0">0</div>
+            <div class="kpi-title" data-en="Distinct Brand Names" data-bn="স্বতন্ত্র ব্র্যান্ড নাম">Distinct Brand Names</div>
+            <div class="kpi-meta" data-en="Unique brand names among the published records." data-bn="প্রকাশিত রেকর্ডগুলোর মধ্যে অনন্য ব্র্যান্ড নাম।">Unique brand names among the published records.</div>
+          </article>
+        </div>
+
+        <p class="db-stats-source">
+          <span data-en="Official cumulative figures (1971&ndash;2025): DPDT published statistics." data-bn="সরকারি ক্রমপুঞ্জিত পরিসংখ্যান (১৯৭১&ndash;২০২৫): ডিপিডিটি প্রকাশিত পরিসংখ্যান।">Official cumulative figures (1971&ndash;2025): DPDT published statistics.</span>
+          <a href="https://dpdt.gov.bd/pages/static-pages/6922dc00933eb65569e0de4f" target="_blank" rel="noopener" data-en="View source" data-bn="সূত্র দেখুন">View source</a>
+          <span class="db-stats-source-sep" aria-hidden="true">&middot;</span>
+          <span data-en="Searchable records and brand names are computed live from this portal's published dataset and differ from the national cumulative totals." data-bn="অনুসন্ধানযোগ্য রেকর্ড ও ব্র্যান্ড নাম এই পোর্টালের প্রকাশিত ডেটাসেট থেকে সরাসরি গণনা করা হয় এবং জাতীয় ক্রমপুঞ্জিত মোটের চেয়ে ভিন্ন।">Searchable records and brand names are computed live from this portal's published dataset and differ from the national cumulative totals.</span>
+        </p>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW: TRADEMARK RECORD DETAIL
+  ═══════════════════════════════════════════════════════ -->
+  <section class="view" id="view-record">
+    <div class="container page">
+      <div id="recordContainer"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
        VIEW: FEE STRUCTURE
   ═══════════════════════════════════════════════════════ -->
   <section class="view" id="view-fee">
@@ -1123,6 +1290,7 @@
 </footer>
 
 <script src="portal-data.js"></script>
+<script src="vendor-qrcode.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

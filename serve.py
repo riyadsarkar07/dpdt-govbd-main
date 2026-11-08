@@ -33,7 +33,7 @@ def resolve(path):
         return "verify.html"
     if path == "index":
         return "index.html"
-    if path in ("online-application", "about"):
+    if path in ("online-application", "about", "trademarks"):
         return "index.html"
 
     candidate = os.path.join(ROOT, path)
@@ -45,7 +45,7 @@ def resolve(path):
     if os.path.isfile(html_candidate):
         return path + ".html"
 
-    # SPA fallback: internal portal routes (e.g. /acts/...) load index.html
+    # SPA fallback: internal portal routes (e.g. /acts/..., /trademark/123) load index.html
     return "index.html"
 
 

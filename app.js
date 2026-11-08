@@ -202,6 +202,7 @@ const INTERNAL_LINKS = [
   { en: 'About the Department', bn: 'অধিদপ্তর সম্পর্কে', href: '/about' },
   { en: 'Online Application (IPAS)', bn: 'অনলাইন আবেদন (আইপাস)', href: '/online-application' },
   { en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify' },
+  { en: 'Advanced Trademark Search', bn: 'উন্নত ট্রেডমার্ক অনুসন্ধান', href: '/trademarks' },
   { en: 'Fee Structure', bn: 'ফি কাঠামো', href: '/verify?page=fee' },
   { en: 'Contact & Hotlines', bn: 'যোগাযোগ', href: '/verify?page=contact' }
 ];
@@ -241,6 +242,7 @@ const SEARCH_PAGES = [
   { en: 'Photo Gallery', bn: 'ফটো গ্যালারি', href: '/pages/photo-galleries', kw: ['gallery', 'photo', 'ছবি'] },
   { en: 'Publications', bn: 'প্রকাশনা', href: '/pages/publications', kw: ['publication', 'প্রকাশনা'] },
   { en: 'All Laws', bn: 'সকল আইন', href: '/pages/laws', kw: ['law', 'act', 'আইন'] },
+  { en: 'Advanced Trademark Search', bn: 'উন্নত ট্রেডমার্ক অনুসন্ধান', href: '/trademarks', kw: ['search', 'trademark', 'owner', 'class', 'অনুসন্ধান', 'ট্রেডমার্ক'] },
   { en: 'Site Map', bn: 'সাইট ম্যাপ', href: '/views/sitemap', kw: ['sitemap', 'সাইট ম্যাপ'] }
 ];
 
@@ -333,6 +335,7 @@ function renderBar() {
     { type: 'menu', key: 'gi' },
     { type: 'menu', key: 'faq' },
     { type: 'link', en: 'Contact', bn: 'যোগাযোগ', href: '/verify?page=contact', icon: ICON_PHONE },
+    { type: 'link', en: 'Trademark Search', bn: 'ট্রেডমার্ক অনুসন্ধান', href: '/trademarks', icon: ICON_SEARCH },
     { type: 'link', en: 'Trademark Verification', bn: 'ট্রেডমার্ক যাচাইকরণ', href: '/verify', cta: true, icon: ICON_SEARCH }
   ];
   primary.innerHTML = BAR.slice(0, 9).map(barItemHTML).join('');
@@ -636,7 +639,7 @@ function applyStaticLang() {
   if (btn) btn.textContent = lang === 'bn' ? 'English' : 'বাংলা';
   const crumb = document.getElementById('crumbCurrent');
   if (crumb) {
-    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
+    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), trademarks: t('ট্রেডমার্ক অনুসন্ধান', 'Trademark Search'), record: t('ট্রেডমার্ক রেকর্ড', 'Trademark Record'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
     const portalPg = window.PORTAL_DATA ? portalPath() : null;
     if (state.route === 'portal' && portalPg && window.PORTAL_DATA[portalPg]) {
       crumb.textContent = tv(window.PORTAL_DATA[portalPg].title);
@@ -692,15 +695,25 @@ function currentRoute() {
   if (q.get('page') === 'contact') return 'contact';
   if (q.get('page') === 'search') return 'search';
   if (q.has('reg_no') || q.has('regNo')) return 'verify';
+  if (/^\/trademark\/[^/]+/.test(path)) return 'record';
+  if (/^\/trademarks\/?$/.test(path)) return 'trademarks';
   if (/\/verify/.test(path)) return 'verify';
   if (/\/online-application/.test(path)) return 'online-application';
   if (/\/about/.test(path)) return 'about';
   return 'home';
 }
 
+function recordNoFromPath() {
+  const m = (window.location.pathname || '').match(/^\/trademark\/([^/]+)\/?$/);
+  if (!m) return null;
+  try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
+}
+
 const VIEW_TITLES = {
   home: 'Home | Department of Patents, Designs & Trademarks, Bangladesh',
   verify: 'Trademark Verification | DPDT Bangladesh',
+  trademarks: 'Advanced Trademark Search | DPDT Bangladesh',
+  record: 'Trademark Record | DPDT Bangladesh',
   fee: 'Fee Structure | DPDT Bangladesh',
   contact: 'Contact | DPDT Bangladesh',
   search: 'Search the Portal | DPDT Bangladesh',
@@ -713,6 +726,8 @@ function viewTitle(route) {
     const m = {
       home: 'হোম | পেটেন্ট, শিল্প-নকশা ও ট্রেডমার্কস অধিদপ্তর',
       verify: 'ট্রেডমার্ক যাচাইকরণ | ডিপিডিটি বাংলাদেশ',
+      trademarks: 'উন্নত ট্রেডমার্ক অনুসন্ধান | ডিপিডিটি বাংলাদেশ',
+      record: 'ট্রেডমার্ক রেকর্ড | ডিপিডিটি বাংলাদেশ',
       fee: 'ফি কাঠামো | ডিপিডিটি বাংলাদেশ',
       contact: 'যোগাযোগ | ডিপিডিটি বাংলাদেশ',
       search: 'পোর্টালে অনুসন্ধান | ডিপিডিটি বাংলাদেশ',
@@ -816,7 +831,7 @@ function showView(route) {
 
   const crumb = document.getElementById('crumbCurrent');
   if (crumb) {
-    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
+    const map = { home: t('হোম', 'Home'), verify: t('ট্রেডমার্ক যাচাইকরণ', 'Trademark Verification'), trademarks: t('ট্রেডমার্ক অনুসন্ধান', 'Trademark Search'), record: t('ট্রেডমার্ক রেকর্ড', 'Trademark Record'), fee: t('ফি কাঠামো', 'Fee Structure'), contact: t('যোগাযোগ', 'Contact'), search: t('অনুসন্ধান', 'Search'), 'online-application': t('অনলাইন আবেদন', 'Online Application'), about: t('অধিদপ্তর সম্পর্কে', 'About the Department') };
     crumb.textContent = map[route] || map.home;
   }
 
@@ -827,6 +842,16 @@ function showView(route) {
     const searchInput = document.getElementById('siteSearchInput');
     if (searchInput) searchInput.value = term;
     runFullSearch(term);
+  }
+  if (route === 'trademarks') {
+    populateAdvFiltersFromUrl();
+    refreshAdvCoverage();
+    renderDatabaseStats();
+    runAdvancedSearch(false);
+  }
+  if (route === 'record') {
+    const recNo = recordNoFromPath();
+    if (recNo) renderRecordDetail(recNo);
   }
   if (route === 'verify') {
     const inputEl = document.getElementById('tm');
@@ -1318,6 +1343,7 @@ document.addEventListener('DOMContentLoaded', function () {
   bindInternalLinks();
   bindSiteSearch();
   bindVerifyUi();
+  bindAdvSearch();
   loadRecordCount();
   window.addEventListener('popstate', route);
   route();
@@ -1335,6 +1361,697 @@ function loadRecordCount() {
       if (el) el.textContent = count;
     })
     .catch(function () {});
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRADEMARK DATABASE — advanced search, record details, QR, stats
+   Read-only over data.json. Missing fields are never fabricated.
+═══════════════════════════════════════════════════════════════ */
+const RECORD_FIELDS = {
+  regNo:          { keys: ['registration_number', 'registrationNumber'] },
+  appNo:          { keys: ['application_number', 'applicationNumber'] },
+  name:           { keys: ['name', 'trademark_name', 'trademarkName', 'mark'] },
+  owner:          { keys: ['owner', 'proprietor', 'applicant'] },
+  klass:          { keys: ['class', 'trademark_class', 'trademarkClass', 'nice_class'] },
+  status:         { keys: ['status', 'registration_status', 'registrationStatus'] },
+  applicationDate:{ keys: ['application_date', 'applicationDate', 'filing_date', 'filingDate'] },
+  registrationDate:{ keys: ['registration_date', 'registrationDate'] },
+  goods:          { keys: ['goods_services', 'goodsServices', 'goods'] },
+  authority:      { keys: ['authority'] },
+  source:         { keys: ['source', 'reference', 'source_url', 'sourceUrl'] },
+  certificate:    { keys: ['certificate', 'certificate_file', 'certificateFile'] }
+};
+
+function fieldValue(info, field) {
+  if (!info) return '';
+  const spec = RECORD_FIELDS[field];
+  if (!spec) return '';
+  for (let i = 0; i < spec.keys.length; i++) {
+    const v = info[spec.keys[i]];
+    if (v != null && String(v).trim() !== '') return String(v).trim();
+  }
+  return '';
+}
+
+/* Which optional fields actually exist across the dataset — used for the
+   transparency note so we never imply a field is searchable when it is not
+   published for any record. */
+function datasetFieldCoverage(records) {
+  const coverage = {};
+  Object.keys(RECORD_FIELDS).forEach(function (f) {
+    coverage[f] = 0;
+  });
+  Object.keys(records).forEach(function (key) {
+    const info = records[key] || {};
+    Object.keys(RECORD_FIELDS).forEach(function (f) {
+      if (fieldValue(info, f) !== '') coverage[f] += 1;
+    });
+    if (fieldValue(info, 'regNo') === '') coverage.regNo += 1;
+  });
+  return coverage;
+}
+
+let ADV_PAGE_SIZE = 10;
+let advState = { page: 1, results: [], filters: {} };
+
+function readAdvFilters() {
+  const get = function (id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  return {
+    regNo: get('advRegNo'),
+    appNo: get('advAppNo'),
+    name: get('advName'),
+    owner: get('advOwner'),
+    klass: get('advClass'),
+    status: get('advStatus'),
+    mode: (document.getElementById('advMatch') || {}).value || 'contains'
+  };
+}
+
+function filterActive(f) {
+  return !!(f.regNo || f.appNo || f.name || f.owner || f.klass || f.status);
+}
+
+function matchValue(haystack, needle, mode) {
+  if (!needle) return true;
+  const h = String(haystack || '').toLowerCase();
+  const n = needle.toLowerCase();
+  return mode === 'exact' ? h === n : h.indexOf(n) !== -1;
+}
+
+function searchRecords(records, f) {
+  const out = [];
+  Object.keys(records).forEach(function (key) {
+    const info = records[key] || {};
+    const regNo = fieldValue(info, 'regNo') || key;
+    const appNo = fieldValue(info, 'appNo') || '';
+    const name = fieldValue(info, 'name');
+    const owner = fieldValue(info, 'owner');
+    const klass = fieldValue(info, 'klass');
+    const status = fieldValue(info, 'status');
+
+    if (!matchValue(regNo, f.regNo, f.mode)) return;
+    if (!matchValue(appNo || regNo, f.appNo, f.mode)) return;
+    if (!matchValue(name, f.name, f.mode)) return;
+    if (!matchValue(owner, f.owner, f.mode)) return;
+    if (!matchValue(klass, f.klass, f.mode)) return;
+    if (!matchValue(status, f.status, f.mode)) return;
+
+    out.push({ key: key, info: info, regNo: regNo });
+  });
+  out.sort(function (a, b) {
+    return String(a.regNo).localeCompare(String(b.regNo), undefined, { numeric: true });
+  });
+  return out;
+}
+
+function recordDetailHref(regNo) {
+  return '/trademark/' + encodeURIComponent(regNo);
+}
+
+function renderAdvCard(r) {
+  const info = r.info;
+  const name = fieldValue(info, 'name') || t('নাম নেই', 'Untitled record');
+  const owner = fieldValue(info, 'owner');
+  const klass = fieldValue(info, 'klass');
+  const status = fieldValue(info, 'status');
+  const date = fieldValue(info, 'applicationDate');
+  let meta = '';
+  if (owner) meta += '<span class="adv-meta"><span class="adv-k">' + t('মালিক', 'Owner') + '</span> ' + escapeHtml(owner) + '</span>';
+  if (klass) meta += '<span class="adv-meta"><span class="adv-k">' + t('শ্রেণি', 'Class') + '</span> ' + escapeHtml(klass) + '</span>';
+  if (date) meta += '<span class="adv-meta"><span class="adv-k">' + t('আবেদনের তারিখ', 'Application date') + '</span> ' + escapeHtml(formatArchiveDate(date)) + '</span>';
+  const badge = status
+    ? '<span class="adv-badge">' + escapeHtml(status) + '</span>'
+    : '<span class="adv-badge adv-badge-neutral">' + t('রেকর্ডভুক্ত', 'On record') + '</span>';
+  return '<article class="adv-card">' +
+      '<div class="adv-card-main">' +
+        '<a class="adv-card-title" href="' + recordDetailHref(r.regNo) + '" data-internal="1">' + escapeHtml(name) + '</a>' +
+        '<div class="adv-card-no">' + t('ট্রেডমার্ক নম্বর', 'Trademark no.') + ' <b>' + escapeHtml(r.regNo) + '</b></div>' +
+        (meta ? '<div class="adv-card-meta">' + meta + '</div>' : '') +
+      '</div>' +
+      '<div class="adv-card-side">' + badge +
+        '<a class="action-btn action-btn-outline adv-open" href="' + recordDetailHref(r.regNo) + '" data-internal="1">' + t('বিস্তারিত', 'View details') + ' →</a>' +
+      '</div>' +
+    '</article>';
+}
+
+function renderAdvResults() {
+  const out = document.getElementById('advResults');
+  const empty = document.getElementById('advEmpty');
+  const summary = document.getElementById('advSummary');
+  const pager = document.getElementById('advPager');
+  if (!out) return;
+
+  const total = advState.results.length;
+  if (summary) {
+    if (!filterActive(advState.filters) && !total) {
+      summary.classList.add('hidden');
+    } else {
+      summary.innerHTML = '<strong>' + total + '</strong> ' + t('টি রেকর্ড পাওয়া গেছে', 'record(s) found');
+      summary.classList.remove('hidden');
+    }
+  }
+
+  if (!total) {
+    out.innerHTML = '';
+    if (empty && filterActive(advState.filters)) empty.classList.remove('hidden');
+    else if (empty) empty.classList.add('hidden');
+    if (pager) pager.classList.add('hidden');
+    return;
+  }
+  if (empty) empty.classList.add('hidden');
+
+  const pages = Math.max(1, Math.ceil(total / ADV_PAGE_SIZE));
+  if (advState.page > pages) advState.page = pages;
+  const start = (advState.page - 1) * ADV_PAGE_SIZE;
+  const slice = advState.results.slice(start, start + ADV_PAGE_SIZE);
+  out.innerHTML = slice.map(renderAdvCard).join('');
+
+  if (pager) {
+    if (pages <= 1) {
+      pager.classList.add('hidden');
+      pager.innerHTML = '';
+    } else {
+      let html = '<button class="adv-page-btn" type="button" data-page="' + (advState.page - 1) + '"' + (advState.page === 1 ? ' disabled' : '') + '>' + t('পূর্ববর্তী', 'Previous') + '</button>';
+      html += '<span class="adv-page-info">' + t('পৃষ্ঠা', 'Page') + ' ' + advState.page + ' / ' + pages + '</span>';
+      html += '<button class="adv-page-btn" type="button" data-page="' + (advState.page + 1) + '"' + (advState.page === pages ? ' disabled' : '') + '>' + t('পরবর্তী', 'Next') + '</button>';
+      pager.innerHTML = html;
+      pager.classList.remove('hidden');
+      pager.querySelectorAll('.adv-page-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const p = parseInt(btn.getAttribute('data-page'), 10);
+          if (!isNaN(p) && p >= 1 && p <= pages) {
+            advState.page = p;
+            renderAdvResults();
+            const v = document.getElementById('view-trademarks');
+            if (v) window.scrollTo({ top: v.offsetTop, behavior: 'smooth' });
+          }
+        });
+      });
+    }
+  }
+}
+
+async function runAdvancedSearch(updateUrl) {
+  const loading = document.getElementById('advLoading');
+  const out = document.getElementById('advResults');
+  const empty = document.getElementById('advEmpty');
+  const filters = readAdvFilters();
+  advState.filters = filters;
+  advState.page = 1;
+
+  if (loading) loading.classList.remove('hidden');
+  if (out) out.innerHTML = '';
+  if (empty) empty.classList.add('hidden');
+
+  let records;
+  try {
+    records = await loadArchive();
+  } catch (e) {
+    if (loading) loading.classList.add('hidden');
+    const sum = document.getElementById('advSummary');
+    if (sum) { sum.textContent = t('ডেটা লোড করা যায়নি।', 'Unable to load data.'); sum.classList.remove('hidden'); }
+    return;
+  }
+
+  advState.results = filterActive(filters) ? searchRecords(records, filters) : [];
+  if (loading) loading.classList.add('hidden');
+
+  if (updateUrl) {
+    const params = new URLSearchParams();
+    if (filters.regNo) params.set('reg_no', filters.regNo);
+    if (filters.appNo) params.set('app_no', filters.appNo);
+    if (filters.name) params.set('name', filters.name);
+    if (filters.owner) params.set('owner', filters.owner);
+    if (filters.klass) params.set('class', filters.klass);
+    if (filters.status) params.set('status', filters.status);
+    if (filters.mode === 'exact') params.set('match', 'exact');
+    const qs = params.toString();
+    history.replaceState({}, '', '/trademarks' + (qs ? '?' + qs : ''));
+  }
+
+  renderAdvResults();
+}
+
+function populateAdvFiltersFromUrl() {
+  const q = new URLSearchParams(window.location.search);
+  const set = function (id, val) { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+  set('advRegNo', q.get('reg_no') || '');
+  set('advAppNo', q.get('app_no') || '');
+  set('advName', q.get('name') || '');
+  set('advOwner', q.get('owner') || '');
+  set('advClass', q.get('class') || '');
+  set('advStatus', q.get('status') || '');
+  set('advMatch', q.get('match') === 'exact' ? 'exact' : 'contains');
+}
+
+function resetAdvSearch() {
+  ['advRegNo', 'advAppNo', 'advName', 'advOwner', 'advClass', 'advStatus'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const m = document.getElementById('advMatch');
+  if (m) m.value = 'contains';
+  runAdvancedSearch(true);
+}
+
+async function refreshAdvCoverage() {
+  const el = document.getElementById('advCoverage');
+  if (!el) return;
+  try {
+    const records = await loadArchive();
+    const cov = datasetFieldCoverage(records);
+    const total = Object.keys(records).length;
+    const published = [];
+    if (cov.owner) published.push(t('মালিক', 'owner'));
+    if (cov.klass) published.push(t('শ্রেণি', 'class'));
+    if (cov.status) published.push(t('অবস্থা', 'status'));
+    if (published.length) {
+      el.textContent = t('এই ডেটাসেটে ' + total + 'টি রেকর্ড রয়েছে; অনুসন্ধানযোগ্য অতিরিক্ত ক্ষেত্র: ' + published.join(', ') + '।',
+        'This dataset holds ' + total + ' record(s); additional searchable fields: ' + published.join(', ') + '.');
+    } else {
+      el.textContent = t('এই ডেটাসেটে ' + total + 'টি রেকর্ড রয়েছে। প্রতিটি রেকর্ডে ট্রেডমার্ক নম্বর, নাম, কর্তৃপক্ষ ও আবেদনের তারিখ প্রকাশিত; মালিক, শ্রেণি বা অবস্থা এই ডেটাসেটে প্রকাশিত নয়।',
+        'This dataset holds ' + total + ' record(s). Each record publishes the trademark number, name, authority and application date; owner, class and status are not published in this dataset.');
+    }
+    el.classList.remove('hidden');
+  } catch (e) { /* keep hidden */ }
+}
+
+/* ── Record detail page ─────────────────────────────────────── */
+function detailRow(en, bn, value, opts) {
+  if (value == null || String(value).trim() === '') return '';
+  const cls = (opts && opts.cls) ? ' ' + opts.cls : '';
+  let cell;
+  if (/^https?:\/\//i.test(value)) {
+    cell = '<a href="' + escapeHtml(value) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(value) + '</a>';
+  } else {
+    cell = escapeHtml(value);
+  }
+  return '<tr><td class="label-cell">' + escapeHtml(t(bn, en)) + '</td><td class="value-cell' + cls + '">' + cell + '</td></tr>';
+}
+
+function buildTimeline(regNo, info) {
+  const events = [];
+  const app = fieldValue(info, 'applicationDate');
+  const reg = fieldValue(info, 'registrationDate');
+  if (app) events.push({ date: app, en: 'Application date', bn: 'আবেদনের তারিখ', ref: regNo });
+  if (reg) events.push({ date: reg, en: 'Registration date', bn: 'নিবন্ধনের তারিখ', ref: regNo });
+  if (!events.length) {
+    return '<div class="record-timeline-empty"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>' +
+      t('এই রেকর্ডে কোনো তারিখভিত্তিক ইভেন্ট প্রকাশিত হয়নি।', 'No dated events are published for this record.') + '</span></div>';
+  }
+  const items = events.map(function (e) {
+    return '<li class="record-tl-item">' +
+      '<span class="record-tl-dot" aria-hidden="true"></span>' +
+      '<div class="record-tl-body">' +
+        '<span class="record-tl-date">' + escapeHtml(formatArchiveDate(e.date)) + '</span>' +
+        '<span class="record-tl-label">' + escapeHtml(t(e.bn, e.en)) + '</span>' +
+      '</div></li>';
+  }).join('');
+  return '<ol class="record-timeline">' + items + '</ol>';
+}
+
+function publicRecordUrl(regNo) {
+  return window.location.origin + recordDetailHref(regNo);
+}
+
+function renderQr(regNo) {
+  const url = publicRecordUrl(regNo);
+  const box = document.getElementById('recordQr');
+  const cap = document.getElementById('recordQrUrl');
+  if (cap) cap.textContent = url;
+  if (!box) return;
+  if (typeof qrcode !== 'function') {
+    box.innerHTML = '<div class="qr-fallback">' + t('QR জেনারেটর লোড হয়নি।', 'QR generator failed to load.') + '</div>';
+    return;
+  }
+  try {
+    const qr = qrcode(0, 'M');
+    qr.addData(url);
+    qr.make();
+    box.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 12, scalable: true, alt: t('রেকর্ড QR কোড', 'Record QR code') });
+  } catch (e) {
+    box.innerHTML = '<div class="qr-fallback">' + t('QR তৈরি করা যায়নি।', 'Unable to generate QR.') + '</div>';
+  }
+}
+
+function copyText(value) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(value);
+  }
+  return new Promise(function (resolve, reject) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = value;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      resolve();
+    } catch (err) { reject(err); }
+  });
+}
+
+async function shareRecord(regNo) {
+  const url = publicRecordUrl(regNo);
+  const title = t('ডিপিডিটি ট্রেডমার্ক রেকর্ড', 'DPDT Trademark Record');
+  if (navigator.share) {
+    try { await navigator.share({ title: title, url: url }); return; } catch (e) { /* fall through to copy */ }
+  }
+  try {
+    await copyText(url);
+    showRecordToast(t('লিংক কপি হয়েছে', 'Link copied'));
+  } catch (e) {
+    showRecordToast(t('লিংক কপি করা যায়নি', 'Could not copy link'));
+  }
+}
+
+function showRecordToast(msg) {
+  const el = document.getElementById('recordToast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function () { el.classList.remove('show'); }, 2200);
+}
+
+function documentRows(info) {
+  const rows = [];
+  const campos = [
+    ['registrationDate', 'Registration date', 'নিবন্ধনের তারিখ', {}],
+    ['klass', 'Trademark class', 'ট্রেডমার্ক শ্রেণি', {}],
+    ['status', 'Registration status', 'নিবন্ধন অবস্থা', {}],
+    ['goods', 'Goods and services', 'পণ্য ও সেবা', {}],
+    ['authority', 'Issuing authority', 'ইস্যুকারী কর্তৃপক্ষ', {}]
+  ];
+  campos.forEach(function (c) {
+    rows.push(detailRow(c[1], c[2], fieldValue(info, c[0]), c[3]));
+  });
+  return rows.join('');
+}
+
+async function renderRecordDetail(regNo) {
+  const box = document.getElementById('recordContainer');
+  if (!box) return;
+  box.innerHTML = '<div class="record-loading"><div class="adv-skel"></div><div class="adv-skel"></div><div class="adv-skel"></div></div>';
+
+  let records;
+  try { records = await loadArchive(); }
+  catch (e) {
+    box.innerHTML = '<div class="verify-state"><div class="vs-icon vs-icon-error"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><div><h3>' +
+      escapeHtml(t('ডেটা লোড করা যায়নি', 'Data could not be loaded')) + '</h3><p>' +
+      escapeHtml(t('আবার চেষ্টা করুন।', 'Please try again.')) + '</p></div></div>';
+    return;
+  }
+
+  const info = Object.prototype.hasOwnProperty.call(records, regNo) ? records[regNo] : null;
+  if (!info || typeof info !== 'object') {
+    box.innerHTML = '<div class="verify-state verify-notfound"><div class="vs-icon vs-icon-warn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="13"/><line x1="12" y1="16.5" x2="12.01" y2="16.5"/></svg></div><div><h3>' +
+      escapeHtml(t('রেকর্ড পাওয়া যায়নি', 'Record not found')) + '</h3><p><strong class="vs-number">' + escapeHtml(regNo) +
+      '</strong> ' + escapeHtml(t('এই ডেটাসেটে নেই।', 'is not present in this dataset.')) + '</p>' +
+      '<a class="action-btn action-btn-green" href="/verify" data-internal="1">' + escapeHtml(t('যাচাইকরণে ফিরে যান', 'Back to verification')) + '</a></div></div>';
+    document.title = t('রেকর্ড পাওয়া যায়নি | ডিপিডিটি বাংলাদেশ', 'Record not found | DPDT Bangladesh');
+    return;
+  }
+
+  const name = fieldValue(info, 'name') || t('শিরোনামহীন রেকর্ড', 'Untitled record');
+  const owner = fieldValue(info, 'owner');
+  const appDate = fieldValue(info, 'applicationDate');
+  const hasCert = !!(fieldValue(info, 'certificate'));
+  const certUrl = hasCert ? fieldValue(info, 'certificate') : null;
+  const imgCandidate = certUrl && /\.(jpe?g|png|webp)$/i.test(certUrl) ? certUrl : regNo + '.jpg';
+  const pdfCandidate = certUrl && /\.pdf$/i.test(certUrl) ? certUrl : regNo + '.pdf';
+
+  document.title = name + ' | DPDT Bangladesh';
+  const crumb = document.getElementById('crumbCurrent');
+  if (crumb) crumb.textContent = name;
+
+  const infoRows = [
+    detailRow('Trademark number', 'ট্রেডমার্ক নম্বর', regNo, { cls: 'value-mono' }),
+    detailRow('Application number', 'আবেদন নম্বর', fieldValue(info, 'appNo'), { cls: 'value-mono' }),
+    detailRow('Trademark / brand name', 'ট্রেডমার্ক / ব্র্যান্ড নাম', name, { cls: 'value-bold' }),
+    detailRow('Owner / proprietor', 'মালিক / স্বত্বাধিকারী', owner)
+  ].join('');
+
+  const dateRows = [
+    detailRow('Application date', 'আবেদনের তারিখ', appDate ? formatArchiveDate(appDate) : ''),
+    detailRow('Registration date', 'নিবন্ধনের তারিখ', fieldValue(info, 'registrationDate') ? formatArchiveDate(fieldValue(info, 'registrationDate')) : '')
+  ].join('');
+
+  const classRows = [
+    detailRow('Trademark class', 'ট্রেডমার্ক শ্রেণি', fieldValue(info, 'klass')),
+    detailRow('Registration status', 'নিবন্ধন অবস্থা', fieldValue(info, 'status')),
+    detailRow('Goods and services', 'পণ্য ও সেবা', fieldValue(info, 'goods')),
+    detailRow('Issuing authority', 'ইস্যুকারী কর্তৃপক্ষ', fieldValue(info, 'authority'))
+  ].join('');
+
+  const sourceVal = fieldValue(info, 'source');
+  const sourceRows = sourceVal ? detailRow('Source reference', 'উৎস সূত্র', sourceVal) : '';
+
+  function tableBlock(rows) {
+    if (!rows) return '<p class="record-none">' + escapeHtml(t('কোনো তথ্য প্রকাশিত হয়নি।', 'No information published.')) + '</p>';
+    return '<table class="result-table record-table"><tbody>' + rows + '</tbody></table>';
+  }
+
+  box.innerHTML =
+    '<div class="record-head">' +
+      '<div class="record-head-main">' +
+        '<div class="record-eyebrow">' + escapeHtml(t('ট্রেডমার্ক রেকর্ড', 'Trademark record')) + '</div>' +
+        '<h2 class="record-title">' + escapeHtml(name) + '</h2>' +
+        '<div class="record-sub">' + escapeHtml(t('ট্রেডমার্ক নম্বর', 'Trademark no.')) + ' <b>' + escapeHtml(regNo) + '</b></div>' +
+      '</div>' +
+      '<div class="record-head-actions">' +
+        '<button class="action-btn action-btn-outline" type="button" id="recordCopyBtn">' + escapeHtml(t('লিংক কপি', 'Copy link')) + '</button>' +
+        '<button class="action-btn action-btn-green" type="button" id="recordShareBtn">' + escapeHtml(t('শেয়ার', 'Share')) + '</button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="record-grid">' +
+      '<div class="record-col">' +
+        '<section class="record-card"><h3>' + escapeHtml(t('ট্রেডমার্ক তথ্য', 'Trademark information')) + '</h3>' + tableBlock(infoRows) + '</section>' +
+        '<section class="record-card"><h3>' + escapeHtml(t('শ্রেণিবিন্যাস ও অবস্থা', 'Classification &amp; status')) + '</h3>' + tableBlock(classRows) + '</section>' +
+        '<section class="record-card"><h3>' + escapeHtml(t('তারিখসমূহ', 'Dates')) + '</h3>' + tableBlock(dateRows) + '</section>' +
+        (sourceRows ? '<section class="record-card"><h3>' + escapeHtml(t('উৎস', 'Source')) + '</h3>' + tableBlock(sourceRows) + '</section>' : '') +
+        '<section class="record-card"><h3>' + escapeHtml(t('ইভেন্ট টাইমলাইন', 'Event timeline')) + '</h3>' + buildTimeline(regNo, info) + '</section>' +
+      '</div>' +
+      '<div class="record-col">' +
+        '<section class="record-card record-qr-card">' +
+          '<h3>' + escapeHtml(t('QR যাচাইকরণ', 'QR verification')) + '</h3>' +
+          '<div class="record-qr" id="recordQr"></div>' +
+          '<p class="record-qr-url" id="recordQrUrl"></p>' +
+          '<p class="record-qr-note">' + escapeHtml(t('এই QR কোডটি শুধু এই পাবলিক রেকর্ড পেজ খোলে। এটি কোনো সরকারি ডিজিটাল স্বাক্ষর নয়।', 'This QR code only opens this public record page. It is not a government digital signature.')) + '</p>' +
+        '</section>' +
+        '<section class="record-card">' +
+          '<h3>' + escapeHtml(t('সনদ ও নথি কেন্দ্র', 'Certificate &amp; document center')) + '</h3>' +
+          '<div class="record-cert" id="recordCert">' +
+            '<div class="cert-skeleton" aria-hidden="true"></div>' +
+          '</div>' +
+          '<p class="record-doc-note" id="recordDocNote"></p>' +
+          '<div class="record-doc-actions" id="recordDocActions"></div>' +
+        '</section>' +
+        '<section class="record-card">' +
+          '<h3>' + escapeHtml(t('সহায়ক লিংক', 'Official resources')) + '</h3>' +
+          '<ul class="record-links">' +
+            '<li><a href="/verify" data-internal="1">' + escapeHtml(t('নম্বর দিয়ে যাচাই করুন', 'Verify by number')) + '</a></li>' +
+            '<li><a href="/classification/nice" data-internal="1">' + escapeHtml(t('নিস শ্রেণিবিন্যাস', 'Nice classification')) + '</a></li>' +
+            '<li><a href="/download/trademark-application-process" data-internal="1">' + escapeHtml(t('ট্রেডমার্ক নিবন্ধন প্রক্রিয়া', 'Trademark registration process')) + '</a></li>' +
+            '<li><a href="/acts/trademark-act-2009" data-internal="1">' + escapeHtml(t('ট্রেডমার্ক আইন, ২০০৯', 'Trademark Act, 2009')) + '</a></li>' +
+            '<li><a href="/faq/trademark" data-internal="1">' + escapeHtml(t('ট্রেডমার্ক সচরাচর জিজ্ঞাসা', 'Trademark FAQ')) + '</a></li>' +
+          '</ul>' +
+        '</section>' +
+      '</div>' +
+    '</div>' +
+    '<div class="record-toast" id="recordToast" role="status" aria-live="polite"></div>';
+
+  renderQr(regNo);
+
+  const copyBtn = document.getElementById('recordCopyBtn');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    copyText(publicRecordUrl(regNo))
+      .then(function () { showRecordToast(t('লিংক কপি হয়েছে', 'Link copied')); })
+      .catch(function () { showRecordToast(t('লিংক কপি করা যায়নি', 'Could not copy link')); });
+  });
+  const shareBtn = document.getElementById('recordShareBtn');
+  if (shareBtn) shareBtn.addEventListener('click', function () { shareRecord(regNo); });
+
+  loadRecordCertificate(regNo, imgCandidate, pdfCandidate);
+  applyStaticLang();
+}
+
+function loadRecordCertificate(regNo, imgUrl, pdfUrl) {
+  const box = document.getElementById('recordCert');
+  const note = document.getElementById('recordDocNote');
+  const actions = document.getElementById('recordDocActions');
+  if (!box) return;
+
+  function unavailable() {
+    box.innerHTML = '<div class="record-cert-missing"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>' +
+      escapeHtml(t('এই রেকর্ডের জন্য কোনো সনদ ফাইল সংরক্ষিত নেই।', 'No certificate file is stored for this record.')) + '</span></div>';
+    if (note) note.textContent = '';
+    if (actions) actions.innerHTML = '';
+  }
+
+  const img = document.createElement('img');
+  img.className = 'record-cert-img';
+  img.alt = t('সনদের ছবি', 'Certificate document') + ' — ' + regNo;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.onload = function () {
+    box.innerHTML = '';
+    box.appendChild(img);
+    if (note) note.textContent = t('মূল ফাইল, অপরিবর্তিত।', 'Original file, unmodified.');
+    if (actions) {
+      actions.innerHTML = '<a class="action-btn action-btn-outline" href="' + escapeHtml(imgUrl) + '" target="_blank" rel="noopener">' + escapeHtml(t('সম্পূর্ণ দেখুন', 'Open full size')) + '</a>' +
+        '<a class="action-btn action-btn-green" href="' + escapeHtml(imgUrl) + '" download>' + escapeHtml(t('ডাউনলোড', 'Download')) + '</a>';
+    }
+  };
+  img.onerror = function () {
+    fetch(pdfUrl, { method: 'HEAD' })
+      .then(function (r) {
+        if (!r.ok) { unavailable(); return; }
+        const iframe = document.createElement('iframe');
+        iframe.src = pdfUrl;
+        iframe.title = 'Certificate PDF — ' + regNo;
+        iframe.className = 'record-cert-pdf';
+        box.innerHTML = '';
+        box.appendChild(iframe);
+        if (note) note.textContent = t('মূল PDF ফাইল, অপরিবর্তিত।', 'Original PDF file, unmodified.');
+        if (actions) {
+          actions.innerHTML = '<a class="action-btn action-btn-green" href="' + escapeHtml(pdfUrl) + '" download>' + escapeHtml(t('PDF ডাউনলোড', 'Download PDF')) + '</a>';
+        }
+      })
+      .catch(unavailable);
+  };
+  img.src = imgUrl;
+}
+
+/* ── Dynamic database statistics ────────────────────────────── */
+/* Format a number with grouping and (for Bangla) Bengali digits.
+   Bangla uses the South Asian grouping system (e.g. ৩,৪৫,১১৭). */
+function formatStatNumber(value) {
+  const num = Math.max(0, Math.round(Number(value) || 0));
+  if (lang !== 'bn') {
+    return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  let s = String(num);
+  let grouped = '';
+  if (s.length > 3) {
+    const last3 = s.slice(-3);
+    let rest = s.slice(0, -3);
+    rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+    grouped = rest + ',' + last3;
+  } else {
+    grouped = s;
+  }
+  const bn = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  return grouped.replace(/[0-9]/g, function (d) { return bn[+d]; });
+}
+
+/* Count-up animation for a KPI number. Honours reduced-motion. */
+function animateKpi(el, target) {
+  if (!el) return;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !window.requestAnimationFrame || target === 0) {
+    el.textContent = formatStatNumber(target);
+    return;
+  }
+  const duration = 1100;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = formatStatNumber(Math.round(target * eased));
+    if (p < 1) window.requestAnimationFrame(step);
+    else el.textContent = formatStatNumber(target);
+  }
+  window.requestAnimationFrame(step);
+}
+
+async function renderDatabaseStats() {
+  const searchableEl = document.getElementById('kpiSearchable');
+  const brandsEl = document.getElementById('kpiBrands');
+  const officialAppsEl = document.getElementById('kpiOfficialApps');
+  const officialCertsEl = document.getElementById('kpiOfficialCerts');
+  if (!searchableEl && !brandsEl) return;
+
+  /* Official cumulative figures are declared once in the markup via
+     data-count and rendered here so both languages + animation stay
+     consistent. They are historical statistics, NOT searchable rows. */
+  if (officialAppsEl) animateKpi(officialAppsEl, parseInt(officialAppsEl.getAttribute('data-count'), 10) || 0);
+  if (officialCertsEl) animateKpi(officialCertsEl, parseInt(officialCertsEl.getAttribute('data-count'), 10) || 0);
+
+  let records;
+  try { records = await loadArchive(); } catch (e) { records = null; }
+  if (!records) {
+    if (searchableEl) searchableEl.textContent = formatStatNumber(0);
+    if (brandsEl) brandsEl.textContent = formatStatNumber(0);
+    return;
+  }
+
+  const keys = Object.keys(records);
+  const total = keys.length;
+  const brandSet = {};
+  keys.forEach(function (k) {
+    const v = fieldValue(records[k], 'name');
+    if (v) brandSet[v.trim().toLowerCase()] = true;
+  });
+  const brands = Object.keys(brandSet).length;
+
+  animateKpi(searchableEl, total);
+  animateKpi(brandsEl, brands);
+}
+
+/* ── Search suggestions (advanced search inputs) ─────────────── */
+function bindAdvSearch() {
+  const form = document.getElementById('advSearchForm');
+  if (form) {
+    form.addEventListener('submit', function (e) { e.preventDefault(); runAdvancedSearch(true); });
+  }
+  const reset = document.getElementById('advReset');
+  if (reset) reset.addEventListener('click', resetAdvSearch);
+
+  const nameEl = document.getElementById('advName');
+  const ownerEl = document.getElementById('advOwner');
+  [nameEl, ownerEl].forEach(function (el) {
+    if (!el) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'adv-suggest';
+    el.parentNode.style.position = 'relative';
+    el.parentNode.appendChild(wrap);
+    el.setAttribute('autocomplete', 'off');
+
+    el.addEventListener('input', function () {
+      const q = el.value.trim().toLowerCase();
+      if (q.length < 2) { wrap.innerHTML = ''; wrap.classList.remove('open'); return; }
+      const field = el === ownerEl ? 'owner' : 'name';
+      loadArchive().then(function (records) {
+        const seen = {};
+        const out = [];
+        Object.keys(records).forEach(function (k) {
+          const v = fieldValue(records[k], field);
+          if (v && v.toLowerCase().indexOf(q) !== -1 && !seen[v.toLowerCase()]) {
+            seen[v.toLowerCase()] = true;
+            out.push(v);
+          }
+        });
+        out.sort(function (a, b) { return a.localeCompare(b); });
+        wrap.innerHTML = out.slice(0, 6).map(function (v) {
+          return '<button type="button" class="adv-suggest-item">' + escapeHtml(v) + '</button>';
+        }).join('');
+        wrap.classList.toggle('open', out.length > 0);
+        wrap.querySelectorAll('.adv-suggest-item').forEach(function (b) {
+          b.addEventListener('click', function () {
+            el.value = b.textContent;
+            wrap.innerHTML = '';
+            wrap.classList.remove('open');
+            runAdvancedSearch(true);
+          });
+        });
+      }).catch(function () {});
+    });
+    el.addEventListener('blur', function () { setTimeout(function () { wrap.classList.remove('open'); }, 150); });
+  });
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1530,5 +2247,14 @@ setLang = function (next) {
     const pg = portalPage();
     const t = pg ? tv(pg.title) : '';
     document.title = (t ? t + ' | ' : '') + (lang === 'bn' ? 'ডিপিডিটি বাংলাদেশ' : 'DPDT Bangladesh');
+  }
+  if (state.route === 'trademarks') {
+    refreshAdvCoverage();
+    renderDatabaseStats();
+    renderAdvResults();
+  }
+  if (state.route === 'record') {
+    const recNo = recordNoFromPath();
+    if (recNo) renderRecordDetail(recNo);
   }
 };

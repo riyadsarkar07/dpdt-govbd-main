@@ -18,6 +18,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/trademarks",
+      "destination": "/index.html"
+    },
+    {
       "source": "/:path*",
       "destination": "/index.html"
     }
