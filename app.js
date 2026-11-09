@@ -283,6 +283,14 @@ let lang = localStorage.getItem('dpdt-lang') || 'en';
 
 function t(bn, en) { return lang === 'bn' ? bn : en; }
 
+/* Root-absolute asset path so resources resolve correctly from nested
+   routes such as /trademark/543782 (where relative paths would break). */
+function assetUrl(path) {
+  if (!path) return path;
+  if (/^(https?:)?\/\//i.test(path) || path.charAt(0) === '/' || path.charAt(0) === '#') return path;
+  return '/' + path.replace(/^\.?\//, '');
+}
+
 /* ═══════════════════════════════════════════════════════════════
    RENDER — DESKTOP PRIMARY NAV (full official DPDT structure)
 ═══════════════════════════════════════════════════════════════ */
@@ -970,7 +978,7 @@ function searchTM() {
 
 function loadArchive() {
   if (!archivePromise) {
-    archivePromise = fetch('data.json', { cache: 'no-cache' }).then(function (response) {
+    archivePromise = fetch(assetUrl('data.json'), { cache: 'no-cache' }).then(function (response) {
       if (!response.ok) throw new Error('Data request failed with status ' + response.status);
       return response.json();
     }).catch(function (error) {
@@ -1120,8 +1128,8 @@ let certObserver = null;
 
 function resolveCertificateAsset(regNo, container, info) {
   const declared = info && (info.certificate || info.certificate_file || info.certificateFile);
-  const imgUrl = declared && /\.(jpe?g|png|webp)$/i.test(declared) ? declared : regNo + '.jpg';
-  const pdfUrl = declared && /\.pdf$/i.test(declared) ? declared : regNo + '.pdf';
+  const imgUrl = declared && /\.(jpe?g|png|webp)$/i.test(declared) ? assetUrl(declared) : assetUrl(regNo + '.jpg');
+  const pdfUrl = declared && /\.pdf$/i.test(declared) ? assetUrl(declared) : assetUrl(regNo + '.pdf');
   currentAssetUrl = imgUrl;
 
   if (certObserver) {
@@ -1353,7 +1361,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* Live count of trademark records in data.json (reliable stat) */
 function loadRecordCount() {
-  fetch('data.json')
+  fetch(assetUrl('data.json'))
     .then(function (r) { return r.json(); })
     .then(function (data) {
       const count = Object.keys(data).length;
@@ -1780,8 +1788,8 @@ async function renderRecordDetail(regNo) {
   const appDate = fieldValue(info, 'applicationDate');
   const hasCert = !!(fieldValue(info, 'certificate'));
   const certUrl = hasCert ? fieldValue(info, 'certificate') : null;
-  const imgCandidate = certUrl && /\.(jpe?g|png|webp)$/i.test(certUrl) ? certUrl : regNo + '.jpg';
-  const pdfCandidate = certUrl && /\.pdf$/i.test(certUrl) ? certUrl : regNo + '.pdf';
+  const imgCandidate = certUrl && /\.(jpe?g|png|webp)$/i.test(certUrl) ? assetUrl(certUrl) : assetUrl(regNo + '.jpg');
+  const pdfCandidate = certUrl && /\.pdf$/i.test(certUrl) ? assetUrl(certUrl) : assetUrl(regNo + '.pdf');
 
   document.title = name + ' | DPDT Bangladesh';
   const crumb = document.getElementById('crumbCurrent');

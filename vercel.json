@@ -2,28 +2,20 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/verify",
-      "destination": "/verify.html"
+      "source": "/trademark/:path*",
+      "destination": "/"
     },
     {
       "source": "/online-application",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/about",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/trademarks",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/:path*",
-      "destination": "/index.html"
+      "destination": "/"
     }
   ],
   "headers": [
